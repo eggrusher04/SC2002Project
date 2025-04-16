@@ -1,5 +1,5 @@
 public class Applicant implements Users {
-
+//test
 	private String name;
 	private String nric;
 	private String password;
