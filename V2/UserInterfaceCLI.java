@@ -77,7 +77,7 @@ public class UserInterfaceCLI {
 		}
 		else
 		{
-			showOutput("Login failed. Invalid NRIC or password.");
+			showOutput("Login failed. Invalid NRIC or password, please try again.");
 		}
 	}
 
