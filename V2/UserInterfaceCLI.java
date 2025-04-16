@@ -10,7 +10,7 @@ public class UserInterfaceCLI {
 		loginManager =  new LoginManager();
 
 		//Applicant tesApplicant = new Applicant("S1234567A", null, 25, true, "Pending", null, new Enquiry[0]);
-		loginManager.loadApplicant("ApplicantList.csv");
+		loginManager.loadApplicant("C:\\Users\\rusha\\OneDrive\\Documents\\GitHub\\SC2002Project\\V2\\ApplicantList.csv");
 	}
 
 	public void displayMenu() {
@@ -73,7 +73,11 @@ public class UserInterfaceCLI {
 		if(user != null)
 		{
 			showOutput("Login successful! Welcome, " + user.getName());
-			//add post-login here
+			if(user instanceof Applicant)
+			{
+				ApplicantCLI applicantCLI = new ApplicantCLI();
+				applicantCLI.launch((Applicant) user);
+			}
 		}
 		else
 		{
