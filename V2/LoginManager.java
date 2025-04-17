@@ -119,7 +119,7 @@ public class LoginManager {
 		}
 	}
 
-	/*public void loadOfficer(String officerFilename)
+	public void loadOfficer(String officerFilename)
 	{
 		try(BufferedReader br = new BufferedReader(new FileReader(officerFilename)))
 		{
@@ -163,7 +163,38 @@ public class LoginManager {
 		}
 	}
 
-	public void loadManager(String managerFilename)
+	//Update changes into officerList.csv
+	public void saveOfficerToCSV(String pathname)
+	{
+		try(FileWriter writer = new FileWriter(pathname))
+		{
+			writer.write("Name,NRIC,Age,Marital Status, Password\n");
+			for(Users user: userList)
+			{
+				if(user instanceof HDBOfficer)
+				{
+					HDBOfficer app = (HDBOfficer) user;
+					String writeLine = String.format("%s,%s,%d,%b,%s\n",
+						app.getName(),
+						app.getNRIC(),
+						app.getAge(),
+						app.getMaritalStatus(),
+						app.getPassword()
+					);
+					writer.write(writeLine);
+				}
+			}
+		}
+		catch(IOException e)
+		{
+			System.out.println("Error saving applicant to CSV: " + e.getMessage());
+		}
+	}
+
+
+	//LoadManager should be commented out when HDBManager's constructor is completed
+
+	/*public void loadManager(String managerFilename)
 	{
 		try(BufferedReader br = new BufferedReader(new FileReader(managerFilename)))
 		{
