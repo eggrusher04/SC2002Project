@@ -5,6 +5,15 @@ import java.util.Scanner;
 
 public class ApplicantCLI {
     private Scanner scanner = new Scanner(System.in);
+    private LoginManager loginManager;
+    private String applicantCSVPath; // path to save updated csv
+
+    //ApplicantCLI constructor, loginManager object and pathname to csv will be passed here from UserInterfaceCLI after logging in
+    public ApplicantCLI(LoginManager loginManager, String applicantCSVPath)
+    {
+        this.loginManager = loginManager;
+        this.applicantCSVPath = applicantCSVPath;
+    }
 
     public void launch(Applicant applicant)
     {
@@ -37,10 +46,11 @@ public class ApplicantCLI {
                     System.out.println("Enter your new password: ");
                     String newPw = scanner.nextLine();
                     applicant.changePassword(newPw);
-                    System.out.println("You have successfully updates your password.");
-                    break;
+                    loginManager.saveApplicantToCSV(applicantCSVPath); //Update the csv after changing password
+                    System.out.println("You have successfully updated your password. Please login using your new password!");
+                    return;
                 case "5":
-                    System.out.println("Logging out... Goodbye!");
+                    System.out.println("Logging out...");
                     return;
                 default:
                     System.out.println("Invalid option. Try again!!");

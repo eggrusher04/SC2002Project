@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 
@@ -90,6 +91,123 @@ public class LoginManager {
 			System.out.println("Error reading applicants from CSV: "+ e.getMessage());
 		}
 	}
+
+	public void saveApplicantToCSV(String pathname)
+	{
+		try(FileWriter writer = new FileWriter(pathname))
+		{
+			writer.write("Name,NRIC,Age,Marital Status, Password\n");
+			for(Users user: userList)
+			{
+				if(user instanceof Applicant)
+				{
+					Applicant app = (Applicant) user;
+					String writeLine = String.format("%s,%s,%d,%b,%s\n",
+						app.getName(),
+						app.getNRIC(),
+						app.getAge(),
+						app.getMaritalStatus(),
+						app.getPassword()
+					);
+					writer.write(writeLine);
+				}
+			}
+		}
+		catch(IOException e)
+		{
+			System.out.println("Error saving applicant to CSV: " + e.getMessage());
+		}
+	}
+
+	/*public void loadOfficer(String officerFilename)
+	{
+		try(BufferedReader br = new BufferedReader(new FileReader(officerFilename)))
+		{
+			String reader;
+			boolean skipHeader  = true;
+
+			while((reader = br.readLine()) != null)
+			{
+				if(skipHeader)
+				{
+					skipHeader = false;
+					continue;
+				}
+
+				String[] fields = reader.split(",");
+				if(fields.length >= 5)
+				{
+					String name = fields[0].trim();
+					String nric = fields[1].trim();
+					int age = Integer.parseInt(fields[2].trim());
+					boolean maritalStatus = Boolean.parseBoolean(fields[3].trim());
+					String password = fields[4].trim();
+
+					//Officer's constructor have yet to be made, hence the errors
+					HDBOfficer officer = new HDBOfficer(
+						name,
+						nric,
+						password,
+						age,
+						maritalStatus
+						//more attributes to be added(eg: role, staffID, assignedproject)
+					);
+
+					addUser(officer);
+				}
+			}
+		}
+		catch(IOException e)
+		{
+			System.out.println("Error reading officers from CSV: " + e.getMessage());
+		}
+	}
+
+	public void loadManager(String managerFilename)
+	{
+		try(BufferedReader br = new BufferedReader(new FileReader(managerFilename)))
+		{
+			String reader;
+			boolean skipHeader  = true;
+
+			while((reader = br.readLine()) != null)
+			{
+				if(skipHeader)
+				{
+					skipHeader = false;
+					continue;
+				}
+
+				String[] fields = reader.split(",");
+				if(fields.length >= 5)
+				{
+					String name = fields[0].trim();
+					String nric = fields[1].trim();
+					int age = Integer.parseInt(fields[2].trim());
+					boolean maritalStatus = Boolean.parseBoolean(fields[3].trim());
+					String password = fields[4].trim();
+
+					//Manager constructor have yet to be made, hence the errors
+					HDBManager manager = new HDBManager(
+						name,
+						nric,
+						password,
+						age,
+						maritalStatus
+						//more attributes to be added(eg: role, staffID, assignedproject)
+					);
+
+					addUser(manager);
+				}
+			}
+		}
+		catch(IOException e)
+		{
+			System.out.println("Error reading officers from CSV: " + e.getMessage());
+		}
+	}*/
+
+
 
 
 }
