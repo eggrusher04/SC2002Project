@@ -1,7 +1,11 @@
 public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement {
 
 	private BTOProject assignedProj;
-	
+
+	// Constructor
+    public HDBOfficer(String staffID, String nric, String password, String name) {
+        super(staffID, nric, password, name);
+    }
 
 	/**
 	 * 
