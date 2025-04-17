@@ -10,11 +10,19 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, re
 	 */
 	public void generateReceipt(Applicant applicant) {
 		// TODO - implement HDBOfficer.generateReceipt
+		System.out.println("Generating receipt for applicant ID: " + applicant.getApplicantID());
+        System.out.println("Project: " + (assignedProj != null ? assignedProj.getProjectName() : "None"));
+        System.out.println("Status: " + applicant.getApplicationStatus());
 		throw new UnsupportedOperationException();
 	}
 
 	public string viewRegStatus() {
 		// TODO - implement HDBOfficer.viewRegStatus
+		if (assignedProj != null) {
+            return "Officer is registered to handle project: " + assignedProj.getProjectName();
+        } else {
+            return "No project assigned.";
+        }
 		throw new UnsupportedOperationException();
 	}
 
