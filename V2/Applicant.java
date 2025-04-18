@@ -8,19 +8,21 @@ public class Applicant implements Users {
 
 	private String applicationStatus;
 	private BTOProject appliedProject;
+	private String flatType;
 	private Enquiry[] enquiries;
 
-	public Applicant(String name,String nric, String pw, int age, boolean maritalStatus, String appStats, BTOProject appliedProj, Enquiry[] enquiry)
+	public Applicant(String name,String nric, String pw, int age, boolean maritalStatus, String appStats, BTOProject appliedProj, Enquiry[] enquiry, String flatType)
 	{
 		this.name = name;
 		this.nric = nric;
-		this.password = Users.password;
+		this.password = pw;
 		this.age = age;
 		this.maritalStatus = maritalStatus;
 
 		this.applicationStatus = appStats;
 		this.appliedProject = appliedProj;
 		this.enquiries = enquiry;
+		this.flatType = flatType;
 	}
 
 	public String getName()
@@ -46,6 +48,35 @@ public class Applicant implements Users {
 	public boolean getMaritalStatus()
 	{
 		return maritalStatus;
+	}
+
+	public void setApplicationStatus(String status)
+	{
+		this.applicationStatus = status;
+	}
+
+	public String getApplicationStatus()
+	{
+		return applicationStatus;
+	}
+
+	public void setAppliedProject(BTOProject project)
+	{
+		this.appliedProject = project;
+	}
+
+	public BTOProject getAppliedProject()
+	{
+		return appliedProject;
+	}
+
+	public void setFlatType(String flatType)
+	{
+		this.flatType = flatType;
+	}
+	public String getFlatType()
+	{
+		return flatType;
 	}
 
 	/**

@@ -3,6 +3,7 @@ public abstract class Employees implements Users {
 	
 
     private String nric;
+    private String name;
     private String password;
     private int age;
     private boolean maritalStatus;
@@ -10,8 +11,9 @@ public abstract class Employees implements Users {
     private int staffID;
     private String role;
 
-	public Employees( String nric, String password, int age, boolean maritalStatus, int staffID, String role) {
+	public Employees( String nric, String password, int age, boolean maritalStatus, int staffID, String role, String name) {
         this.nric = nric;
+        this.name = name;
         this.password = password;
         this.age = age;
         this.maritalStatus = maritalStatus;

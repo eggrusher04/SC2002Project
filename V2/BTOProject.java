@@ -8,6 +8,7 @@ public class BTOProject {
     private boolean visibility;
     private ArrayList<Flat> availFlats;
     private ArrayList<HDBOfficer> assignedOfficers;
+    private int getMaxOfficerSlots;
 
      public BTOProject(String projName, String neighbourhood, String applicationOpenDate, String applicationCloseDate) {
         this.projName = projName;
@@ -19,17 +20,23 @@ public class BTOProject {
         this.assignedOfficers = new ArrayList<>();
     }
 
+    public int getMaxOfficerSlots()
+    {
+        return getMaxOfficerSlots;
+    }
+
 	
      public void addFlatType(String flatType, int units) {
             for (int i = 0; i < units; i++) {
             String unitNumber = flatType + "-" + (availFlats.size() + 1);
             availFlats.add(new Flat(flatType, unitNumber));
     }
+
 }
      public int getAvailUnits(String flatType) {
         int count = 0;
         for (Flat flat : availFlats) {
-            if (flat.getFlatType().equals(flatType) && !flat.isBooked()) {
+            if (flat.getFlatType().equals(flatType) && !flat.getbookstatus()) {
                 count++;
             }
         }
@@ -38,7 +45,7 @@ public class BTOProject {
     public void updateFlatAvailability(String flatType, int newFlatCount) {
       int available = 0;
       for (Flat flat : availFlats) {
-        if (flat.getFlatType().equals(flatType) && !flat.isBooked()) {
+        if (flat.getFlatType().equals(flatType) && !flat.getbookstatus()) {
             available++;
         }
     }
@@ -85,6 +92,27 @@ public class BTOProject {
     public void setVisibility(boolean visibility) {
         this.visibility = visibility;
     }
+
+    public void setProjectName(String projName)
+    {
+        this.projName = projName;
+    }
+
+    public void setNeighbourhood(String neighbourhood)
+    {
+        this.neighbourhood = neighbourhood;
+    }
+
+    public void setApplicationOpenDate(String appOpenDate)
+    {
+        this.applicationOpenDate = appOpenDate;
+    }
+
+    public void setApplicationCloseDate(String appCloseDate)
+    {
+        this.applicationCloseDate = appCloseDate;
+    }
+
     @Override
     public String toString() {
         return "Project: " + projName + ", Neighbourhood: " + neighbourhood +

@@ -2,6 +2,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
 
 public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement {
 
@@ -15,20 +18,27 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	private String applicationStatus;
 	private BTOProject appliedProject;
 	private List<Enquiry> enquiries;
+	private String regStatus;
 
 	// First Constructor
-	public HDBOfficer(String name,String nric, String pw, int age, boolean maritalStatus, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries)
-	{
-		this.name = name;
-		this.nric = nric;
-		this.password = pw;
-		this.age = age;
-		this.maritalStatus = maritalStatus;
-		this.applicationStatus = applicationStatus;
-		this.appliedProject = appliedProject;
-		this.enquiries = enquiries;
+	public HDBOfficer(String nric, String name, String password, int age, boolean maritalStatus, int staffID, String role, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries) {
 
-	}
+    super(nric, password, age, maritalStatus, staffID, role, name);
+
+    this.applicationStatus = applicationStatus;
+    this.appliedProject = appliedProject;
+    this.enquiries = enquiries;
+}
+
+
+	// Second constructor
+    public HDBOfficer(String nric, String name, String password, int age, boolean maritalStatus, int staffID, String role, BTOProject assignedProj) {
+
+    super(nric, password, age, maritalStatus, staffID, role, name);
+    this.assignedProj = assignedProj;
+}
+
+
 
 	public String getName()
 	{
@@ -142,9 +152,15 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public String viewProjDetails(BTOProject project)
 	{
 		// Method to view project details
-		return "Project Name: " + project.getProjectName() +
-               "\nLocation: " + project.getLocation() +
-               "\nAvailable Flat Types: " + String.join(", ", project.getFlatTypes());
+		Set<String> flatTypes = new HashSet<>();
+		for (Flat flat : project.getAvailFlats())
+		{
+			flatTypes.add(flat.getFlatType());
+		}
+
+		return "Project Name: " + project.getProjName() +
+               "\nLocation: " + project.getNeighbourhood() +
+               "\nAvailable Flat Types: " + String.join(", ", flatTypes);
 	}
 
 	// ProjectManagement Implementation
@@ -153,7 +169,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	{
 		// Register for project function
 		this.assignedProj = project;
-        System.out.println("Project " + project.getProjectName() + " has been successfully registered to officer " + this.name + ".");
+        System.out.println("Project " + project.getProjName() + " has been successfully registered to officer " + this.name + ".");
 	}
 
 	@Override
@@ -164,8 +180,8 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
             System.out.println("No project assigned to officer.");
             throw new UnsupportedOperationException("Cannot update flat availability without an assigned project.");
         }
-        assignedProj.updateFlatAvailability(flatType, "Available", unitsLeft);
-        System.out.println("Updated " + flatType + " flats availability to " + unitsLeft + " units in project: " + assignedProj.getProjectName());
+        assignedProj.updateFlatAvailability(flatType, unitsLeft);
+        System.out.println("Updated " + flatType + " flats availability to " + unitsLeft + " units in project: " + assignedProj.getProjName());
 	}
 
 	// ApplicantManagement Implementation
@@ -178,7 +194,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		System.out.println("NRIC: " + applicant.getNRIC());
 		System.out.println("Age: " + applicant.getAge());
 		System.out.println("Marital Status: " + (applicant.getMaritalStatus() ? "Married" : "Single"));
-		System.out.println("Applied Project: " + (applicant.getAppliedProject() != null ? applicant.getAppliedProject().getProjectName() : "None"));
+		System.out.println("Applied Project: " + (applicant.getAppliedProject() != null ? applicant.getAppliedProject().getProjName() : "None"));
 		System.out.println("Application Status: " + applicant.getApplicationStatus());
 		System.out.println("==========================");
 	}
@@ -213,12 +229,6 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
         this.assignedProj = assignedProj;
     }
 
-	// Second constructor
-    public HDBOfficer(String staffID, String nric, String password, String name, BTOProject assignedProj) {
-        super(staffID, nric, password, name);
-        this.assignedProj = assignedProj; 
-    }
-
 	/**
 	 * 
 	 * @param applicant
@@ -232,8 +242,8 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     	System.out.println("Marital Status  : " + (applicant.getMaritalStatus() ? "Married" : "Single"));
 
     	if (assignedProj != null) {
-        	System.out.println("Project Name    : " + assignedProj.getProjectName());
-        	System.out.println("Project Location: " + assignedProj.getLocation()); // assumed method
+        	System.out.println("Project Name    : " + assignedProj.getProjName());
+        	System.out.println("Project Location: " + assignedProj.getNeighbourhood()); // assumed method
         	System.out.println("Flat Type       : " + applicant.getFlatType());   // assumed method
         	System.out.println("Application Status: " + applicant.getApplicationStatus()); // assumed method
     	} else {
@@ -246,9 +256,14 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public String viewRegStatus() {
 		// HDBOfficer.viewRegStatus
 		if (assignedProj != null) {
-            return "Officer is registered to handle project: " + assignedProj.getProjectName();
+            return "Officer is registered to handle project: " + assignedProj.getProjName();
         } else {
             return "No project assigned.";
         }
+	}
+
+	public void setRegStatus(String status)
+	{
+		this.regStatus = status;
 	}
 }

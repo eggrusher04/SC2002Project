@@ -1,16 +1,14 @@
-<<<<<<< HEAD
-=======
 import java.util.Arrays;
 
->>>>>>> jaychou
 public class HDBManager extends Employees implements ProjectManager, OfficerApproval, View {
 
 	private BTOProject[] createdProj;
 	private static final int INITIAL_CAPACITY = 10;
+    private String name;
 
 
-	public HDBManager(String nric, String password, int age, boolean maritalStatus, int staffID) {
-        super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER");
+	public HDBManager(String nric, String password, int age, boolean maritalStatus, int staffID, String name) {
+        super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
     }
 
@@ -33,11 +31,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 	
 		StringBuilder sb = new StringBuilder();
 		sb.append("=== Project Details ===\n");
-		sb.append("Project Name: ").append(project.getProjectName()).append("\n");
+		sb.append("Project Name: ").append(project.getProjName()).append("\n");
 		sb.append("Neighbourhood: ").append(project.getNeighbourhood()).append("\n");
 		sb.append("Application Period: ").append(project.getApplicationOpenDate())
 		  .append(" to ").append(project.getApplicationCloseDate()).append("\n");
-		sb.append("Visibility: ").append(project.isVisibility() ? "Visible" : "Hidden").append("\n");
+		sb.append("Visibility: ").append(project.isVisible() ? "Visible" : "Hidden").append("\n");
 	
 		// Flat availability
 		sb.append("Available Flats:\n");
@@ -45,7 +43,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 		sb.append(" - 3-Room: ").append(project.getAvailUnits("3-Room")).append(" units\n");
 	
 		// Officers
-		sb.append("Officer Slots: ").append(project.getAssignedOfficers().length)
+		sb.append("Officer Slots: ").append(project.getAssignedOfficers().size())
 		  .append(" / ").append(project.getMaxOfficerSlots()).append("\n");
 	
 		sb.append("Assigned Officers:\n");
@@ -72,9 +70,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         StringBuilder sb = new StringBuilder();
         for (BTOProject p : createdProj) {
             if (p != null) {
-                sb.append(p.getProjectName())
+                sb.append(p.getProjName())
                   .append(" (Visible: ")
-                  .append(p.isVisibility() ? "ON" : "OFF")
+                  .append(p.isVisible() ? "ON" : "OFF")
                   .append(")\n");
             }
         }
@@ -96,7 +94,6 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
 // This method only updates data - no printing or input
-	@Override
 	public void editProject(BTOProject project, String newName, String newHood, String newOpen, String newClose, int twoRoom, int threeRoom) {
 		if (newName != null && !newName.isBlank()) {
 			project.setProjectName(newName);
@@ -111,10 +108,10 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 			project.setApplicationCloseDate(newClose);
 		}
 		if (twoRoom >= 0) {
-			project.updateFlatAvail("2-Room", twoRoom);
+			project.updateFlatAvailability("2-Room", twoRoom);
 		}
 		if (threeRoom >= 0) {
-			project.updateFlatAvail("3-Room", threeRoom);
+			project.updateFlatAvailability("3-Room", threeRoom);
 		}
 	}
 
@@ -167,7 +164,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         StringBuilder report = new StringBuilder("=== Manager Report ===\n");
         for (BTOProject p : createdProj) {
             if (p != null) {
-                report.append("Project: ").append(p.getProjectName()).append("\n");
+                report.append("Project: ").append(p.getProjName()).append("\n");
             }
         }
         return report.toString();
