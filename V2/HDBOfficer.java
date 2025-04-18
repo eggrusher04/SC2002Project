@@ -1,10 +1,20 @@
 public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement {
 
 	private BTOProject assignedProj;
+	// Getter and Setter for assignedProj
+    public BTOProject getAssignedProj() {
+        return assignedProj;
+    }
+
+    public void setAssignedProj(BTOProject assignedProj) {
+        this.assignedProj = assignedProj;
+    }
+
 
 	// Constructor
-    public HDBOfficer(String staffID, String nric, String password, String name) {
+    public HDBOfficer(String staffID, String nric, String password, String name, BTOProject assignedProj) {
         super(staffID, nric, password, name);
+        this.assignedProj = assignedProj; 
     }
 
 	/**
@@ -28,5 +38,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
         }
 		throw new UnsupportedOperationException();
 	}
+
+	
 
 }
