@@ -1,6 +1,4 @@
-import View.*;
-
-public class HDBManager extends Employees implements ProjectManager, OfficerApproval, viewListOfProjects {
+public class HDBManager extends Employees implements ProjectManager, OfficerApproval, View {
 
 	private BTOProject[] createdProj;
 
