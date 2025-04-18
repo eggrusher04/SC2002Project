@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+
 public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement {
 
 	private BTOProject assignedProj;
@@ -7,22 +12,23 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	private int age;
 	private boolean maritalStatus;
 
-	//Constructor
-	public HDBOfficer(String name,String nric, String pw, int age, boolean maritalStatus)
+	private String applicationStatus;
+	private BTOProject appliedProject;
+	private List<Enquiry> enquiries;
+
+	// First Constructor
+	public HDBOfficer(String name,String nric, String pw, int age, boolean maritalStatus, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries)
 	{
 		this.name = name;
 		this.nric = nric;
-		this.password = Users.password;
+		this.password = pw;
 		this.age = age;
 		this.maritalStatus = maritalStatus;
+		this.applicationStatus = applicationStatus;
+		this.appliedProject = appliedProject;
+		this.enquiries = enquiries;
 
-		/*this.applicationStatus = appStats;
-		this.appliedProject = appliedProj;
-		this.enquiries = enquiry;*/
-
-		//As for the commented out code above^, still thinking how to do its constructor considering it can be an applicant
 	}
-
 
 	public String getName()
 	{
@@ -49,6 +55,18 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		return maritalStatus;
 	}
 
+	public String getApplicationStatus() {
+    	return applicationStatus;
+	}
+
+	public BTOProject getAppliedProject() {
+    	return appliedProject;
+	}
+
+	public List<Enquiry> getEnquiries() {
+		return enquiries;
+	}
+
 	public boolean login(String nric, String pw)
 	{
 		if(this.nric.equals(nric) && this.password.equals(pw))
@@ -68,53 +86,124 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	public String viewListOfProjects()
 	{
-		//Read the listOfProjects from the csv
-		return "blablabla";
+		// Read the listOfProjects from the csv ( erm im not really sure how to do this )
+		String filePath = "ProjectList.csv";
+    	StringBuilder result = new StringBuilder();
+
+		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+			String line;
+			boolean isHeader = true;
+
+			while ((line = br.readLine()) != null) {
+				if (isHeader) {
+					isHeader = false; // skip header line
+					continue;
+				}
+				String[] fields = line.split(",");
+				if (fields.length >= 1) {
+					result.append("- ").append(fields[0]).append("\n"); // assuming the first column is project name
+				}
+			}
+
+			if (result.length() == 0) {
+				return "No projects found in the file.";
+			}
+
+			return "Available Projects:\n" + result.toString();
+
+		} catch (IOException e) {
+			return "Error reading project list: " + e.getMessage();
+		}
 	}
-	
 
 	public String viewEnquiry(String message)
 	{
-		//implement viewEnquiry here
-		return "blablabla";
+		// View enquiries 
+		for (Enquiry e : enquiries) {
+            if (e.getMessage().equalsIgnoreCase(message)) {
+                return "Enquiry from " + e.getApplicant().getName() + ": " + e.getMessage();
+            }
+        }
+        return "Enquiry not found.";
 	}
 
 	public void replyEnquiry()
 	{
-		//Implement replyEnquiry
+		// Simulate replying to the first enquiry in the list
+        if (enquiries != null && !enquiries.isEmpty()) {
+            Enquiry enquiry = enquiries.get(0);
+            enquiry.setReply("Thank you for your enquiry. We will get back to you shortly.");
+            System.out.println("Reply sent to " + enquiry.getApplicant().getName() + ": " + enquiry.getReply());
+        } else {
+            System.out.println("No enquiries to reply to.");
+        }
 	}
 
 	public String viewProjDetails(BTOProject project)
 	{
-		//implement a method to view project details
-		return "blablabal";
+		// Method to view project details
+		return "Project Name: " + project.getProjectName() +
+               "\nLocation: " + project.getLocation() +
+               "\nAvailable Flat Types: " + String.join(", ", project.getFlatTypes());
 	}
 
+	// ProjectManagement Implementation
+	@Override
 	public void regProject(BTOProject project)
 	{
-		//register for project function
+		// Register for project function
+		this.assignedProj = project;
+        System.out.println("Project " + project.getProjectName() + " has been successfully registered to officer " + this.name + ".");
 	}
 
+	@Override
 	public void updateFlatAvail(String flatType, int unitsLeft)
 	{
-		//Oficer to update flats available and save into the ProjectList CSV
+		// Oficer to update flats available and save into the ProjectList CSV
+		if (assignedProj == null) {
+            System.out.println("No project assigned to officer.");
+            throw new UnsupportedOperationException("Cannot update flat availability without an assigned project.");
+        }
+        assignedProj.updateFlatAvailability(flatType, "Available", unitsLeft);
+        System.out.println("Updated " + flatType + " flats availability to " + unitsLeft + " units in project: " + assignedProj.getProjectName());
 	}
 
+	// ApplicantManagement Implementation
+	@Override
 	public void retrieveApplicant(Applicant applicant)
 	{
-		//retrieve applicant details here
+		// Retrieve applicant details 
+		System.out.println("=== Applicant Details ===");
+		System.out.println("Name: " + applicant.getName());
+		System.out.println("NRIC: " + applicant.getNRIC());
+		System.out.println("Age: " + applicant.getAge());
+		System.out.println("Marital Status: " + (applicant.getMaritalStatus() ? "Married" : "Single"));
+		System.out.println("Applied Project: " + (applicant.getAppliedProject() != null ? applicant.getAppliedProject().getProjectName() : "None"));
+		System.out.println("Application Status: " + applicant.getApplicationStatus());
+		System.out.println("==========================");
 	}
 
+	@Override
 	public void updateApplicantStatus(Applicant applicant)
 	{
-		//Change the status of an applicant from pending to booked or otherwise
+		// Change the status of an applicant from pending to booked or otherwise
+		String currentStatus = applicant.getApplicationStatus();
+		if ("Pending".equalsIgnoreCase(currentStatus)) {
+			applicant.setApplicationStatus("Booked");
+			System.out.println("Applicant status updated to: Booked");
+		} else {
+			System.out.println("No status change applied. Current status: " + currentStatus);
+		}
 	}
-
+	@Override
 	public boolean isEligibleForApplicant(Applicant applicant)
 	{
-		//check whether the officer can be an applicant for a hdb project
-		return false; //temporary
+		// Check whether the officer can be an applicant for a hdb project
+		boolean ageEligible = applicant.getAge() >= 21;
+		boolean maritalEligible = applicant.getMaritalStatus();
+		return ageEligible && maritalEligible;
 	}
+
 	// Getter and Setter for assignedProj
     public BTOProject getAssignedProj() {
         return assignedProj;
@@ -124,8 +213,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
         this.assignedProj = assignedProj;
     }
 
-
-	// Constructor
+	// Second constructor
     public HDBOfficer(String staffID, String nric, String password, String name, BTOProject assignedProj) {
         super(staffID, nric, password, name);
         this.assignedProj = assignedProj; 
@@ -136,25 +224,31 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	 * @param applicant
 	 */
 	public void generateReceipt(Applicant applicant) {
-		// TODO - implement HDBOfficer.generateReceipt
-		System.out.println("Generating receipt for applicant ID: " + applicant.getNRIC() + ", Name: " + applicant.getName()); //updated the receipt to include NRIC and Name
-        System.out.println("Age: " + applicant.getAge());
-		System.out.println("Marital Status: " + applicant.getMaritalStatus());
-		//System.out.println("Project: " + (assignedProj != null ? assignedProj.getProjectName() : "None"));
-		//add the flat type and other project details
-		throw new UnsupportedOperationException();
+		// HDBOfficer.generateReceipt
+		System.out.println("===== HDB Application Receipt =====");
+    	System.out.println("Applicant ID    : " + applicant.getNRIC());
+    	System.out.println("Name            : " + applicant.getName());
+    	System.out.println("Age             : " + applicant.getAge());
+    	System.out.println("Marital Status  : " + (applicant.getMaritalStatus() ? "Married" : "Single"));
+
+    	if (assignedProj != null) {
+        	System.out.println("Project Name    : " + assignedProj.getProjectName());
+        	System.out.println("Project Location: " + assignedProj.getLocation()); // assumed method
+        	System.out.println("Flat Type       : " + applicant.getFlatType());   // assumed method
+        	System.out.println("Application Status: " + applicant.getApplicationStatus()); // assumed method
+    	} else {
+        	System.out.println("Project         : None assigned");
+    }
+
+    	System.out.println("===================================");
 	}
 
 	public String viewRegStatus() {
-		// TODO - implement HDBOfficer.viewRegStatus
-		/*if (assignedProj != null) {
+		// HDBOfficer.viewRegStatus
+		if (assignedProj != null) {
             return "Officer is registered to handle project: " + assignedProj.getProjectName();
         } else {
             return "No project assigned.";
-        }*/
-		throw new UnsupportedOperationException();
+        }
 	}
-
-	
-
 }
