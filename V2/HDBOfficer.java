@@ -20,7 +20,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	private List<Enquiry> enquiries;
 	private String regStatus;
 
-	// First Constructor
+	// First Constructor to apply as an applicant
 	public HDBOfficer(String nric, String name, String password, int age, boolean maritalStatus, int staffID, String role, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
@@ -31,12 +31,28 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 }
 
 
-	// Second constructor
+	// Second constructor to manage a project
     public HDBOfficer(String nric, String name, String password, int age, boolean maritalStatus, int staffID, String role, BTOProject assignedProj) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
     this.assignedProj = assignedProj;
 }
+	//Third constructor to load login details and basic attributes when app is launched
+	public HDBOfficer(String name, String nric, String password, int age, boolean maritalStatus)
+	{
+		super(nric, password, age, maritalStatus, 0, "Officer", name); // default staffID = 0, role = "Officer"
+		this.name = name;
+		this.nric = nric;
+		this.password = password;
+		this.age = age;
+		this.maritalStatus = maritalStatus;
+		this.assignedProj = null;
+		this.applicationStatus = null;
+		this.appliedProject = null;
+		this.enquiries = null;
+		this.regStatus = null;
+	}
+
 
 
 
