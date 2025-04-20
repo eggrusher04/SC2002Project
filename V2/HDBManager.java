@@ -12,7 +12,10 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
     }
 
-
+    public HDBManager(String name, String nric, String password, int age, boolean maritalStatus, int staffID)
+    {
+        super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
+    }
 
 
 	@Override
@@ -175,5 +178,15 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
             createdProj = Arrays.copyOf(createdProj, createdProj.length * 2);
         }
     }
+
+    public BTOProject getProjectByName(String name) {
+        for (BTOProject project : createdProj) {
+            if (project != null && project.getProjName().equalsIgnoreCase(name)) {
+                return project;
+            }
+        }
+        return null;
+    }
+    
 }
 

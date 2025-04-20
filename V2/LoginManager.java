@@ -42,9 +42,8 @@ public class LoginManager {
 	 * @param password
 	 */
 	public void changeUserPassword(Users user, String password) {
-		// TODO - implement LoginManager.changeUserPassword
+		
 		user.changePassword(password);
-		//throw new UnsupportedOperationException();
 	}
 
 	public void loadApplicant(String filename)
@@ -195,7 +194,7 @@ public class LoginManager {
 
 	//LoadManager should be commented out when HDBManager's constructor is completed
 
-	/*public void loadManager(String managerFilename)
+	public void loadManager(String managerFilename)
 	{
 		try(BufferedReader br = new BufferedReader(new FileReader(managerFilename)))
 		{
@@ -211,13 +210,14 @@ public class LoginManager {
 				}
 
 				String[] fields = reader.split(",");
-				if(fields.length >= 5)
+				if(fields.length >= 6)
 				{
 					String name = fields[0].trim();
 					String nric = fields[1].trim();
 					int age = Integer.parseInt(fields[2].trim());
 					boolean maritalStatus = Boolean.parseBoolean(fields[3].trim());
 					String password = fields[4].trim();
+					int staffID = Integer.parseInt(fields[5].trim());
 
 					//Manager constructor have yet to be made, hence the errors
 					HDBManager manager = new HDBManager(
@@ -225,7 +225,8 @@ public class LoginManager {
 						nric,
 						password,
 						age,
-						maritalStatus
+						maritalStatus,
+						staffID
 						//more attributes to be added(eg: role, staffID, assignedproject)
 					);
 
@@ -237,9 +238,55 @@ public class LoginManager {
 		{
 			System.out.println("Error reading officers from CSV: " + e.getMessage());
 		}
-	}*/
+	}
 
+	public void saveManagerToCSV(String pathname)
+	{
+		try(FileWriter writer = new FileWriter(pathname))
+		{
+			writer.write("Name,NRIC,Age,Marital Status, Password\n");
+			for(Users user: userList)
+			{
+				if(user instanceof HDBManager)
+				{
+					HDBManager manager = (HDBManager) user;
+					String writeLine = String.format("%s,%s,%d,%b,%s\n",
+						manager.getName(),
+						manager.getNRIC(),
+						manager.getAge(),
+						manager.getMaritalStatus(),
+						manager.getPassword()
+					);
+					writer.write(writeLine);
+				}
+			}
+		}
+		catch(IOException e)
+		{
+			System.out.println("Error saving applicant to CSV: " + e.getMessage());
+		}
+	}
 
+    public HDBOfficer findOfficerByNRIC(String nric) {
+        for (Users users : userList) {
+            if (users instanceof HDBOfficer && users.getNRIC().equals(nric)) {
+                return (HDBOfficer) users;
+            }
+        }
+        return null;
+    }
+
+	public Applicant findApplicantByNRIC(String nric)
+	{
+		for(Users users : userList)
+		{
+			if(users instanceof Applicant && users.getNRIC().equals(nric))
+			{
+				return (Applicant) users;
+			}
+		}
+		return null;
+	}
 
 
 }
