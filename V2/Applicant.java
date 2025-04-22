@@ -230,14 +230,16 @@ public class Applicant implements Users, View {
     private void loadEnquiriesFromCSV() {
         String filePath = "V2\\enquiries.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
+            String line = br.readLine(); //skip header
+
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(",");
                 int id = Integer.parseInt(fields[0]);
                 String sender = fields[1];
-                String responder = fields[2];
-                String enquiryMessage = fields[3];
-                String response = fields[4];
+                String senderNRIC = fields[2];
+                String responder = fields[3];
+                String enquiryMessage = fields[4];
+                String response = fields[5];
                 if (sender.equals(this.nric)) { // load only relevant enquiries
                     Enquiry enquiry = new Enquiry(id, this, enquiryMessage);
                     enquiry.setReply(response);
@@ -250,10 +252,13 @@ public class Applicant implements Users, View {
     }
 
     private void saveEnquiryToCSV(Enquiry enquiry) {
-        String filePath = "enquiries.csv";
+        String filePath = "V2\\enquiries.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
+
+            bw.write("enquiryID,senderNRIC,Name,responder,message,reply\n");
+
             bw.write(enquiry.getEnquiryID() + "," +
-                     enquiry.getApplicant().getNRIC() + "," +
+                     enquiry.getApplicant().getNRIC() + "," + enquiry.getApplicant().getName() + "," +
                      (enquiry.getResponder() != null ? enquiry.getResponder().getName() : "") + "," +
                      enquiry.getMessage() + "," +
                      (enquiry.getReply() != null ? enquiry.getReply() : "") + "\n");
@@ -267,11 +272,15 @@ public class Applicant implements Users, View {
     }
 
     private void saveAllEnquiriesToCSV() {
-        String filePath = "enquiries.csv";
+        String filePath = "V2\\enquiries.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+
+            bw.write("enquiryID,senderNRIC,Name,responder,message,reply\n");
+
+
             for (Enquiry enquiry : enquiries) { // write all enquiries to csv
                 bw.write(enquiry.getEnquiryID() + "," +
-                         enquiry.getApplicant().getNRIC() + "," +
+                         enquiry.getApplicant().getNRIC() + "," + enquiry.getApplicant().getName() + "," +
                          (enquiry.getResponder() != null ? enquiry.getResponder().getName() : "") + "," +
                          enquiry.getMessage() + "," +
                          (enquiry.getReply() != null ? enquiry.getReply() : "") + "\n");
@@ -284,7 +293,7 @@ public class Applicant implements Users, View {
     // method to view filtered list of projects
     @Override
     public String viewListOfProjects() {
-        String filePath = "projectlist.csv";
+        String filePath = "V2\\ProjectList.csv";
         StringBuilder result = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -326,7 +335,7 @@ public class Applicant implements Users, View {
             }
             return "available projects:\n" + result.toString();
         } catch (IOException e) {
-            return "error reading project list: " + e.getMessage();
+            return "error reading project list: " + e.getMessage(); 
         }
     }
 }

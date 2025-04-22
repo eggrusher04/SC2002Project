@@ -35,6 +35,10 @@ public abstract class Employees implements Users {
     @Override public String getPassword()        { return password; }
     @Override public int getAge()                { return age; }
     @Override public boolean getMaritalStatus()  { return maritalStatus; }
+    public int getStaffID()
+    {
+        return staffID;
+    }
 
     @Override
     public boolean login(String nric, String pw) {

@@ -246,12 +246,13 @@ public class LoginManager {
 				if(user instanceof HDBManager)
 				{
 					HDBManager manager = (HDBManager) user;
-					String writeLine = String.format("%s,%s,%d,%b,%s\n",
+					String writeLine = String.format("%s,%s,%d,%b,%s,%d\n",
 						manager.getName(),
 						manager.getNRIC(),
 						manager.getAge(),
 						manager.getMaritalStatus(),
 						manager.getPassword()
+						manager.getStaffID()
 					);
 					writer.write(writeLine);
 				}
