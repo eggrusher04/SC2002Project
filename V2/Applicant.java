@@ -228,7 +228,7 @@ public class Applicant implements Users, View {
 
     // helper methods for csv handling
     private void loadEnquiriesFromCSV() {
-        String filePath = "enquiries.csv";
+        String filePath = "V2\\enquiries.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {

@@ -8,9 +8,9 @@ public class BTOProject {
     private boolean visibility;
     private ArrayList<Flat> availFlats;
     private ArrayList<HDBOfficer> assignedOfficers;
-    private int getMaxOfficerSlots;
+    private int maxOfficerSlots;
 
-     public BTOProject(String projName, String neighbourhood, String applicationOpenDate, String applicationCloseDate) {
+    public BTOProject(String projName, String neighbourhood, String applicationOpenDate, String applicationCloseDate) {
         this.projName = projName;
         this.neighbourhood = neighbourhood;
         this.applicationOpenDate = applicationOpenDate;
@@ -22,18 +22,18 @@ public class BTOProject {
 
     public int getMaxOfficerSlots()
     {
-        return getMaxOfficerSlots;
+        return maxOfficerSlots;
     }
 
 	
-     public void addFlatType(String flatType, int units) {
+    public void addFlatType(String flatType, int units) {
             for (int i = 0; i < units; i++) {
             String unitNumber = flatType + "-" + (availFlats.size() + 1);
             availFlats.add(new Flat(flatType, unitNumber));
     }
 
 }
-     public int getAvailUnits(String flatType) {
+    public int getAvailUnits(String flatType) {
         int count = 0;
         for (Flat flat : availFlats) {
             if (flat.getFlatType().equals(flatType) && !flat.getbookstatus()) {

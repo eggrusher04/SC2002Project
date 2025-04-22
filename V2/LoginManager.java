@@ -75,11 +75,7 @@ public class LoginManager {
 						nric,
 						password,
 						age,
-						maritalStatus,
-						"Pending",
-						null,
-						new Enquiry[0],
-						"TBC"
+						maritalStatus
 					);
 
 					addUser(app);

@@ -48,29 +48,64 @@ public class OfficerCLI {
                     //add logic to check whether officer can apply the project as an applicant
                     break;
                 case "3":
-                    //add officer's method to request withdrawal
+                    //
                     System.out.println("You have submitted a withdrawal request.");
                     break;
                 case "4":
-                    //officer.viewEnquiry()
+                    if(officer.getEnquiries() != null && !officer.getEnquiries().isEmpty())
+                    {
+                        for(Enquiry e : officer.getEnquiries())
+                        {
+                            System.out.println(officer.viewEnquiry(e.getMessage()));
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("No enquiries found.");
+                    }
                     break;
                 case "5":
                     officer.replyEnquiry();
                     break;
                 case "6":
-                    //officer.viewProjDetails()
+                    BTOProject assigned = officer.getAssignedProj();
+                    if(assigned != null)
+                    {
+                        System.out.println(officer.viewProjDetails(assigned));
+                    }
                     break;
                 case "7":
-                    officer.regProject(null);
+                    System.out.println("Enter project name you want to manage: ");
+                    String regProjName = scanner.nextLine();
+
+                    //read the BTOPrject list
+                    //BTOProject newpProject = new BTOProject(regProjName, choice, projectName, regProjName); //need to review this again
+                    //officer.regProject(newpProject);
                     break;
                 case "8":
-                    //officer.updateFlatAvail()
+                    System.out.println("Enter flat type to update: ");
+                    String flatType = scanner.nextLine();
+
+                    System.out.println("Enter units left: ");
+                    int unitsLeft = Integer.parseInt(scanner.nextLine());
+                    officer.updateFlatAvail(flatType, unitsLeft);
+
                     break;
                 case "9":
-                    //officer.retrieveApplicant()
+                    System.out.println("Enter applicant's name: ");
+                    String applicantName = scanner.nextLine();
+
+                    //for now applicant will look like this, cchange in the future
+                    //Applicant applicant =  new Applicant(regProjName, flatType, applicantName, unitsLeft, false);
+                    //officer.retrieveApplicant(applicant);
+                    
                     break;
                 case "10":
-                    //officer.updateApplicantStatus()
+                    System.out.println("Enter applicant's name: ");
+                    String updatedApplicant = scanner.nextLine();
+
+                    //Applicant updApplicant = new Applicant(regProjName, applicantName, updatedApplicant, unitsLeft, false);
+                    //officer.updateApplicantStatus(updApplicant);
                     break;
                 case "11":
                     System.out.println("Enter your new password: ");
