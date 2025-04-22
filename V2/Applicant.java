@@ -1,120 +1,332 @@
-public class Applicant implements Users {
+import java.io.*;
+import java.util.ArrayList;
 
-	private String name;
-	private String nric;
-	private String password;
-	private int age;
-	private boolean maritalStatus;
+public class Applicant implements Users, View {
+    private String name; // applicant's name
+    private String nric; // applicant's nric
+    private String password; // applicant's password
+    private int age; // applicant's age
+    private boolean maritalStatus; // marital status of the applicant
+    private String applicationStatus; // tracks current application status
+    private BTOProject appliedProject; // project applied by the applicant
+    private String flatType; // flat type chosen by the applicant
+    private ArrayList<Enquiry> enquiries; // list of enquiries made by the applicant
+    private String flatTypeFilter; // filter for flat types when viewing projects
+    private Application currentApplication; // tracks the current application object
 
-	private String applicationStatus;
-	private BTOProject appliedProject;
-	private String flatType;
-	private Enquiry[] enquiries;
+    public Applicant(String name, String nric, String password, int age, boolean maritalStatus) {
+        this.name = name;
+        this.nric = nric;
+        this.password = password;
+        this.age = age;
+        this.maritalStatus = maritalStatus;
+        this.applicationStatus = "None"; // default status
+        this.appliedProject = null; // no project applied initially
+        this.flatType = null; // no flat type chosen initially
+        this.currentApplication = null; // no application initially
+        this.enquiries = new ArrayList<>(); // initialize empty list for enquiries
+        this.flatTypeFilter = null; // no filter initially
+        loadEnquiriesFromCSV(); // load existing enquiries from csv
+    }
 
-	public Applicant(String name,String nric, String pw, int age, boolean maritalStatus, String appStats, BTOProject appliedProj, Enquiry[] enquiry, String flatType)
-	{
-		this.name = name;
-		this.nric = nric;
-		this.password = pw;
-		this.age = age;
-		this.maritalStatus = maritalStatus;
+    // getters and setters for attributes
+    public void setFlatTypeFilter(String flatTypeFilter) {
+        this.flatTypeFilter = flatTypeFilter;
+    }
 
-		this.applicationStatus = appStats;
-		this.appliedProject = appliedProj;
-		this.enquiries = enquiry;
-		this.flatType = flatType;
-	}
+    public String getFlatTypeFilter() {
+        return flatTypeFilter;
+    }
 
-	public String getName()
-	{
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	public String getNRIC()
-	{
-		return nric;
-	}
+    @Override
+    public String getNRIC() {
+        return nric;
+    }
 
-	public String getPassword()
-	{
-		return password;
-	}
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
-	public int getAge()
-	{
-		return age;
-	}
+    @Override
+    public int getAge() {
+        return age;
+    }
 
-	public boolean getMaritalStatus()
-	{
-		return maritalStatus;
-	}
+    @Override
+    public boolean getMaritalStatus() {
+        return maritalStatus;
+    }
 
-	public void setApplicationStatus(String status)
-	{
-		this.applicationStatus = status;
-	}
+    public void setApplicationStatus(String status) {
+        this.applicationStatus = status;
+    }
 
-	public String getApplicationStatus()
-	{
-		return applicationStatus;
-	}
+    public String getApplicationStatus() {
+        return applicationStatus;
+    }
 
-	public void setAppliedProject(BTOProject project)
-	{
-		this.appliedProject = project;
-	}
+    public void setAppliedProject(BTOProject project) {
+        this.appliedProject = project;
+    }
 
-	public BTOProject getAppliedProject()
-	{
-		return appliedProject;
-	}
+    public BTOProject getAppliedProject() {
+        return appliedProject;
+    }
 
-	public void setFlatType(String flatType)
-	{
-		this.flatType = flatType;
-	}
-	public String getFlatType()
-	{
-		return flatType;
-	}
+    public void setFlatType(String flatType) {
+        this.flatType = flatType;
+    }
 
-	/**
-	 * 
-	 * @param project
-	 */
-	public void applyProject(BTOProject project) {
-		// TODO - implement Applicant.applyProject
-		//throw new UnsupportedOperationException();
-	}
+    public String getFlatType() {
+        return flatType;
+    }
 
-	public String viewStatus() {
-		// TODO - implement Applicant.viewStatus
-		return applicationStatus;
-	}
+    // method to apply for a bto project
+    public void applyProject(BTOProject project) {
+        if (this.currentApplication != null) { // check if already applied
+            System.out.println("you have already applied for a project.");
+            return;
+        }
+        if (project == null) { // check if project exists
+            System.out.println("project not found. please enter a valid project name.");
+            return;
+        }
+        if (!isEligible(project)) { // check eligibility
+            System.out.println("you are not eligible to apply for this project.");
+            return;
+        }
+        // create a new application and save to csv
+        this.currentApplication = new Application(this.nric, project.getProjName(), flatType);
+        System.out.println("you have successfully applied for the project: " + project.getProjName());
+    }
 
-	public void reqWithdrawal() {
-		// TODO - implement Applicant.reqWithdrawal
-		//throw new UnsupportedOperationException();
-	}
+    // method to view application status
+    public String viewStatus() {
+        if (currentApplication == null) { // no active application
+            return "no active application.";
+        }
+        return "your application status is: " + currentApplication.getApplicationStatus();
+    }
 
-	public boolean login(String nric, String pw)
-	{
-		if(this.nric.equals(nric) && this.password.equals(pw))
-		{
-			//System.out.println("Comparing login: input NRIC = " + nric + ", input password = " + pw);
-			//System.out.println("Actual NRIC = " + this.nric + ", Actual password = " + this.password);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+    // method to request withdrawal of application
+    public void reqWithdrawal() {
+        if (this.currentApplication == null) { // check if there is an active application
+            System.out.println("you have no active application to withdraw.");
+            return;
+        }
+        if (this.currentApplication.getApplicationStatus().equals("booked")) { // cannot withdraw if booked
+            System.out.println("your application is already booked. please contact an hdb officer for withdrawal.");
+            return;
+        }
+        // delete application from csv and reset current application
+        this.currentApplication.deleteFromCSV();
+        this.currentApplication = null;
+        System.out.println("your withdrawal request has been processed.");
+    }
 
-	public void changePassword(String newPw)
-	{
-		this.password = newPw;
-	}
+    // method to create a bto project object from csv data
+    public void createBTOProjectFromCSV(String projectName) {
+        String filePath = "projectlist.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+            while ((line = br.readLine()) != null) {
+                if (isHeader) { // skip header row
+                    isHeader = false;
+                    continue;
+                }
+                String[] fields = line.split(",");
+                if (fields[0].equalsIgnoreCase(projectName)) { // find matching project
+                    String projName = fields[0];
+                    String neighborhood = fields[1];
+                    String appOpenDate = fields[8];
+                    String appCloseDate = fields[9];
+                    BTOProject project = new BTOProject(projName, neighborhood, appOpenDate, appCloseDate);
+                    String type1 = fields[2];
+                    int unitsType1 = Integer.parseInt(fields[3]);
+                    String type2 = fields[5];
+                    int unitsType2 = Integer.parseInt(fields[6]);
+                    project.addFlatType(type1, unitsType1); // add flat types
+                    project.addFlatType(type2, unitsType2);
+                    this.applyProject(project); // apply to the project
+                    return;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("error reading project list: " + e.getMessage());
+        }
+        System.out.println("project not found. please enter a valid project name.");
+    }
 
+    // method to handle user login
+    @Override
+    public boolean login(String nric, String pw) {
+        return this.nric.equals(nric) && this.password.equals(pw);
+    }
+
+    // method to change password
+    @Override
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    // method to check eligibility for a project
+    private boolean isEligible(BTOProject project) {
+        if (maritalStatus) { // married applicants can apply for any flat
+            return true;
+        }
+        if (age >= 35 && flatType != null && flatType.equals("2-room")) { // singles above 35 can apply for 2-room
+            return true;
+        }
+        return false; // ineligible otherwise
+    }
+
+    // enquiry management methods
+    public void addEnquiry(String message) {
+        int enquiryID = enquiries.size() + 1; // generate unique id
+        Enquiry newEnquiry = new Enquiry(enquiryID, this, message);
+        enquiries.add(newEnquiry);
+        saveEnquiryToCSV(newEnquiry); // save enquiry to csv
+        System.out.println("enquiry added successfully.");
+    }
+
+    public void viewEnquiries() {
+        if (enquiries.isEmpty()) { // no enquiries to display
+            System.out.println("you have no enquiries.");
+            return;
+        }
+        for (Enquiry enquiry : enquiries) { // display all enquiries
+            System.out.println("enquiry id: " + enquiry.getEnquiryID() +
+                               ", message: " + enquiry.getMessage() +
+                               ", reply: " + (enquiry.getReply() != null ? enquiry.getReply() : "no reply yet"));
+        }
+    }
+
+    public void editEnquiry(int enquiryID, String newMessage) {
+        for (Enquiry enquiry : enquiries) { // find and update enquiry
+            if (enquiry.getEnquiryID() == enquiryID) {
+                enquiry.updateEnquiry(newMessage);
+                updateEnquiryInCSV(enquiry); // update in csv
+                System.out.println("enquiry updated successfully.");
+                return;
+            }
+        }
+        System.out.println("enquiry not found.");
+    }
+
+    public void deleteEnquiry(int enquiryID) {
+        enquiries.removeIf(enquiry -> enquiry.getEnquiryID() == enquiryID); // remove enquiry
+        saveAllEnquiriesToCSV(); // rewrite csv
+        System.out.println("enquiry deleted successfully.");
+    }
+
+    // helper methods for csv handling
+    private void loadEnquiriesFromCSV() {
+        String filePath = "enquiries.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] fields = line.split(",");
+                int id = Integer.parseInt(fields[0]);
+                String sender = fields[1];
+                String responder = fields[2];
+                String enquiryMessage = fields[3];
+                String response = fields[4];
+                if (sender.equals(this.nric)) { // load only relevant enquiries
+                    Enquiry enquiry = new Enquiry(id, this, enquiryMessage);
+                    enquiry.setReply(response);
+                    enquiries.add(enquiry);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("no existing enquiries found. starting with an empty list.");
+        }
+    }
+
+    private void saveEnquiryToCSV(Enquiry enquiry) {
+        String filePath = "enquiries.csv";
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
+            bw.write(enquiry.getEnquiryID() + "," +
+                     enquiry.getApplicant().getNRIC() + "," +
+                     (enquiry.getResponder() != null ? enquiry.getResponder().getName() : "") + "," +
+                     enquiry.getMessage() + "," +
+                     (enquiry.getReply() != null ? enquiry.getReply() : "") + "\n");
+        } catch (IOException e) {
+            System.out.println("error saving enquiry to csv: " + e.getMessage());
+        }
+    }
+
+    private void updateEnquiryInCSV(Enquiry enquiry) {
+        saveAllEnquiriesToCSV(); // rewrite entire csv
+    }
+
+    private void saveAllEnquiriesToCSV() {
+        String filePath = "enquiries.csv";
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            for (Enquiry enquiry : enquiries) { // write all enquiries to csv
+                bw.write(enquiry.getEnquiryID() + "," +
+                         enquiry.getApplicant().getNRIC() + "," +
+                         (enquiry.getResponder() != null ? enquiry.getResponder().getName() : "") + "," +
+                         enquiry.getMessage() + "," +
+                         (enquiry.getReply() != null ? enquiry.getReply() : "") + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("error saving enquiries to csv: " + e.getMessage());
+        }
+    }
+
+    // method to view filtered list of projects
+    @Override
+    public String viewListOfProjects() {
+        String filePath = "projectlist.csv";
+        StringBuilder result = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+            while ((line = br.readLine()) != null) {
+                if (isHeader) { // skip header row
+                    isHeader = false;
+                    continue;
+                }
+                String[] fields = line.split(",");
+                String projectName = fields[0];
+                String neighborhood = fields[1];
+                String type1 = fields[2];
+                int unitsType1 = Integer.parseInt(fields[3]);
+                String type2 = fields[5];
+                int unitsType2 = Integer.parseInt(fields[6]);
+
+                // ensure singles above 35 only see 2-room flats
+                if (!(maritalStatus) && age >= 35) {
+                    flatTypeFilter = "2-room";
+                }
+
+                // apply flat type filter
+                else if (flatTypeFilter != null && !flatTypeFilter.isEmpty()) {
+                    if (!type1.equalsIgnoreCase(flatTypeFilter) && !type2.equalsIgnoreCase(flatTypeFilter)) {
+                        continue; // skip projects that don't match filter
+                    }
+                }
+
+                // append project details to result
+                result.append("- project name: ").append(projectName).append("\n");
+                result.append("  neighborhood: ").append(neighborhood).append("\n");
+                result.append("  flat types: ").append(type1).append(" (").append(unitsType1).append(" units), ")
+                      .append(type2).append(" (").append(unitsType2).append(" units)\n");
+                result.append("\n");
+            }
+            if (result.length() == 0) { // no projects match the filter
+                return "no projects found matching the filter.";
+            }
+            return "available projects:\n" + result.toString();
+        } catch (IOException e) {
+            return "error reading project list: " + e.getMessage();
+        }
+    }
 }
