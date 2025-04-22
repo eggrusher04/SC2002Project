@@ -34,6 +34,11 @@ public class Enquiry {
 		return response;
 	}
 
+	public Employees getResponder()
+	{
+		return responder;
+	}
+
 	public void setReply(String response)
 	{
 		this.response = response;
