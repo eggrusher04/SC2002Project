@@ -12,7 +12,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	private String applicationStatus;
 	private BTOProject appliedProject;
-	private List<Enquiry> enquiries;
+	private List<Enquiry> enquiries = new ArrayList<>();
 	private String regStatus;
 
 	// First Constructor to apply as an applicant
@@ -22,7 +22,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
     this.applicationStatus = applicationStatus;
     this.appliedProject = appliedProject;
-    this.enquiries = enquiries;
+    this.enquiries = (enquiries != null) ? enquiries : new ArrayList<>();
 }
 
 
