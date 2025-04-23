@@ -17,6 +17,13 @@ public class OfficerCLI {
 
     public void launchOfficerCLI(HDBOfficer officer)
     {
+        Applicant officerApplicant =  new Applicant(
+            officer.getNRIC(),
+            officer.getName(),
+            officer.getPassword(),
+            officer.getAge(),
+            officer.getMaritalStatus()
+        );
         while(true)
         {
             System.out.println("\n====== HDB Officer Dashboard ======");
@@ -26,7 +33,7 @@ public class OfficerCLI {
             System.out.println("4. View Enquiry");
             System.out.println("5. Reply Enquiry");
             System.out.println("6. View Project Details");
-            System.out.println("7. Register for a project");
+            System.out.println("7. Register for a project to manage");
             System.out.println("8. Update Flat Availability");
             System.out.println("9. Retrieve Applicant Details");
             System.out.println("10. Update Applicant Status");
@@ -39,16 +46,33 @@ public class OfficerCLI {
             switch(choice)
             {
                 case "1":
-                    //System.out.println("Your Application Status: " + applicant.viewStatus());
+                    System.out.println("Your Application Status: " + officerApplicant.viewStatus());
                     break;
                 case "2":
-                    System.out.println("Enter the BTO Project name to apply: ");
-                    String projectName = scanner.nextLine();
-
                     //add logic to check whether officer can apply the project as an applicant
+                    if(officer.isEligibleForApplicant(officerApplicant))
+                    {
+                        System.out.println("Filter by flat type? (eg: 2-Room, 3-Room or leave blank)");
+                        String flatTypeFilter = scanner.nextLine().trim();
+                        officerApplicant.setFlatTypeFilter(flatTypeFilter);
+                        System.out.println(officerApplicant.viewListOfProjects());
+
+                        System.out.println("Enter the BTO Project name to apply: ");
+                        String projectName = scanner.nextLine();
+
+                        System.out.println("Enter flat type: ");
+                        String flatType =  scanner.nextLine();
+                        officerApplicant.setFlatType(flatType);
+                        officerApplicant.createBTOProjectFromCSV(projectName);
+
+                    }
+                    else
+                    {
+                        System.out.println("You are not eligible to apply as you are managing his project!");
+                    }
                     break;
                 case "3":
-                    //
+                    officerApplicant.reqWithdrawal();
                     System.out.println("You have submitted a withdrawal request.");
                     break;
                 case "4":
@@ -73,14 +97,16 @@ public class OfficerCLI {
                     {
                         System.out.println(officer.viewProjDetails(assigned));
                     }
+                    else
+                    {
+                        System.out.println("You have yet to register to manage a project.");
+                    }
                     break;
                 case "7":
+                    officer.viewListOfProjects();
                     System.out.println("Enter project name you want to manage: ");
                     String regProjName = scanner.nextLine();
 
-                    //read the BTOPrject list
-                    //BTOProject newpProject = new BTOProject(regProjName, choice, projectName, regProjName); //need to review this again
-                    //officer.regProject(newpProject);
                     break;
                 case "8":
                     System.out.println("Enter flat type to update: ");

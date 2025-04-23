@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 
-public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement {
+public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement{
 
 	private BTOProject assignedProj;
 
@@ -75,7 +75,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public String viewListOfProjects()
 	{
 		// Read the listOfProjects from the csv ( erm im not really sure how to do this )
-		String filePath = "ProjectList.csv";
+		String filePath = "V2\\ProjectList.csv";
     	StringBuilder result = new StringBuilder();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
