@@ -14,7 +14,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	private String applicationStatus;
 	private BTOProject appliedProject;
-	private List<Enquiry> enquiries;
+	private List<Enquiry> enquiries = new ArrayList<>();
 
 	// First Constructor
 	public HDBOfficer(String name,String nric, String pw, int age, boolean maritalStatus, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries)
@@ -26,7 +26,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		this.maritalStatus = maritalStatus;
 		this.applicationStatus = applicationStatus;
 		this.appliedProject = appliedProject;
-		this.enquiries = enquiries;
+		this.enquiries = (enquiries != null) ? enquiries : new ArrayList<>();
 
 	}
 
@@ -86,7 +86,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	public String viewListOfProjects()
 	{
-		// Read the listOfProjects from the csv ( erm im not really sure how to do this )
+		// Read the listOfProjects from the csv 
 		String filePath = "ProjectList.csv";
     	StringBuilder result = new StringBuilder();
 
@@ -96,12 +96,12 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 			while ((line = br.readLine()) != null) {
 				if (isHeader) {
-					isHeader = false; // skip header line
+					isHeader = false; // Skip header line
 					continue;
 				}
 				String[] fields = line.split(",");
 				if (fields.length >= 1) {
-					result.append("- ").append(fields[0]).append("\n"); // assuming the first column is project name
+					result.append("- ").append(fields[0]).append("\n"); // Assuming the first column is project name
 				}
 			}
 
@@ -119,6 +119,10 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public String viewEnquiry(String message)
 	{
 		// View enquiries 
+		if (enquiries == null || enquiries.isEmpty()) {
+        return "No enquiries available.";
+    }
+		
 		for (Enquiry e : enquiries) {
             if (e.getMessage().equalsIgnoreCase(message)) {
                 return "Enquiry from " + e.getApplicant().getName() + ": " + e.getMessage();
@@ -152,8 +156,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public void regProject(BTOProject project)
 	{
 		// Register for project function
-		this.assignedProj = project;
-        System.out.println("Project " + project.getProjectName() + " has been successfully registered to officer " + this.name + ".");
+		this.appliedProject = project;
+    	this.applicationStatus = "Pending";
+        System.out.println("Officer has registered for project: " + project.getProjectName());
 	}
 
 	@Override
