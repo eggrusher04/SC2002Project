@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class HDBManager extends Employees implements ProjectManager, OfficerApproval, View {
@@ -67,20 +70,47 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 
-
+    // pulls from projectlist csv and prints out all the exisitng projects (changed)
 	@Override
     public String viewListOfProjects() {
-        StringBuilder sb = new StringBuilder();
-        for (BTOProject p : createdProj) {
-            if (p != null) {
-                sb.append(p.getProjName())
-                  .append(" (Visible: ")
-                  .append(p.isVisible() ? "ON" : "OFF")
-                  .append(")\n");
+        String filePath = "V2\\ProjectList.csv";
+        StringBuilder result = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+            while ((line = br.readLine()) != null) {
+                if (isHeader) { // skip header row
+                    isHeader = false;
+                    continue;
+                }
+                String[] fields = line.split(",");
+                String projectName = fields[0];
+                String neighborhood = fields[1];
+                String type1 = fields[2];
+                int unitsType1 = Integer.parseInt(fields[3]);
+                String type2 = fields[5];
+                int unitsType2 = Integer.parseInt(fields[6]);
+                String manager = fields[7];
+                int officerSlot = Integer.parseInt(fields[8]);
+                String officer = fields[9];                
+
+                // append project details to result
+                result.append("- project name: ").append(projectName).append("\n");
+                result.append("  neighborhood: ").append(neighborhood).append("\n");
+                result.append("  flat types: ").append(type1).append(" (").append(unitsType1).append(" units), ")
+                      .append(type2).append(" (").append(unitsType2).append(" units)\n");
+                result.append("manager: ").append(manager).append("\n");
+                result.append("officer slot: ").append(officerSlot).append(", ").append(officer);
+                result.append("\n");
             }
+            if (result.length() == 0) { // no projects found
+                return "no projects found";
+            }
+            return "available projects:\n" + result.toString();
+        } catch (IOException e) {
+            return "error reading project list: " + e.getMessage(); 
         }
-        return sb.toString();
-    }
+    }    
 
 
 
@@ -156,10 +186,10 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 
-
+    // cahnged a bit
     public void approveWithdrawal(Applicant applicant) {
         if (applicant != null) {
-            applicant.reqWithdrawal(); // Assume method exists in Applicant
+            applicant.withraw(); // deletes the application from application.csv
         }
     }
 
@@ -187,6 +217,8 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         }
         return null;
     }
+
+
     
 }
 

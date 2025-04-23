@@ -121,9 +121,15 @@ public class Applicant implements Users, View {
             return;
         }
         if (this.currentApplication.getApplicationStatus().equals("booked")) { // cannot withdraw if booked
-            System.out.println("your application is already booked. please contact an hdb officer for withdrawal.");
+            System.out.println("your application is already booked. please contact an hdb manager for withdrawal.");
             return;
+        
+        
         }
+        this.withraw();
+    }
+
+    public void withraw(){
         // delete application from csv and reset current application
         this.currentApplication.deleteFromCSV();
         this.currentApplication = null;
