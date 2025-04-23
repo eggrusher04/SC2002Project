@@ -6,7 +6,7 @@ public class Applicant implements Users, View {
     private String nric; // applicant's nric
     private String password; // applicant's password
     private int age; // applicant's age
-    private boolean maritalStatus; // marital status of the applicant
+    private String maritalStatus; // marital status of the applicant
     private String applicationStatus; // tracks current application status
     private BTOProject appliedProject; // project applied by the applicant
     private String flatType; // flat type chosen by the applicant
@@ -14,7 +14,7 @@ public class Applicant implements Users, View {
     private String flatTypeFilter; // filter for flat types when viewing projects
     private Application currentApplication; // tracks the current application object
 
-    public Applicant(String name, String nric, String password, int age, boolean maritalStatus) {
+    public Applicant(String name, String nric, String password, int age, String maritalStatus) {
         this.name = name;
         this.nric = nric;
         this.password = password;
@@ -59,7 +59,7 @@ public class Applicant implements Users, View {
     }
 
     @Override
-    public boolean getMaritalStatus() {
+    public String getMaritalStatus() {
         return maritalStatus;
     }
 
@@ -178,11 +178,11 @@ public class Applicant implements Users, View {
 
     // method to check eligibility for a project
     private boolean isEligible(BTOProject project) {
-        if (maritalStatus) { // married applicants can apply for any flat
+        if (maritalStatus.equalsIgnoreCase("married")) { // married applicants can apply for any flat
             return true;
         }
-        if (age >= 35 && flatType != null && flatType.equals("2-room")) { // singles above 35 can apply for 2-room
-            return true;
+        else if(maritalStatus.equalsIgnoreCase("single")) { // singles above 35 can apply for 2-room
+            return age >= 35 && flatType != null && flatType.equalsIgnoreCase("2-room");
         }
         return false; // ineligible otherwise
     }
@@ -312,7 +312,7 @@ public class Applicant implements Users, View {
                 int unitsType2 = Integer.parseInt(fields[6]);
 
                 // ensure singles above 35 only see 2-room flats
-                if (!(maritalStatus) && age >= 35) {
+                if (maritalStatus.equalsIgnoreCase("single") && age >= 35) {
                     flatTypeFilter = "2-room";
                 }
 

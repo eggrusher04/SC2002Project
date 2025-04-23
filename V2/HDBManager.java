@@ -7,12 +7,12 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     private String name;
 
 
-	public HDBManager(String nric, String password, int age, boolean maritalStatus, int staffID, String name) {
+	public HDBManager(String nric, String password, int age, String maritalStatus, int staffID, String name) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
     }
 
-    public HDBManager(String name, String nric, String password, int age, boolean maritalStatus, int staffID)
+    public HDBManager(String name, String nric, String password, int age, String maritalStatus, int staffID)
     {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
     }

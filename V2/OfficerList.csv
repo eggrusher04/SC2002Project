@@ -1,4 +1,4 @@
 Name,NRIC,Age,Marital Status, Password
-Daniel,T2109876H,36,false,DanielOfficer1
-Emily,S6543210I,28,false,password
-David,T1234567J,29,false,password
+Daniel,T2109876H,36,true,DanielOfficer1
+Emily,S6543210I,28,true,password
+David,T1234567J,29,true,D4vdPassw0rd

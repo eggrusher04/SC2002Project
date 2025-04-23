@@ -1,3 +1,3 @@
 Name,NRIC,Age,Marital Status,Password,Staff ID
-Michael,T8765432F,36,false,MichaelJackson12,2001
-Jessica,S5678901G,26,false,password,2002
+Michael,T8765432F,36,Single,MichaelJackson12,2001
+Jessica,S5678901G,26,Married,password,2002

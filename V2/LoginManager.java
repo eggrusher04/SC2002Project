@@ -67,7 +67,7 @@ public class LoginManager {
 					String name = fields[0].trim();
 					String nric = fields[1].trim();
 					int age = Integer.parseInt(fields[2].trim());
-					boolean maritalStatus = Boolean.parseBoolean(fields[3].trim());
+					String maritalStatus = fields[3].trim();
 					String password = fields[4].trim();
 
 					Applicant app = new Applicant(
@@ -98,7 +98,7 @@ public class LoginManager {
 				if(user instanceof Applicant)
 				{
 					Applicant app = (Applicant) user;
-					String writeLine = String.format("%s,%s,%d,%b,%s\n",
+					String writeLine = String.format("%s,%s,%d,%s,%s\n",
 						app.getName(),
 						app.getNRIC(),
 						app.getAge(),
@@ -136,7 +136,7 @@ public class LoginManager {
 					String name = fields[0].trim();
 					String nric = fields[1].trim();
 					int age = Integer.parseInt(fields[2].trim());
-					boolean maritalStatus = Boolean.parseBoolean(fields[3].trim());
+					String maritalStatus = fields[3].trim();
 					String password = fields[4].trim();
 
 					//Officer's constructor have yet to be made, hence the errors
@@ -211,7 +211,7 @@ public class LoginManager {
 					String name = fields[0].trim();
 					String nric = fields[1].trim();
 					int age = Integer.parseInt(fields[2].trim());
-					boolean maritalStatus = Boolean.parseBoolean(fields[3].trim());
+					String maritalStatus = fields[3].trim();
 					String password = fields[4].trim();
 					int staffID = Integer.parseInt(fields[5].trim());
 

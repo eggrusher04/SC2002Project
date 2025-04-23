@@ -46,7 +46,8 @@ public class ApplicantCLI {
                     String newPw = scanner.nextLine();
                     applicant.changePassword(newPw);
                     loginManager.saveApplicantToCSV(applicantCSVPath);
-                    System.out.println("Password updated successfully.");
+                    System.out.println("Password updated successfully. Please login your new password!");
+                    return;
                 }
                 case "6" -> { // logout
                     System.out.println("Logging out...");
