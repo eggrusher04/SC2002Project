@@ -9,11 +9,6 @@ import java.util.HashSet;
 public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement {
 
 	private BTOProject assignedProj;
-	private String name;
-	private String nric;
-	private String password;
-	private int age;
-	private boolean maritalStatus;
 
 	private String applicationStatus;
 	private BTOProject appliedProject;
@@ -41,11 +36,6 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public HDBOfficer(String name, String nric, String password, int age, boolean maritalStatus)
 	{
 		super(nric, password, age, maritalStatus, 0, "Officer", name); // default staffID = 0, role = "Officer"
-		this.name = name;
-		this.nric = nric;
-		this.password = password;
-		this.age = age;
-		this.maritalStatus = maritalStatus;
 		this.assignedProj = null;
 		this.applicationStatus = null;
 		this.appliedProject = null;
