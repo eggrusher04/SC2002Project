@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -32,7 +33,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     super(nric, password, age, maritalStatus, staffID, role, name);
     this.assignedProj = assignedProj;
 }
-	//Third constructor to load login details and basic attributes when app is launched
+	// Third constructor to load login details and basic attributes when app is launched
 	public HDBOfficer(String name, String nric, String password, int age, String maritalStatus)
 	{
 		super(nric, password, age, maritalStatus, 0, "Officer", name); // default staffID = 0, role = "Officer"
