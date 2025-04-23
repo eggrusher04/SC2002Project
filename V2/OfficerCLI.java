@@ -103,7 +103,7 @@ public class OfficerCLI {
                     }
                     break;
                 case "7":
-                    officer.viewListOfProjects();
+                    System.out.println(officer.viewListOfProjects());
                     System.out.println("Enter project name you want to manage: ");
                     String regProjName = scanner.nextLine();
 
