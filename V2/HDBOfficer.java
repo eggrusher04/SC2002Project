@@ -247,5 +247,37 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		this.regStatus = status;
 	}
 
+	public BTOProject loadProjectByName(String projectName) {
+		String filePath = "V2\\ProjectList.csv";
+	
+		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+			String line;
+			boolean isHeader = true;
+	
+			while ((line = br.readLine()) != null) {
+				if (isHeader) {
+					isHeader = false;
+					continue;
+				}
+	
+				String[] fields = line.split(",");
+				if (fields.length >= 4) { 
+					String name = fields[0].trim();
+					String neighbourhood = fields[1].trim();
+					String openDate = fields[2].trim();
+					String closeDate = fields[3].trim();
+	
+					if (name.equalsIgnoreCase(projectName)) {
+						BTOProject project = new BTOProject(name, neighbourhood, openDate, closeDate);
+						return project;
+					}
+				}
+			}
+		} catch (IOException e) {
+			System.out.println("Error reading project file: " + e.getMessage());
+		}
+	
+		return null;
+	}
 	
 }

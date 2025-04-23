@@ -107,6 +107,12 @@ public class OfficerCLI {
                     System.out.println("Enter project name you want to manage: ");
                     String regProjName = scanner.nextLine();
 
+                    BTOProject manageProject = officer.loadProjectByName(regProjName);
+                    if (manageProject != null) {
+                        officer.regProject(manageProject);
+                    } else {
+                        System.out.println("Project not found.");
+                    }
                     break;
                 case "8":
                     System.out.println("Enter flat type to update: ");
