@@ -12,9 +12,9 @@ public class UserInterfaceCLI {
 		//Applicant tesApplicant = new Applicant("S1234567A", null, 25, true, "Pending", null, new Enquiry[0]);
 
 
-		loginManager.loadApplicant("V2\\ApplicantList.csv"); //rmb to change filepath to your own one
-		loginManager.loadOfficer("V2\\OfficerList.csv");
-		loginManager.loadManager("V2\\ManagerList.csv");
+		loginManager.loadApplicant("ApplicantList.csv"); //rmb to change filepath to your own one
+		loginManager.loadOfficer("OfficerList.csv");
+		loginManager.loadManager("ManagerList.csv");
 	}
 
 	public void displayMenu() {
@@ -93,7 +93,7 @@ public class UserInterfaceCLI {
 			}
 			else if(user instanceof HDBManager)
 			{
-				String managerPath = "V2\\ManagerList.csv";
+				String managerPath = "ManagerList.csv";
 				HDBManagerCLI managerCLI = new HDBManagerCLI(loginManager, managerPath);
 				managerCLI.launchManagerCLI((HDBManager) user);
 			}

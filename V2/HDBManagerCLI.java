@@ -41,7 +41,7 @@ public class HDBManagerCLI {
 
             switch(choice)
             {
-                case "1" -> manager.viewListOfProjects();
+                case "1" -> System.out.println(manager.viewListOfProjects());
                 case "2" -> handleCreateProj(manager);
 
                 case "3" -> handleEditProj(manager);
@@ -72,52 +72,46 @@ public class HDBManagerCLI {
         }
     }
 
-    // changed a bit
     private void handleCreateProj(HDBManager manager)
     {
         System.out.println("Enter project name: ");
         String projectName = scanner.nextLine();
-
+    
         System.out.println("Enter neighbourhood: ");
         String hood = scanner.nextLine();
-
+    
         System.out.println("Enter application OPEN date: ");
         String openDate = scanner.nextLine();
-
+    
         System.out.println("Enter application CLOSE date: ");
         String closeDate = scanner.nextLine();
-
+    
         System.out.println("Enter number of 2-Room flats: ");
         int twoRoom = Integer.parseInt(scanner.nextLine());
-
-        // added price for the rooms 
+    
         System.out.println("Enter selling price for 2-Room flats: ");
         int twoRoomPrice = Integer.parseInt(scanner.nextLine());
-
+    
         System.out.println("Enter number of 3-Room flats: ");
         int threeRoom = Integer.parseInt(scanner.nextLine());
-
-        // added price for the rooms
+    
         System.out.println("Enter selling price for 3-Room flats: ");
         int threeRoomPrice = Integer.parseInt(scanner.nextLine());
-
-        // added officer slots
+    
         System.out.println("Enter maximum officer slots (e.g., 10): ");
         int maxOfficerSlots = Integer.parseInt(scanner.nextLine());
-
+    
         BTOProject newProj = new BTOProject(projectName, hood, openDate, closeDate);
         newProj.addFlatType("2-Room", twoRoom);
         newProj.addFlatType("3-Room", threeRoom);
-
-        // save
-        saveProjectToCSV(newProj, twoRoom, twoRoomPrice, threeRoom, threeRoomPrice, maxOfficerSlots);
-
+    
+        // Save to memory and file
         manager.createProject(newProj);
-
-        
-
-        System.out.println("Project created successfully!!");
+        saveProjectToCSV(newProj, twoRoom, twoRoomPrice, threeRoom, threeRoomPrice, maxOfficerSlots);
+    
+        System.out.println("Project created and saved successfully!");
     }
+    
 
     private void handleEditProj(HDBManager manager)
     {
@@ -258,7 +252,7 @@ public class HDBManagerCLI {
 
 
     private void saveProjectToCSV(BTOProject project, int twoRoomUnits, int twoRoomPrice, int threeRoomUnits, int threeRoomPrice, int maxOfficerSlots) {
-        String filePath = "V2\\ProjectList.csv";
+        String filePath = "ProjectList.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
             // append to the next blank row
             bw.write(
@@ -279,7 +273,7 @@ public class HDBManagerCLI {
 
     // help delete from csv file
     private void deleteProjectFromCSV(String projectName) {
-        String filePath = "V2\\ProjectList.csv";
+        String filePath = "ProjectList.csv";
         ArrayList<String> updatedLines = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
