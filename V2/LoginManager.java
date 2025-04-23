@@ -251,7 +251,7 @@ public class LoginManager {
 						manager.getNRIC(),
 						manager.getAge(),
 						manager.getMaritalStatus(),
-						manager.getPassword()
+						manager.getPassword(),	
 						manager.getStaffID()
 					);
 					writer.write(writeLine);

@@ -43,34 +43,6 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		this.regStatus = null;
 	}
 
-
-
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public String getNRIC()
-	{
-		return nric;
-	}
-
-	public String getPassword()
-	{
-		return password;
-	}
-
-	public int getAge()
-	{
-		return age;
-	}
-
-	public boolean getMaritalStatus()
-	{
-		return maritalStatus;
-	}
-
 	public String getApplicationStatus() {
     	return applicationStatus;
 	}
@@ -85,7 +57,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	public boolean login(String nric, String pw)
 	{
-		if(this.nric.equals(nric) && this.password.equals(pw))
+		if(this.getNRIC().equals(nric) && this.getPassword().equals(pw))
 		{
 			return true;
 		}
@@ -95,9 +67,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		}
 	}
 
-	public void changePassword(String newPw)
+	public void setPassword(String newPw)
 	{
-		this.password = newPw;
+		this.changePassword(newPw);
 	}
 
 	public String viewListOfProjects()
@@ -175,7 +147,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	{
 		// Register for project function
 		this.assignedProj = project;
-        System.out.println("Project " + project.getProjName() + " has been successfully registered to officer " + this.name + ".");
+        System.out.println("Project " + project.getProjName() + " has been successfully registered to officer " + this.getName() + ".");
 	}
 
 	@Override

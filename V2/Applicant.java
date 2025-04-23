@@ -132,7 +132,7 @@ public class Applicant implements Users, View {
 
     // method to create a bto project object from csv data
     public void createBTOProjectFromCSV(String projectName) {
-        String filePath = "projectlist.csv";
+        String filePath = "V2\\ProjectList.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean isHeader = true;
