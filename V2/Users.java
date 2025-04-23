@@ -7,7 +7,7 @@ public interface Users {
 	String getNRIC();
 	String getPassword();
 	int getAge();
-	boolean getMaritalStatus();
+	String getMaritalStatus();
 
 	/**
 	 * 

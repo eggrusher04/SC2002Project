@@ -1,61 +1,99 @@
 import java.util.Scanner;
 
-
-//This class is what the Applicant will see upon successful login
-
 public class ApplicantCLI {
-    private Scanner scanner = new Scanner(System.in);
-    private LoginManager loginManager;
-    private String applicantCSVPath; // path to save updated csv
+    private Scanner scanner = new Scanner(System.in); // for user input
+    private LoginManager loginManager; // manages login functionality
+    private String applicantCSVPath; // path to applicant CSV file
 
-    //ApplicantCLI constructor, loginManager object and pathname to csv will be passed here from UserInterfaceCLI after logging in
-    public ApplicantCLI(LoginManager loginManager, String applicantCSVPath)
-    {
+    public ApplicantCLI(LoginManager loginManager, String applicantCSVPath) {
         this.loginManager = loginManager;
         this.applicantCSVPath = applicantCSVPath;
     }
 
-    public void launch(Applicant applicant)
-    {
-        while(true)
-        {
+    public void launch(Applicant applicant) { // main dashboard loop
+        while (true) {
             System.out.println("\n====== Applicant Dashboard ======");
             System.out.println("1. View Application Status");
             System.out.println("2. Apply for BTO Project");
             System.out.println("3. Request Withdrawal");
-            System.out.println("4. Change Password");
-            System.out.println("5. Logout");
+            System.out.println("4. Manage Enquiries");
+            System.out.println("5. Change Password");
+            System.out.println("6. Logout");
 
             System.out.println("Enter your choice: ");
             String choice = scanner.nextLine();
 
-            switch(choice)
-            {
-                case "1":
-                    System.out.println("Your Application Status: " + applicant.viewStatus());
-                    break;
-                case "2":
-                    System.out.println("Enter BTO Project Name: ");
-                    //to be added more
-                    break;
-                case "3":
-                    applicant.reqWithdrawal();
-                    System.out.println("You have submitted a withdrawal request.");
-                    break;
-                case "4":
-                    System.out.println("Enter your new password: ");
+            switch (choice) {
+                case "1" -> System.out.println(applicant.viewStatus()); // display status
+                case "2" -> { // apply for project
+                    System.out.println("Filter by flat type? (e.g., '2-Room', '3-Room', or leave blank):");
+                    String flatTypeFilter = scanner.nextLine().trim();
+                    applicant.setFlatTypeFilter(flatTypeFilter);
+                    System.out.println(applicant.viewListOfProjects());
+
+                    System.out.println("Enter project name:");
+                    String projectName = scanner.nextLine();
+
+                    System.out.println("Enter flat type:");
+                    String flatType = scanner.nextLine();
+                    applicant.setFlatType(flatType);
+                    applicant.createBTOProjectFromCSV(projectName);
+                }
+                case "3" -> applicant.reqWithdrawal(); // request withdrawal
+                case "4" -> manageEnquiries(applicant); // manage enquiries
+                case "5" -> { // change password
+                    System.out.println("Enter new password:");
                     String newPw = scanner.nextLine();
                     applicant.changePassword(newPw);
-                    loginManager.saveApplicantToCSV(applicantCSVPath); //Update the csv after changing password
-                    System.out.println("You have successfully updated your password. Please login using your new password!");
+                    loginManager.saveApplicantToCSV(applicantCSVPath);
+                    System.out.println("Password updated successfully. Please login your new password!");
                     return;
-                case "5":
+                }
+                case "6" -> { // logout
                     System.out.println("Logging out...");
                     return;
-                default:
-                    System.out.println("Invalid option. Try again!!");
+                }
+                default -> System.out.println("Invalid option. Try again!");
             }
+        }
+    }
 
+    private void manageEnquiries(Applicant applicant) { // submenu for enquiries
+        while (true) {
+            System.out.println("\n===== Enquiry Management =====");
+            System.out.println("1. View Enquiries");
+            System.out.println("2. Add Enquiry");
+            System.out.println("3. Edit Enquiry");
+            System.out.println("4. Delete Enquiry");
+            System.out.println("5. Back to Dashboard");
+
+            System.out.println("Enter your choice: ");
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1" -> applicant.viewEnquiries(); // view enquiries
+                case "2" -> { // add enquiry
+                    System.out.println("Enter your enquiry message:");
+                    String message = scanner.nextLine();
+                    applicant.addEnquiry(message);
+                }
+                case "3" -> { // edit enquiry
+                    System.out.println("Enter Enquiry ID to edit:");
+                    int editID = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter new message:");
+                    String newMessage = scanner.nextLine();
+                    applicant.editEnquiry(editID, newMessage);
+                }
+                case "4" -> { // delete enquiry
+                    System.out.println("Enter Enquiry ID to delete:");
+                    int deleteID = Integer.parseInt(scanner.nextLine());
+                    applicant.deleteEnquiry(deleteID);
+                }
+                case "5" -> { // back to dashboard
+                    return;
+                }
+                default -> System.out.println("Invalid option. Try again!");
+            }
         }
     }
 }

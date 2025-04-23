@@ -12,9 +12,9 @@ public class UserInterfaceCLI {
 		//Applicant tesApplicant = new Applicant("S1234567A", null, 25, true, "Pending", null, new Enquiry[0]);
 
 
-		loginManager.loadApplicant("D:\\Documents\\GitHub\\SC2002Project\\V2\\ApplicantList.csv"); //rmb to change filepath to your own one
-		loginManager.loadOfficer("D:\\Documents\\GitHub\\SC2002Project\\V2\\OfficerList.csv");
-		//add loadManager soon
+		loginManager.loadApplicant("V2\\ApplicantList.csv"); //rmb to change filepath to your own one
+		loginManager.loadOfficer("V2\\OfficerList.csv");
+		loginManager.loadManager("V2\\ManagerList.csv");
 	}
 
 	public void displayMenu() {
@@ -81,15 +81,21 @@ public class UserInterfaceCLI {
 			showOutput("Login successful! Welcome, " + user.getName());
 			if(user instanceof Applicant)
 			{
-				String path = "D:\\Documents\\GitHub\\SC2002Project\\V2\\ApplicantList.csv"; //load the pathname of the CSV file
+				String path = "V2\\ApplicantList.csv"; //load the pathname of the CSV file
 				ApplicantCLI applicantCLI = new ApplicantCLI(loginManager,path); //then pass it into Applicant CLI, including the loginManager object. So it wont need to duplicate the login logic or object.
 				applicantCLI.launch((Applicant) user);
 			}
 			else if(user instanceof HDBOfficer)
 			{
-				String officerPath = "D:\\Documents\\GitHub\\SC2002Project\\V2\\OfficerList.csv"; 
+				String officerPath = "V2\\OfficerList.csv"; 
 				OfficerCLI officerCLI = new OfficerCLI(loginManager,officerPath);
 				officerCLI.launchOfficerCLI((HDBOfficer) user);
+			}
+			else if(user instanceof HDBManager)
+			{
+				String managerPath = "V2\\ManagerList.csv";
+				HDBManagerCLI managerCLI = new HDBManagerCLI(loginManager, managerPath);
+				managerCLI.launchManagerCLI((HDBManager) user);
 			}
 		}
 		else

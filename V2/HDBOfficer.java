@@ -2,57 +2,45 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
-public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement {
+
+public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement{
 
 	private BTOProject assignedProj;
-	private String name;
-	private String nric;
-	private String password;
-	private int age;
-	private boolean maritalStatus;
 
 	private String applicationStatus;
 	private BTOProject appliedProject;
-	private List<Enquiry> enquiries = new ArrayList<>();
+	private List<Enquiry> enquiries;
+	private String regStatus;
 
-	// First Constructor
-	public HDBOfficer(String name,String nric, String pw, int age, boolean maritalStatus, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries)
+	// First Constructor to apply as an applicant
+	public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries) {
+
+    super(nric, password, age, maritalStatus, staffID, role, name);
+
+    this.applicationStatus = applicationStatus;
+    this.appliedProject = appliedProject;
+    this.enquiries = enquiries;
+}
+
+
+	// Second constructor to manage a project
+    public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, BTOProject assignedProj) {
+
+    super(nric, password, age, maritalStatus, staffID, role, name);
+    this.assignedProj = assignedProj;
+}
+	//Third constructor to load login details and basic attributes when app is launched
+	public HDBOfficer(String name, String nric, String password, int age, String maritalStatus)
 	{
-		this.name = name;
-		this.nric = nric;
-		this.password = pw;
-		this.age = age;
-		this.maritalStatus = maritalStatus;
-		this.applicationStatus = applicationStatus;
-		this.appliedProject = appliedProject;
-		this.enquiries = (enquiries != null) ? enquiries : new ArrayList<>();
-
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public String getNRIC()
-	{
-		return nric;
-	}
-
-	public String getPassword()
-	{
-		return password;
-	}
-
-	public int getAge()
-	{
-		return age;
-	}
-
-	public boolean getMaritalStatus()
-	{
-		return maritalStatus;
+		super(nric, password, age, maritalStatus, 0, "Officer", name); // default staffID = 0, role = "Officer"
+		this.assignedProj = null;
+		this.applicationStatus = null;
+		this.appliedProject = null;
+		this.enquiries = null;
+		this.regStatus = null;
 	}
 
 	public String getApplicationStatus() {
@@ -69,7 +57,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	public boolean login(String nric, String pw)
 	{
-		if(this.nric.equals(nric) && this.password.equals(pw))
+		if(this.getNRIC().equals(nric) && this.getPassword().equals(pw))
 		{
 			return true;
 		}
@@ -79,15 +67,15 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		}
 	}
 
-	public void changePassword(String newPw)
+	public void setPassword(String newPw)
 	{
-		this.password = newPw;
+		this.changePassword(newPw);
 	}
 
 	public String viewListOfProjects()
 	{
-		// Read the listOfProjects from the csv 
-		String filePath = "ProjectList.csv";
+		// Read the listOfProjects from the csv ( erm im not really sure how to do this )
+		String filePath = "V2\\ProjectList.csv";
     	StringBuilder result = new StringBuilder();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -146,9 +134,15 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public String viewProjDetails(BTOProject project)
 	{
 		// Method to view project details
-		return "Project Name: " + project.getProjectName() +
-               "\nLocation: " + project.getLocation() +
-               "\nAvailable Flat Types: " + String.join(", ", project.getFlatTypes());
+		Set<String> flatTypes = new HashSet<>();
+		for (Flat flat : project.getAvailFlats())
+		{
+			flatTypes.add(flat.getFlatType());
+		}
+
+		return "Project Name: " + project.getProjName() +
+               "\nLocation: " + project.getNeighbourhood() +
+               "\nAvailable Flat Types: " + String.join(", ", flatTypes);
 	}
 
 	// ProjectManagement Implementation
@@ -156,9 +150,8 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public void regProject(BTOProject project)
 	{
 		// Register for project function
-		this.appliedProject = project;
-    	this.applicationStatus = "Pending";
-        System.out.println("Officer has registered for project: " + project.getProjectName());
+		this.assignedProj = project;
+        System.out.println("Project " + project.getProjName() + " has been successfully registered to officer " + this.getName() + ".");
 	}
 
 	@Override
@@ -169,8 +162,8 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
             System.out.println("No project assigned to officer.");
             throw new UnsupportedOperationException("Cannot update flat availability without an assigned project.");
         }
-        assignedProj.updateFlatAvailability(flatType, "Available", unitsLeft);
-        System.out.println("Updated " + flatType + " flats availability to " + unitsLeft + " units in project: " + assignedProj.getProjectName());
+        assignedProj.updateFlatAvailability(flatType, unitsLeft);
+        System.out.println("Updated " + flatType + " flats availability to " + unitsLeft + " units in project: " + assignedProj.getProjName());
 	}
 
 	// ApplicantManagement Implementation
@@ -182,8 +175,8 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		System.out.println("Name: " + applicant.getName());
 		System.out.println("NRIC: " + applicant.getNRIC());
 		System.out.println("Age: " + applicant.getAge());
-		System.out.println("Marital Status: " + (applicant.getMaritalStatus() ? "Married" : "Single"));
-		System.out.println("Applied Project: " + (applicant.getAppliedProject() != null ? applicant.getAppliedProject().getProjectName() : "None"));
+		System.out.println("Marital Status: " + applicant.getMaritalStatus());
+		System.out.println("Applied Project: " + (applicant.getAppliedProject() != null ? applicant.getAppliedProject().getProjName() : "None"));
 		System.out.println("Application Status: " + applicant.getApplicationStatus());
 		System.out.println("==========================");
 	}
@@ -204,9 +197,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public boolean isEligibleForApplicant(Applicant applicant)
 	{
 		// Check whether the officer can be an applicant for a hdb project
-		boolean ageEligible = applicant.getAge() >= 21;
-		boolean maritalEligible = applicant.getMaritalStatus();
-		return ageEligible && maritalEligible;
+		if(this.assignedProj != null && this.appliedProject != null)
+		{
+			return !this.assignedProj.getProjName().equals(this.appliedProject.getProjName());
+		}
+		return true;
 	}
 
 	// Getter and Setter for assignedProj
@@ -216,12 +211,6 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
     public void setAssignedProj(BTOProject assignedProj) {
         this.assignedProj = assignedProj;
-    }
-
-	// Second constructor
-    public HDBOfficer(String staffID, String nric, String password, String name, BTOProject assignedProj) {
-        super(staffID, nric, password, name);
-        this.assignedProj = assignedProj; 
     }
 
 	/**
@@ -234,11 +223,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     	System.out.println("Applicant ID    : " + applicant.getNRIC());
     	System.out.println("Name            : " + applicant.getName());
     	System.out.println("Age             : " + applicant.getAge());
-    	System.out.println("Marital Status  : " + (applicant.getMaritalStatus() ? "Married" : "Single"));
+    	System.out.println("Marital Status  : " + (applicant.getMaritalStatus()));
 
     	if (assignedProj != null) {
-        	System.out.println("Project Name    : " + assignedProj.getProjectName());
-        	System.out.println("Project Location: " + assignedProj.getLocation()); // assumed method
+        	System.out.println("Project Name    : " + assignedProj.getProjName());
+        	System.out.println("Project Location: " + assignedProj.getNeighbourhood()); // assumed method
         	System.out.println("Flat Type       : " + applicant.getFlatType());   // assumed method
         	System.out.println("Application Status: " + applicant.getApplicationStatus()); // assumed method
     	} else {
@@ -251,9 +240,14 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public String viewRegStatus() {
 		// HDBOfficer.viewRegStatus
 		if (assignedProj != null) {
-            return "Officer is registered to handle project: " + assignedProj.getProjectName();
+            return "Officer is registered to handle project: " + assignedProj.getProjName();
         } else {
             return "No project assigned.";
         }
+	}
+
+	public void setRegStatus(String status)
+	{
+		this.regStatus = status;
 	}
 }

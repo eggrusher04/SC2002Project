@@ -6,23 +6,62 @@ public class Enquiry {
 	private String message;
 	private String response;
 
-	/**
-	 * 
-	 * @param newMessage
-	 */
+	public Enquiry(int enquiryID, Applicant sender, String message)
+	{
+		this.enquiryID = enquiryID;
+		this.sender = sender;
+		this.message = message;
+		this.response = null;
+	}
+
+	public int getEnquiryID()
+	{
+		return enquiryID;
+	}
+
+	public Applicant getApplicant()
+	{
+		return sender;
+	}
+
+	public String getMessage()
+	{
+		return message;
+	}
+
+	public String getReply()
+	{
+		return response;
+	}
+
+	public Employees getResponder()
+	{
+		return responder;
+	}
+
+	public void setReply(String response)
+	{
+		this.response = response;
+	}
+
+	public void setResponder(Employees responder)
+	{
+		this.responder = responder;
+	}
+
+	
 	public void updateEnquiry(String newMessage) {
-		// TODO - implement Enquiry.updateEnquiry
-		throw new UnsupportedOperationException();
+		this.message = newMessage;
 	}
 
 	public void delEnquiry() {
-		// TODO - implement Enquiry.delEnquiry
-		throw new UnsupportedOperationException();
+		this.message = null;
+		this.response = null;
 	}
 
-	public void addEnquiry() {
-		// TODO - implement Enquiry.addEnquiry
-		throw new UnsupportedOperationException();
+	public void addEnquiry(Applicant sender, String message) {
+		this.sender = sender;
+		this.message = message;
 	}
 
 }
