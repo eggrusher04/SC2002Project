@@ -4,13 +4,13 @@ public interface ApplicantManagement {
 	 * 
 	 * @param applicant
 	 */
-	void retrieveApplicant(Applicant applicant);
+	void retrieveApplicant(String nric);
 
 	/**
 	 * 
 	 * @param applicant
 	 */
-	void updateApplicantStatus(Applicant applicant);
+	void updateApplicantStatus(String nric, String newStatus);
 
 	/**
 	 * 

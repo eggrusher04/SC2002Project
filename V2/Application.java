@@ -13,8 +13,18 @@ public class Application {
         this.applicantNRIC = applicantNRIC;
         this.projectName = projectName;
         this.flatType = flatType;
-        saveToCSV(); // save application data when object is created
+        this.applicationStatus = "Pending";
+        this.assignedOfficer = "Unassigned";
     }
+
+    public Application(String applicantNRIC, String projectName, String flatType, String applicationStatus, String assignedOfficer) {
+        this.applicantNRIC = applicantNRIC;
+        this.projectName = projectName;
+        this.flatType = flatType;
+        this.applicationStatus = applicationStatus;
+        this.assignedOfficer = assignedOfficer;
+    }
+    
 
     public String getApplicantNRIC() {
         return applicantNRIC;
@@ -72,6 +82,25 @@ public class Application {
         }
     }
 
+    public static Application loadFromCSV(String nric) {
+        String filePath = "V2\\Applications.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length >= 5 && fields[0].equals(nric)) {
+                    Application app = new Application(fields[0], fields[1], fields[2]);
+                    app.applicationStatus = fields[3];
+                    app.assignedOfficer = fields[4];
+                    return app;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading application: " + e.getMessage());
+        }
+        return null; // no application found
+    }
+
     public void updateCSV() {
         String filePath = "V2\\Applications.csv";
         List<String> lines = new ArrayList<>();
@@ -126,6 +155,23 @@ public class Application {
             System.out.println("Error writing applications to CSV: " + e.getMessage());
         }
     }
+
+    public static Application getApplicationByNRIC(String csvPath, String nric) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvPath))) {
+            String line;
+            reader.readLine(); // skip header
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 5 && parts[0].equalsIgnoreCase(nric)) {
+                    return new Application(parts[0], parts[1], parts[2], parts[3], parts[4]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 
     @Override
     public String toString() {

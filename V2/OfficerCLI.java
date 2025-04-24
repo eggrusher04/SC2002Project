@@ -124,20 +124,35 @@ public class OfficerCLI {
 
                     break;
                 case "9":
-                    System.out.println("Enter applicant's name: ");
-                    String applicantName = scanner.nextLine();
-
-                    //for now applicant will look like this, cchange in the future
-                    //Applicant applicant =  new Applicant(regProjName, flatType, applicantName, unitsLeft, false);
-                    //officer.retrieveApplicant(applicant);
-                    
+                    System.out.println("Enter applicant's nric: ");
+                    String applicantNRIC = scanner.nextLine();
+                    officer.retrieveApplicant(applicantNRIC);
                     break;
                 case "10":
-                    System.out.println("Enter applicant's name: ");
-                    String updatedApplicant = scanner.nextLine();
-
-                    //Applicant updApplicant = new Applicant(regProjName, applicantName, updatedApplicant, unitsLeft, false);
-                    //officer.updateApplicantStatus(updApplicant);
+                    System.out.println("Enter applicant's NRIC: ");
+                    String appliNRIC = scanner.nextLine();
+            
+                    Application application = Application.getApplicationByNRIC("V2\\Applications.csv", appliNRIC); // Pass file path and NRIC
+                    
+                    if (application != null) {
+                        System.out.println("Application found: " + application.toString());
+                        
+                        System.out.println("Enter the new status for the applicant (e.g., Approved, Pending, Rejected): ");
+                        String newStatus = scanner.nextLine().trim();
+                        
+                        if (newStatus.isEmpty()) {
+                            System.out.println("Invalid status. Status not updated.");
+                            return;
+                        }
+    
+                        application.setApplicationStatus(newStatus);
+                        
+                        officer.updateApplicantStatus(appliNRIC,newStatus);
+                        
+                        System.out.println("Application status has been updated to: " + newStatus);
+                    } else {
+                        System.out.println("No application found with NRIC: " + appliNRIC);
+                    }
                     break;
                 case "11":
                     System.out.println("Enter your new password: ");

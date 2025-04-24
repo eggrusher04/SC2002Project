@@ -14,6 +14,8 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	private BTOProject appliedProject;
 	private List<Enquiry> enquiries;
 	private String regStatus;
+	private dataLoader loader;
+	
 
 	// First Constructor to apply as an applicant
 	public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries) {
@@ -23,6 +25,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     this.applicationStatus = applicationStatus;
     this.appliedProject = appliedProject;
     this.enquiries = enquiries;
+	this.loader = new dataLoader();
 }
 
 
@@ -31,6 +34,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
     super(nric, password, age, maritalStatus, staffID, role, name);
     this.assignedProj = assignedProj;
+	this.loader = new dataLoader();
 }
 	//Third constructor to load login details and basic attributes when app is launched
 	public HDBOfficer(String name, String nric, String password, int age, String maritalStatus)
@@ -41,6 +45,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		this.appliedProject = null;
 		this.enquiries = null;
 		this.regStatus = null;
+		this.loader = new dataLoader();
 	}
 
 	public String getApplicationStatus() {
@@ -164,31 +169,51 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	// ApplicantManagement Implementation
 	@Override
-	public void retrieveApplicant(Applicant applicant)
-	{
-		// Retrieve applicant details 
-		System.out.println("=== Applicant Details ===");
-		System.out.println("Name: " + applicant.getName());
-		System.out.println("NRIC: " + applicant.getNRIC());
-		System.out.println("Age: " + applicant.getAge());
-		System.out.println("Marital Status: " + applicant.getMaritalStatus());
-		System.out.println("Applied Project: " + (applicant.getAppliedProject() != null ? applicant.getAppliedProject().getProjName() : "None"));
-		System.out.println("Application Status: " + applicant.getApplicationStatus());
-		System.out.println("==========================");
+	public void retrieveApplicant(String nric) {
+		List<Applicant> applicants = loader.loadApplicants("V2\\ApplicantList.csv", "V2\\Applications.csv");
+
+		String trimmedNRIC = nric.trim();
+		System.out.println("Searching for NRIC: '" + trimmedNRIC + "'");
+
+		for (Applicant a : applicants) {
+			String applicantNRIC = a.getNRIC().trim();
+
+			if (applicantNRIC.equalsIgnoreCase(trimmedNRIC)) {
+				System.out.println("\n=== Applicant Details ===");
+				System.out.println("Name: " + a.getName());
+				System.out.println("NRIC: " + a.getNRIC());
+				System.out.println("Age: " + a.getAge());
+				System.out.println("Marital Status: " + a.getMaritalStatus());
+				System.out.println("Applied Project: " + (a.getAppliedProjectName() != null ? a.getAppliedProjectName() : "None"));
+				System.out.println("Application Status: " + a.getApplicationStatus());
+				System.out.println("==========================");
+				return;
+			}
+		}
+
+		System.out.println("Applicant with NRIC " + trimmedNRIC + " not found.");
 	}
 
-	@Override
-	public void updateApplicantStatus(Applicant applicant)
-	{
-		// Change the status of an applicant from pending to booked or otherwise
-		String currentStatus = applicant.getApplicationStatus();
-		if ("Pending".equalsIgnoreCase(currentStatus)) {
-			applicant.setApplicationStatus("Booked");
-			System.out.println("Applicant status updated to: Booked");
+
+	public void updateApplicantStatus(String nric, String newStatus) {
+		String csvPath = "V2\\Applications.csv";
+	
+		Application app = Application.getApplicationByNRIC(csvPath, nric);
+	
+	
+		if (app != null) {
+		
+			app.setApplicationStatus(newStatus);
+			
+			app.updateCSV();
+			
+			System.out.println("Applicant status updated to: " + newStatus);
 		} else {
-			System.out.println("No status change applied. Current status: " + currentStatus);
+			System.out.println("Application with NRIC " + nric + " not found.");
 		}
 	}
+	
+	
 	@Override
 	public boolean isEligibleForApplicant(Applicant applicant)
 	{

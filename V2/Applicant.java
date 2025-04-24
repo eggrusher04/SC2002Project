@@ -13,6 +13,8 @@ public class Applicant implements Users, View {
     private ArrayList<Enquiry> enquiries; // list of enquiries made by the applicant
     private String flatTypeFilter; // filter for flat types when viewing projects
     private Application currentApplication; // tracks the current application object
+    private String assignedOfficer;
+    private String appliedProjName;
 
     public Applicant(String name, String nric, String password, int age, String maritalStatus) {
         this.name = name;
@@ -27,6 +29,16 @@ public class Applicant implements Users, View {
         this.enquiries = new ArrayList<>(); // initialize empty list for enquiries
         this.flatTypeFilter = null; // no filter initially
         loadEnquiriesFromCSV(); // load existing enquiries from csv
+        this.currentApplication = Application.loadFromCSV(this.nric);
+        this.assignedOfficer = null;
+    }
+
+    public String getAppliedProjectName() {
+        return appliedProjName;
+    }
+
+    public void setAppliedProjectName(String appliedProjectName) {
+        this.appliedProjName = appliedProjectName;
     }
 
     // getters and setters for attributes
@@ -87,6 +99,11 @@ public class Applicant implements Users, View {
         return flatType;
     }
 
+    public void setAssignedOfficer(String officer)
+    {
+        this.assignedOfficer = officer;
+    }
+
     // method to apply for a bto project
     public void applyProject(BTOProject project) {
         if (this.currentApplication != null) { // check if already applied
@@ -103,7 +120,12 @@ public class Applicant implements Users, View {
         }
         // create a new application and save to csv
         this.currentApplication = new Application(this.nric, project.getProjName(), flatType);
+        this.currentApplication.saveToCSV();
         System.out.println("you have successfully applied for the project: " + project.getProjName());
+    }
+
+    public Application getCurrentApplication() {
+        return currentApplication;
     }
 
     // method to view application status
@@ -344,5 +366,31 @@ public class Applicant implements Users, View {
             return "error reading project list: " + e.getMessage(); 
         }
     }
+
+    private void loadCurrentApplicationFromCSV() {
+        String filePath = "V2\\Applications.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] fields = line.split(",", -1);
+                if (fields.length >= 5 && fields[0].equals(this.nric)) {
+                    String projectName = fields[1];
+                    String flatType = fields[2];
+                    String status = fields[3];
+                    String officer = fields[4];
+    
+                    this.currentApplication = new Application(this.nric, projectName, flatType);
+                    this.currentApplication.setApplicationStatus(status);
+                    this.currentApplication.setAssignedOfficer(officer);
+                    this.applicationStatus = status;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading application from CSV: " + e.getMessage());
+        }
+    }
+    
+
     
 }
