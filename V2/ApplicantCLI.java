@@ -26,7 +26,11 @@ public class ApplicantCLI {
 
             switch (choice) {
                 case "1" -> System.out.println(applicant.viewStatus()); // display status
-                case "2" -> System.out.println(applicant.viewListOfProjects());
+                case "2" -> {
+                    System.out.println("Filter by flat type? (e.g., '2-Room', '3-Room', or leave blank):");
+                    String flatTypeFilter = scanner.nextLine().trim();
+                    applicant.setFlatTypeFilter(flatTypeFilter);
+                    System.out.println(applicant.viewListOfProjects());}
                 case "3" -> { // apply for project
                     System.out.println("Filter by flat type? (e.g., '2-Room', '3-Room', or leave blank):");
                     String flatTypeFilter = scanner.nextLine().trim();

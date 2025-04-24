@@ -384,11 +384,25 @@ public class Applicant implements Users, View {
                 }
 
                 // append project details to result
-                result.append("- project name: ").append(projectName).append("\n");
-                result.append("  neighborhood: ").append(neighborhood).append("\n");
-                result.append("  flat types: ").append(type1).append(" (").append(unitsType1).append(" units), ")
-                      .append(type2).append(" (").append(unitsType2).append(" units)\n");
-                result.append("\n");
+                if (flatTypeFilter.equalsIgnoreCase("2-Room")){
+                    result.append("- project name: ").append(projectName).append("\n");
+                    result.append("  neighborhood: ").append(neighborhood).append("\n");
+                    result.append("  flat types: ").append(type1).append(" (").append(unitsType1).append(" units)\n");
+                    result.append("\n");
+                }
+                else if (flatTypeFilter.equalsIgnoreCase("3-Room")){
+                    result.append("- project name: ").append(projectName).append("\n");
+                    result.append("  neighborhood: ").append(neighborhood).append("\n");
+                    result.append(type2).append(" (").append(unitsType2).append(" units)\n");
+                    result.append("\n");
+                }
+                else{
+                    result.append("- project name: ").append(projectName).append("\n");
+                    result.append("  neighborhood: ").append(neighborhood).append("\n");
+                    result.append("  flat types: ").append(type1).append(" (").append(unitsType1).append(" units), ")
+                        .append(type2).append(" (").append(unitsType2).append(" units)\n");
+                    result.append("\n");
+                }
             }
             if (result.length() == 0) { // no projects match the filter
                 return "no projects found matching the filter.";
