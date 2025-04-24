@@ -7,6 +7,7 @@ public class Application {
     private String projectName;
     private String flatType;
     private String assignedOfficer;
+    private String applicationStatus;
 
     public Application(String applicantNRIC, String projectName, String flatType) {
         this.applicantNRIC = applicantNRIC;
@@ -32,7 +33,7 @@ public class Application {
     }
 
     public String getApplicationStatus() {
-        String filePath = "Applications.csv";
+        String filePath = "V2\\Applications.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -47,13 +48,19 @@ public class Application {
         return "Status not found";
     }
 
+    public void setApplicationStatus(String applicationStatus) {
+        this.applicationStatus = applicationStatus;
+        updateCSV();
+    }
+    
+
     public void setAssignedOfficer(String assignedOfficer) {
         this.assignedOfficer = assignedOfficer;
         updateCSV(); // update file with new officer
     }
 
-    private void saveToCSV() {
-        String filePath = "Applications.csv";
+    public void saveToCSV() {
+        String filePath = "V2\\Applications.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
             bw.write(applicantNRIC + "," +
                      projectName + "," +
@@ -65,8 +72,8 @@ public class Application {
         }
     }
 
-    private void updateCSV() {
-        String filePath = "Applications.csv";
+    public void updateCSV() {
+        String filePath = "V2\\Applications.csv";
         List<String> lines = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -77,7 +84,7 @@ public class Application {
                     line = applicantNRIC + "," +
                            projectName + "," +
                            flatType + "," +
-                           getApplicationStatus() + "," +
+                           getApplicationStatus()+ "," +
                            (assignedOfficer != null ? assignedOfficer : "");
                 }
                 lines.add(line);
@@ -96,7 +103,7 @@ public class Application {
     }
 
     public void deleteFromCSV() {
-        String filePath = "Applications.csv";
+        String filePath = "V2\\Applications.csv";
         List<String> lines = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -130,4 +137,6 @@ public class Application {
                ", Assigned Officer='" + assignedOfficer + '\'' +
                '}';
     }
+
+    
 }

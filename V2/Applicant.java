@@ -239,7 +239,7 @@ public class Applicant implements Users, View {
             String line = br.readLine(); //skip header
 
             while ((line = br.readLine()) != null) {
-                String[] fields = line.split(",");
+                String[] fields = line.split(",",-1);
                 int id = Integer.parseInt(fields[0]);
                 String sender = fields[1];
                 String senderNRIC = fields[2];
@@ -261,7 +261,7 @@ public class Applicant implements Users, View {
         String filePath = "V2\\enquiries.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
 
-            bw.write("enquiryID,senderNRIC,Name,responder,message,reply\n");
+            //bw.write("enquiryID,senderNRIC,Name,responder,message,reply\n");
 
             bw.write(enquiry.getEnquiryID() + "," +
                      enquiry.getApplicant().getNRIC() + "," + enquiry.getApplicant().getName() + "," +
@@ -344,4 +344,5 @@ public class Applicant implements Users, View {
             return "error reading project list: " + e.getMessage(); 
         }
     }
+    
 }
