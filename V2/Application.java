@@ -113,7 +113,7 @@ public class Application {
                     line = applicantNRIC + "," +
                            projectName + "," +
                            flatType + "," +
-                           getApplicationStatus()+ "," +
+                           this.applicationStatus+ "," +
                            (assignedOfficer != null ? assignedOfficer : "");
                 }
                 lines.add(line);

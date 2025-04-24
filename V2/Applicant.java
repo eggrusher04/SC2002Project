@@ -359,7 +359,7 @@ public class Applicant implements Users, View {
                     isHeader = false;
                     continue;
                 }
-                String[] fields = line.split(",");
+                String[] fields = line.split(",",-1);
                 String projectName = fields[0];
                 String neighborhood = fields[1];
                 String type1 = fields[2];

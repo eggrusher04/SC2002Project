@@ -9,10 +9,9 @@ import java.util.Map;
 public class dataLoader {
 
     public dataLoader() {
-        // No need for hdbManager anymore
+        
     }
 
-    // Function to load personal details
     public Map<String, Applicant> loadPersonalDetails(String personalCSV) {
         Map<String, Applicant> applicantMap = new HashMap<>();
 
@@ -34,7 +33,6 @@ public class dataLoader {
                     String maritalStatus = fields[3].trim();
                     String password = fields[4].trim();
 
-                    // Create and store the applicant in the map
                     Applicant applicant = new Applicant(name,nric, password, age, maritalStatus);
                     applicantMap.put(nric, applicant);
 
@@ -47,7 +45,6 @@ public class dataLoader {
         return applicantMap;
     }
 
-    // Function to load application data and associate with personal details
     public void loadApplicationData(String applicationCSV, Map<String, Applicant> applicantMap) {
         try (BufferedReader br = new BufferedReader(new FileReader(applicationCSV))) {
             String line;
