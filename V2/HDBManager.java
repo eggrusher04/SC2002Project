@@ -73,7 +73,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     // pulls from projectlist csv and prints out all the exisitng projects (changed)
 	@Override
     public String viewListOfProjects() {
-        String filePath = "ProjectList.csv";
+        String filePath = "V2\\ProjectList.csv";
         StringBuilder result = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;

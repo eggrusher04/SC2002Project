@@ -12,9 +12,9 @@ public class UserInterfaceCLI {
 		//Applicant tesApplicant = new Applicant("S1234567A", null, 25, true, "Pending", null, new Enquiry[0]);
 
 
-		loginManager.loadApplicant("ApplicantList.csv"); //rmb to change filepath to your own one
-		loginManager.loadOfficer("OfficerList.csv");
-		loginManager.loadManager("ManagerList.csv");
+		loginManager.loadApplicant("V2\\ApplicantList.csv"); //rmb to change filepath to your own one
+		loginManager.loadOfficer("V2\\OfficerList.csv");
+		loginManager.loadManager("V2\\ManagerList.csv");
 	}
 
 	public void displayMenu() {

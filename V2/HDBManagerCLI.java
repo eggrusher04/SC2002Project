@@ -145,6 +145,7 @@ public class HDBManagerCLI {
         int newThreeRoom = Integer.parseInt(scanner.nextLine());
 
         manager.editProject(proj, newName, newHood, newOpen, newClose, newTwoRoom, newThreeRoom);
+        saveProjectToCSV(proj, newTwoRoom, newTwoRoom, newThreeRoom, newThreeRoom, newThreeRoom);
 
         System.out.println("Project updated sucessfully.");
     }
@@ -252,7 +253,7 @@ public class HDBManagerCLI {
 
 
     private void saveProjectToCSV(BTOProject project, int twoRoomUnits, int twoRoomPrice, int threeRoomUnits, int threeRoomPrice, int maxOfficerSlots) {
-        String filePath = "ProjectList.csv";
+        String filePath = "V2\\ProjectList.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
             // append to the next blank row
             bw.write(
@@ -273,7 +274,7 @@ public class HDBManagerCLI {
 
     // help delete from csv file
     private void deleteProjectFromCSV(String projectName) {
-        String filePath = "ProjectList.csv";
+        String filePath = "V2\\ProjectList.csv";
         ArrayList<String> updatedLines = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
