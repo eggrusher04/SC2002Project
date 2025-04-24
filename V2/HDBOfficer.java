@@ -4,9 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement{
@@ -211,19 +209,34 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
         }
 	}
 
-	public String viewProjDetails(BTOProject project)
-	{
-		// Method to view project details
-		Set<String> flatTypes = new HashSet<>();
-		for (Flat flat : project.getAvailFlats())
-		{
-			flatTypes.add(flat.getFlatType());
-		}
-
-		return "Project Name: " + project.getProjName() +
-               "\nLocation: " + project.getNeighbourhood() +
-               "\nAvailable Flat Types: " + String.join(", ", flatTypes);
-	}
+    
+	public String viewProjDetails(String officerName) {
+        String filePath = "V2\\OfficerList.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true; // To skip the header row
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+                String[] fields = line.split(","); // Split the CSV line into fields
+                String name = fields[0].trim(); // Officer's name
+                String status = fields.length > 6 ? fields[6].trim() : ""; // Status column
+    
+                // Check if the officer's name matches
+                if (name.equalsIgnoreCase(officerName)) {
+                    // Return the status or "no projects there" if the status is blank
+                    return status.isEmpty() ? "No projects" : status;
+                }
+            }
+            // If no matching officer is found
+            return "Officer not found";
+        } catch (IOException e) {
+            // Handle file reading errors
+            return "Error reading officer list: " + e.getMessage();
+        }
+    }
 
 	// ProjectManagement Implementation
 	@Override

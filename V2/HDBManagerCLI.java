@@ -28,13 +28,12 @@ public class HDBManagerCLI {
             System.out.println("2. Create a Project");
             System.out.println("3. Edit a Project");
             System.out.println("4. Delete a Project");
-            System.out.println("5. Toggle Project Visibility");
-            System.out.println("6. Approve Officer");
-            System.out.println("7. Reject Officer");
-            System.out.println("8. Approve Applicant's Withdrawal");
-            System.out.println("9. Generate Report");
-            System.out.println("10. Change Password");
-            System.out.println("11. Logout");
+            System.out.println("5. Approve Officer");
+            System.out.println("6. Reject Officer");
+            System.out.println("7. Approve Applicant's Withdrawal");
+            System.out.println("8. Generate Report");
+            System.out.println("9. Change Password");
+            System.out.println("10. Logout");
 
             System.out.println("Enter your choice: ");
             String choice = scanner.nextLine();
@@ -46,16 +45,15 @@ public class HDBManagerCLI {
 
                 case "3" -> handleEditProj(manager);
                 case "4" -> handleDeleteProj(manager);
-                case "5" -> handleToggleVisibility(manager);
-                case "6" -> handleApproveOfficer(manager);
-                case "7" -> handleRejectOfficer(manager);
-                case "8" -> handleApproveWithdrawal(manager);
-                case "9" -> {
-                    System.out.println("Enter report filter criteria: ");
+                case "5" -> handleApproveOfficer(manager);
+                case "6" -> handleRejectOfficer(manager);
+                case "7" -> handleApproveWithdrawal(manager);
+                case "8" -> {
+                    System.out.println("Enter report filter criteria (flat type, project name, age, marital status)(leave the option blank if any): ");
                     String filter = scanner.nextLine();
-                    manager.genReport(filter);
+                    System.out.println(manager.genReport(filter));;
                 }
-                case "10" -> {
+                case "9" -> {
                     System.out.println("Enter your new password: ");
                     String newPass = scanner.nextLine();
                     manager.changePassword(newPass);
@@ -63,7 +61,7 @@ public class HDBManagerCLI {
                     System.out.println("You have sucessfully updated your password. Please login using your new password!");
                     return;
                 }
-                case "11" -> {
+                case "10" -> {
                     System.out.println("Logging out....");
                     return;
                 }
@@ -107,7 +105,7 @@ public class HDBManagerCLI {
     
         // Save to memory and file
         manager.createProject(newProj);
-        saveProjectToCSV(newProj, twoRoom, twoRoomPrice, threeRoom, threeRoomPrice, maxOfficerSlots);
+        saveProjectToCSV(newProj, twoRoom, twoRoomPrice, threeRoom, threeRoomPrice, maxOfficerSlots, manager.getName(), "No");
     
         System.out.println("Project created and saved successfully!");
     }
@@ -117,7 +115,6 @@ public class HDBManagerCLI {
     {
         System.out.println("Enter the name of the project: ");
         String name = scanner.nextLine();
-
         BTOProject proj = manager.getProjectByName(name);
 
         if(proj == null)
@@ -144,8 +141,12 @@ public class HDBManagerCLI {
         System.out.println("Edit no. of 3-Room flats: ");
         int newThreeRoom = Integer.parseInt(scanner.nextLine());
 
+        System.out.println("Edit the visibility (Yes/No): ");
+        String newVisibility = scanner.nextLine();
+
         manager.editProject(proj, newName, newHood, newOpen, newClose, newTwoRoom, newThreeRoom);
-        saveProjectToCSV(proj, newTwoRoom, newTwoRoom, newThreeRoom, newThreeRoom, newThreeRoom);
+        deleteProjectFromCSV(name);
+        saveProjectToCSV(proj, newTwoRoom, newTwoRoom, newThreeRoom, newThreeRoom, newThreeRoom, manager.getName(), newVisibility);
 
         System.out.println("Project updated sucessfully.");
     }
@@ -163,73 +164,185 @@ public class HDBManagerCLI {
         {
             manager.deleteProject(proj);
             System.out.println("Project has been deleted.");
+            deleteProjectFromCSV(name);
         }
         
         else
         {
             System.out.println("Project not found.");
         }
-
-        // here
-        deleteProjectFromCSV(name);
+        
         
         
     }
 
-    private void handleToggleVisibility(HDBManager manager)
-    {
-        System.out.println("Enter the project name to toggle visibility: ");
-        String name = scanner.nextLine();
-
-        BTOProject proj = manager.getProjectByName(name);
-
-        if(proj != null)
-        {
-            System.out.println("Enter visibility (true/false): ");
-            boolean visible = Boolean.parseBoolean(scanner.nextLine());
-
-            manager.toggleVisibility(proj, visible);
-            System.out.println("Visibility updated.");
-        }
-        else
-        {
-            System.out.println("Project not found.");
-        }
-    }
-
-    private void handleApproveOfficer(HDBManager manager)
-    {
+    private void handleApproveOfficer(HDBManager manager) {
         System.out.println("Enter an officer's NRIC to approve: ");
         String nric = scanner.nextLine();
-
-        HDBOfficer officer = loginManager.findOfficerByNRIC(nric);
-
-        if(officer != null)
-        {
-            manager.approveOfficer(officer);
-            System.out.println("Officer approved.");
-        }
-        else
-        {
-            System.out.println("Officer not found.");
+    
+        // Step 1: Find the officer in OfficerList.csv
+        String filePath = "V2\\OfficerList.csv";
+        boolean officerFound = false;
+        String projectName = null;
+    
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            ArrayList<String> updatedLines = new ArrayList<>();
+            String line;
+            boolean isHeader = true;
+    
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    updatedLines.add(line); // Retain the header row
+                    isHeader = false;
+                    continue;
+                }
+    
+                String[] fields = line.split(",");
+                String currentNRIC = fields[1].trim();
+                String currentProjectApplied = fields.length > 5 ? fields[5].trim() : "";
+                String currentStatus = fields.length > 6 ? fields[6].trim() : "";
+    
+                if (currentNRIC.equalsIgnoreCase(nric)) {
+                    officerFound = true;
+    
+                    // Check if the officer has applied to a project
+                    if (currentProjectApplied == null || currentProjectApplied.isEmpty()) {
+                        System.out.println("Officer has not applied to any project.");
+                        return;
+                    }
+    
+                    projectName = currentProjectApplied;
+    
+                    // Step 2: Check if the project has available slots
+                    String projectFilePath = "V2\\ProjectList.csv";
+                    boolean isProjectUpdated = false;
+    
+                    try (BufferedReader projectBr = new BufferedReader(new FileReader(projectFilePath))) {
+                        ArrayList<String> updatedProjectLines = new ArrayList<>();
+                        String projectLine;
+                        boolean isProjectHeader = true;
+    
+                        while ((projectLine = projectBr.readLine()) != null) {
+                            if (isProjectHeader) {
+                                updatedProjectLines.add(projectLine); // Retain the header row
+                                isProjectHeader = false;
+                                continue;
+                            }
+    
+                            String[] projectFields = projectLine.split(",");
+                            String currentProjectName = projectFields[0].trim();
+                            int maxOfficerSlots = Integer.parseInt(projectFields[11].trim());
+                            String officerColumn = projectFields.length > 12 ? projectFields[12].trim() : "";
+                            String[] assignedOfficers = officerColumn.split("\\|");
+                            int assignedCount = assignedOfficers.length;
+    
+                            if (currentProjectName.equalsIgnoreCase(projectName)) {
+                                if (assignedCount >= maxOfficerSlots) {
+                                    // Slots are full, reject the officer
+                                    fields[6] = "Rejected"; // Update status to "Rejected"
+                                    System.out.println("Project slots are full. Officer rejected.");
+                                } else {
+                                    // Slots available, add the officer
+                                    String updatedOfficerColumn = officerColumn.isEmpty()
+                                            ? fields[0].trim() // Officer's name
+                                            : officerColumn + "|" + fields[0].trim(); // Append officer's name
+    
+                                    projectFields[12] = updatedOfficerColumn;
+                                    fields[6] = "Approved"; // Update status to "Approved"
+                                    isProjectUpdated = true;
+                                    System.out.println("Officer approved and assigned to the project.");
+                                }
+                            }
+    
+                            updatedProjectLines.add(String.join(",", projectFields));
+                        }
+    
+                        // Write updated lines back to ProjectList.csv
+                        if (isProjectUpdated) {
+                            try (BufferedWriter bw = new BufferedWriter(new FileWriter(projectFilePath))) {
+                                for (String updatedLine : updatedProjectLines) {
+                                    bw.write(updatedLine);
+                                    bw.newLine();
+                                }
+                            }
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error updating project list: " + e.getMessage());
+                        return;
+                    }
+                }
+    
+                // Add the updated officer line to the list
+                updatedLines.add(String.join(",", fields));
+            }
+    
+            // Write updated lines back to OfficerList.csv
+            if (officerFound) {
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+                    for (String updatedLine : updatedLines) {
+                        bw.write(updatedLine);
+                        bw.newLine();
+                    }
+                }
+            } else {
+                System.out.println("Officer not found.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading officer list: " + e.getMessage());
         }
     }
 
-    private void handleRejectOfficer(HDBManager manager)
-    {
+    private void handleRejectOfficer(HDBManager manager) {
         System.out.println("Enter an officer's NRIC to reject: ");
         String nric = scanner.nextLine();
-
         HDBOfficer officer = loginManager.findOfficerByNRIC(nric);
-
-        if(officer != null)
-        {
-            manager.approveOfficer(officer);
-            System.out.println("Officer has been rejected.");
-        }
-        else
-        {
+    
+        if (officer == null) {
             System.out.println("Officer not found.");
+            return;
+        }
+    
+        // Update the officer's status in OfficerList.csv
+        updateOfficerStatusInCSV(officer.getNRIC(), "Rejected");
+        System.out.println("Officer has been rejected.");
+    }
+    
+    
+    private void updateOfficerStatusInCSV(String nric, String status) {
+        String filePath = "V2\\OfficerList.csv";
+    
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            ArrayList<String> updatedLines = new ArrayList<>();
+            String line;
+            boolean isHeader = true;
+    
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    updatedLines.add(line);
+                    isHeader = false;
+                    continue;
+                }
+    
+                String[] fields = line.split(",");
+                String currentNRIC = fields[1];
+    
+                if (currentNRIC.equalsIgnoreCase(nric)) {
+                    fields[6] = status; // Update the Status column
+                    updatedLines.add(String.join(",", fields));
+                } else {
+                    updatedLines.add(line);
+                }
+            }
+    
+            // Write updated lines back to the file
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+                for (String updatedLine : updatedLines) {
+                    bw.write(updatedLine);
+                    bw.newLine();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error updating officer list: " + e.getMessage());
         }
     }
 
@@ -252,7 +365,7 @@ public class HDBManagerCLI {
     }
 
 
-    private void saveProjectToCSV(BTOProject project, int twoRoomUnits, int twoRoomPrice, int threeRoomUnits, int threeRoomPrice, int maxOfficerSlots) {
+    private void saveProjectToCSV(BTOProject project, int twoRoomUnits, int twoRoomPrice, int threeRoomUnits, int threeRoomPrice, int maxOfficerSlots, String managerName, String visibility) {
         String filePath = "V2\\ProjectList.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
             // append to the next blank row
@@ -263,9 +376,10 @@ public class HDBManagerCLI {
                 "3-Room," + threeRoomUnits + "," + threeRoomPrice + "," +
                 project.getApplicationOpenDate() + "," +
                 project.getApplicationCloseDate() + "," + 
-                "" + // no manager assigned yet
+                managerName + "," + // no manager assigned yet
                 maxOfficerSlots + "," + // how many officers
-                "" + "\n" // no officer assigned yet
+                "" + "," +// no officer assigned yet
+                visibility +"\n"
             );
         } catch (IOException e) {
             System.out.println("Error saving project to CSV: " + e.getMessage());
@@ -322,6 +436,7 @@ public class HDBManagerCLI {
             System.out.println("Error deleting project from CSV: " + e.getMessage());
         }
     }
+
 }
 
 

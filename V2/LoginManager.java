@@ -24,7 +24,7 @@ public class LoginManager {
 	 * @param password
 	 */
 	public Users authenticateUser(String nric, String password) {
-		// TODO - implement LoginManager.authenticateUser
+		
 		for(Users user: userList)
 		{
 			if(user.login(nric, password))
@@ -33,7 +33,6 @@ public class LoginManager {
 			}
 		}
 		return null;
-		//throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -139,14 +138,14 @@ public class LoginManager {
 					String maritalStatus = fields[3].trim();
 					String password = fields[4].trim();
 
-					//Officer's constructor have yet to be made, hence the errors
+					
 					HDBOfficer officer = new HDBOfficer(
 						name,
 						nric,
 						password,
 						age,
 						maritalStatus
-						//more attributes to be added(eg: role, staffID, assignedproject)
+					
 					);
 
 					addUser(officer);
@@ -188,7 +187,7 @@ public class LoginManager {
 	}
 
 
-	//LoadManager should be commented out when HDBManager's constructor is completed
+	
 
 	public void loadManager(String managerFilename)
 	{
@@ -215,7 +214,6 @@ public class LoginManager {
 					String password = fields[4].trim();
 					int staffID = Integer.parseInt(fields[5].trim());
 
-					//Manager constructor have yet to be made, hence the errors
 					HDBManager manager = new HDBManager(
 						name,
 						nric,
@@ -223,7 +221,7 @@ public class LoginManager {
 						age,
 						maritalStatus,
 						staffID
-						//more attributes to be added(eg: role, staffID, assignedproject)
+					
 					);
 
 					addUser(manager);
