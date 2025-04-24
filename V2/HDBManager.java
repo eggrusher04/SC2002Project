@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class HDBManager extends Employees implements ProjectManager, OfficerApproval, View {
@@ -12,11 +15,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
     }
 
-    public HDBManager(String name, String nric, String password, int age, String maritalStatus, int staffID)
-    {
+    public HDBManager(String name, String nric, String password, int age, String maritalStatus, int staffID) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
+        this.createdProj = new BTOProject[INITIAL_CAPACITY];  // ✅ initialize it here
     }
-
+    
 
 	@Override
 	public String viewEnquiry(String message) {
@@ -67,20 +70,57 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 
-
+    // pulls from projectlist csv and prints out all the exisitng projects (changed)
 	@Override
     public String viewListOfProjects() {
-        StringBuilder sb = new StringBuilder();
-        for (BTOProject p : createdProj) {
-            if (p != null) {
-                sb.append(p.getProjName())
-                  .append(" (Visible: ")
-                  .append(p.isVisible() ? "ON" : "OFF")
-                  .append(")\n");
+        String filePath = "V2\\ProjectList.csv";
+        StringBuilder result = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
+                String[] fields = line.split(",");
+    
+                String projectName = fields[0];
+                String neighborhood = fields[1];
+                String type1 = fields[2];
+                int unitsType1 = Integer.parseInt(fields[3]);
+                String priceType1 = fields[4];
+                String type2 = fields[5];
+                int unitsType2 = Integer.parseInt(fields[6]);
+                String priceType2 = fields[7];
+                String openDate = fields[8];
+                String closeDate = fields[9];
+                String manager = fields.length > 10 && !fields[10].isBlank() ? fields[10] : "N/A";
+                String officerSlot = fields.length > 11 ? fields[11] : "N/A";
+                String officer = fields.length > 12 ? fields[12] : "None assigned";
+    
+                result.append("--------------------------------------------------\n");
+                result.append("Project Name     : ").append(projectName).append("\n");
+                result.append("Neighborhood     : ").append(neighborhood).append("\n");
+                result.append("Flat Types       : ").append(type1).append(" (").append(unitsType1).append(" units, $").append(priceType1).append("), ")
+                      .append(type2).append(" (").append(unitsType2).append(" units, $").append(priceType2).append(")\n");
+                result.append("Application Dates: ").append(openDate).append(" → ").append(closeDate).append("\n");
+                result.append("Manager          : ").append(manager).append("\n");
+                result.append("Officer Slot     : ").append(officerSlot).append("\n");
+                result.append("Assigned Officer : ").append(officer).append("\n");
+                result.append("--------------------------------------------------\n\n");
             }
+    
+            if (result.length() == 0) {
+                return "No projects found.";
+            }
+            return "Available Projects:\n\n" + result.toString();
+        } catch (IOException | NumberFormatException e) {
+            return "Error reading project list: " + e.getMessage();
         }
-        return sb.toString();
     }
+    
+       
 
 
 
@@ -156,10 +196,10 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 
-
+    // cahnged a bit
     public void approveWithdrawal(Applicant applicant) {
         if (applicant != null) {
-            applicant.reqWithdrawal(); // Assume method exists in Applicant
+            applicant.withraw(); // deletes the application from application.csv
         }
     }
 
@@ -187,6 +227,8 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         }
         return null;
     }
+
+
     
 }
 

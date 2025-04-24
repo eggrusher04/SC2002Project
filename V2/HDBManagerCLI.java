@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HDBManagerCLI {
@@ -35,48 +41,33 @@ public class HDBManagerCLI {
 
             switch(choice)
             {
-                case "1":
-                    manager.viewListOfProjects();
-                    break;
-                case "2":
-                    handleCreateProj(manager);
-                    break;
+                case "1" -> System.out.println(manager.viewListOfProjects());
+                case "2" -> handleCreateProj(manager);
 
-                case "3":
-                    handleEditProj(manager);
-                    break;
-                case "4":
-                    handleDeleteProj(manager);
-                    break;
-                case "5":
-                    handleToggleVisibility(manager);
-                    break;
-                case "6":
-                    handleApproveOfficer(manager);
-                    break;
-                case "7":
-                    handleRejectOfficer(manager);
-                    break;
-                case "8":
-                    handleApproveWithdrawal(manager);
-                    break;
-                case "9":
+                case "3" -> handleEditProj(manager);
+                case "4" -> handleDeleteProj(manager);
+                case "5" -> handleToggleVisibility(manager);
+                case "6" -> handleApproveOfficer(manager);
+                case "7" -> handleRejectOfficer(manager);
+                case "8" -> handleApproveWithdrawal(manager);
+                case "9" -> {
                     System.out.println("Enter report filter criteria: ");
                     String filter = scanner.nextLine();
                     manager.genReport(filter);
-                    break;
-                case "10":
+                }
+                case "10" -> {
                     System.out.println("Enter your new password: ");
                     String newPass = scanner.nextLine();
                     manager.changePassword(newPass);
                     loginManager.saveManagerToCSV(managerCSVPath);
                     System.out.println("You have sucessfully updated your password. Please login using your new password!");
                     return;
-                case "11":
+                }
+                case "11" -> {
                     System.out.println("Logging out....");
                     return;
-                default:
-                    System.out.println("Invalid option. Try again!!");
+                }
+                default -> System.out.println("Invalid option. Try again!!");
             }
         }
     }
@@ -85,29 +76,42 @@ public class HDBManagerCLI {
     {
         System.out.println("Enter project name: ");
         String projectName = scanner.nextLine();
-
+    
         System.out.println("Enter neighbourhood: ");
         String hood = scanner.nextLine();
-
+    
         System.out.println("Enter application OPEN date: ");
         String openDate = scanner.nextLine();
-
+    
         System.out.println("Enter application CLOSE date: ");
         String closeDate = scanner.nextLine();
-
+    
         System.out.println("Enter number of 2-Room flats: ");
         int twoRoom = Integer.parseInt(scanner.nextLine());
-
+    
+        System.out.println("Enter selling price for 2-Room flats: ");
+        int twoRoomPrice = Integer.parseInt(scanner.nextLine());
+    
         System.out.println("Enter number of 3-Room flats: ");
         int threeRoom = Integer.parseInt(scanner.nextLine());
-
+    
+        System.out.println("Enter selling price for 3-Room flats: ");
+        int threeRoomPrice = Integer.parseInt(scanner.nextLine());
+    
+        System.out.println("Enter maximum officer slots (e.g., 10): ");
+        int maxOfficerSlots = Integer.parseInt(scanner.nextLine());
+    
         BTOProject newProj = new BTOProject(projectName, hood, openDate, closeDate);
         newProj.addFlatType("2-Room", twoRoom);
         newProj.addFlatType("3-Room", threeRoom);
+    
+        // Save to memory and file
         manager.createProject(newProj);
-
-        System.out.println("Project created successfully!!");
+        saveProjectToCSV(newProj, twoRoom, twoRoomPrice, threeRoom, threeRoomPrice, maxOfficerSlots);
+    
+        System.out.println("Project created and saved successfully!");
     }
+    
 
     private void handleEditProj(HDBManager manager)
     {
@@ -141,12 +145,15 @@ public class HDBManagerCLI {
         int newThreeRoom = Integer.parseInt(scanner.nextLine());
 
         manager.editProject(proj, newName, newHood, newOpen, newClose, newTwoRoom, newThreeRoom);
+        saveProjectToCSV(proj, newTwoRoom, newTwoRoom, newThreeRoom, newThreeRoom, newThreeRoom);
 
         System.out.println("Project updated sucessfully.");
     }
 
+    // changed a bit
     private void handleDeleteProj(HDBManager manager)
     {
+        
         System.out.println("Enter the project name you want to delete: ");
         String name = scanner.nextLine();
 
@@ -157,10 +164,16 @@ public class HDBManagerCLI {
             manager.deleteProject(proj);
             System.out.println("Project has been deleted.");
         }
+        
         else
         {
             System.out.println("Project not found.");
         }
+
+        // here
+        deleteProjectFromCSV(name);
+        
+        
     }
 
     private void handleToggleVisibility(HDBManager manager)
@@ -222,7 +235,7 @@ public class HDBManagerCLI {
 
     private void handleApproveWithdrawal(HDBManager manager)
     {
-        System.out.println("Eneter applicant's NRIC to approve withdrawal: ");
+        System.out.println("Enter applicant's NRIC to approve withdrawal: ");
         String nric = scanner.nextLine();
 
         Applicant applicant = loginManager.findApplicantByNRIC(nric);
@@ -239,4 +252,77 @@ public class HDBManagerCLI {
     }
 
 
+    private void saveProjectToCSV(BTOProject project, int twoRoomUnits, int twoRoomPrice, int threeRoomUnits, int threeRoomPrice, int maxOfficerSlots) {
+        String filePath = "V2\\ProjectList.csv";
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
+            // append to the next blank row
+            bw.write(
+                project.getProjName() + "," +
+                project.getNeighbourhood() + "," +
+                "2-Room," + twoRoomUnits + "," + twoRoomPrice + "," +
+                "3-Room," + threeRoomUnits + "," + threeRoomPrice + "," +
+                project.getApplicationOpenDate() + "," +
+                project.getApplicationCloseDate() + "," + 
+                "" + // no manager assigned yet
+                maxOfficerSlots + "," + // how many officers
+                "" + "\n" // no officer assigned yet
+            );
+        } catch (IOException e) {
+            System.out.println("Error saving project to CSV: " + e.getMessage());
+        }
+    }
+
+    // help delete from csv file
+    private void deleteProjectFromCSV(String projectName) {
+        String filePath = "V2\\ProjectList.csv";
+        ArrayList<String> updatedLines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+            boolean projectFound = false;
+
+            // read file
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    updatedLines.add(line);
+                    isHeader = false;
+                    continue;
+                }
+
+                // split 
+                String[] fields = line.split(",");
+                String currentProjectName = fields[0];
+
+                // check if match
+                if (currentProjectName.equalsIgnoreCase(projectName)) {
+                    projectFound = true; // project found
+                    System.out.println("Project '" + projectName + "' has been deleted from the CSV file.");
+                } else {
+                    // retain line if not projectName
+                    updatedLines.add(line);
+                }
+            }
+
+            // if not found
+            if (!projectFound) {
+                System.out.println("Project '" + projectName + "' not found in the CSV file.");
+                return;
+            }
+
+            // write everything back
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+                for (String updatedLine : updatedLines) {
+                    bw.write(updatedLine);
+                    bw.newLine();
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error deleting project from CSV: " + e.getMessage());
+        }
+    }
 }
+
+
+

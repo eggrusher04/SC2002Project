@@ -93,7 +93,7 @@ public class UserInterfaceCLI {
 			}
 			else if(user instanceof HDBManager)
 			{
-				String managerPath = "V2\\ManagerList.csv";
+				String managerPath = "ManagerList.csv";
 				HDBManagerCLI managerCLI = new HDBManagerCLI(loginManager, managerPath);
 				managerCLI.launchManagerCLI((HDBManager) user);
 			}
