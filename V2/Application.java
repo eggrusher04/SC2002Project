@@ -32,7 +32,7 @@ public class Application {
     }
 
     public String getApplicationStatus() {
-        String filePath = "Applications.csv";
+        String filePath = "V2\\pplications.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -53,7 +53,7 @@ public class Application {
     }
 
     private void saveToCSV() {
-        String filePath = "Applications.csv";
+        String filePath = "V2\\Applications.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
             bw.write(applicantNRIC + "," +
                      projectName + "," +
@@ -66,7 +66,7 @@ public class Application {
     }
 
     private void updateCSV() {
-        String filePath = "Applications.csv";
+        String filePath = "V2\\Applications.csv";
         List<String> lines = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

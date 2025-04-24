@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,10 +22,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
-
+	
     this.applicationStatus = applicationStatus;
-    this.appliedProject = appliedProject;
+    this.assignedProj = loadAssignedProject(name);
     this.enquiries = enquiries;
+	
 }
 
 
@@ -30,18 +34,76 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, BTOProject assignedProj) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
-    this.assignedProj = assignedProj;
+    this.assignedProj = loadAssignedProject(name);
 }
 	//Third constructor to load login details and basic attributes when app is launched
 	public HDBOfficer(String name, String nric, String password, int age, String maritalStatus)
 	{
 		super(nric, password, age, maritalStatus, 0, "Officer", name); // default staffID = 0, role = "Officer"
-		this.assignedProj = null;
+		this.assignedProj = loadAssignedProject(name);
 		this.applicationStatus = null;
 		this.appliedProject = null;
 		this.enquiries = null;
 		this.regStatus = null;
 	}
+
+	// Helper method to load the assigned project from OfficerList.csv
+    private BTOProject loadAssignedProject(String officerName) {
+        String filePath = "V2\\OfficerList.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+
+                String[] fields = line.split(",");
+                String name = fields[0].trim();
+                String projectName = fields.length > 5 ? fields[5].trim() : ""; // Project Applied column
+                String status = fields.length > 6 ? fields[6].trim() : ""; // Status column
+
+                if (name.equalsIgnoreCase(officerName) && "Approved".equalsIgnoreCase(status)) {
+                    // Create and return the BTOProject object for the assigned project
+                    return createBTOProjectFromCSV(projectName);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading officer list: " + e.getMessage());
+        }
+        return null; // Return null if no project is found
+    }
+
+    // Method to create a BTOProject object from ProjectList.csv
+    private BTOProject createBTOProjectFromCSV(String projectName) {
+        String filePath = "V2\\ProjectList.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+
+                String[] fields = line.split(",");
+                String projName = fields[0].trim();
+                String neighborhood = fields[1].trim();
+                String openDate = fields[8].trim();
+                String closeDate = fields[9].trim();
+
+                if (projName.equalsIgnoreCase(projectName)) {
+                    return new BTOProject(projName, neighborhood, openDate, closeDate);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading project list: " + e.getMessage());
+        }
+        return null; // Return null if the project is not found
+    }
 
 	public String getApplicationStatus() {
     	return applicationStatus;
@@ -72,37 +134,54 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		this.changePassword(newPw);
 	}
 
-	public String viewListOfProjects()
-	{
-		// Read the listOfProjects from the csv ( erm im not really sure how to do this )
-		String filePath = "V2\\ProjectList.csv";
-    	StringBuilder result = new StringBuilder();
-
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-			String line;
-			boolean isHeader = true;
-
-			while ((line = br.readLine()) != null) {
-				if (isHeader) {
-					isHeader = false; // skip header line
-					continue;
-				}
-				String[] fields = line.split(",");
-				if (fields.length >= 1) {
-					result.append("- ").append(fields[0]).append("\n"); // assuming the first column is project name
-				}
-			}
-
-			if (result.length() == 0) {
-				return "No projects found in the file.";
-			}
-
-			return "Available Projects:\n" + result.toString();
-
-		} catch (IOException e) {
-			return "Error reading project list: " + e.getMessage();
-		}
-	}
+	@Override
+    public String viewListOfProjects() {
+        String filePath = "V2\\ProjectList.csv";
+        StringBuilder result = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue;
+                }
+                String[] fields = line.split(",");
+    
+                String projectName = fields[0];
+                String neighborhood = fields[1];
+                String type1 = fields[2];
+                int unitsType1 = Integer.parseInt(fields[3]);
+                String priceType1 = fields[4];
+                String type2 = fields[5];
+                int unitsType2 = Integer.parseInt(fields[6]);
+                String priceType2 = fields[7];
+                String openDate = fields[8];
+                String closeDate = fields[9];
+                String manager = fields.length > 10 && !fields[10].isBlank() ? fields[10] : "N/A";
+                String officerSlot = fields.length > 11 ? fields[11] : "N/A";
+                String officer = fields.length > 12 ? fields[12] : "None assigned";
+    
+                result.append("--------------------------------------------------\n");
+                result.append("Project Name     : ").append(projectName).append("\n");
+                result.append("Neighborhood     : ").append(neighborhood).append("\n");
+                result.append("Flat Types       : ").append(type1).append(" (").append(unitsType1).append(" units, $").append(priceType1).append("), ")
+                      .append(type2).append(" (").append(unitsType2).append(" units, $").append(priceType2).append(")\n");
+                result.append("Application Dates: ").append(openDate).append(" to ").append(closeDate).append("\n");
+                result.append("Manager          : ").append(manager).append("\n");
+                result.append("Officer Slot     : ").append(officerSlot).append("\n");
+                result.append("Assigned Officer : ").append(officer).append("\n");
+                result.append("--------------------------------------------------\n\n");
+            }
+    
+            if (result.length() == 0) {
+                return "No projects found.";
+            }
+            return "Available Projects:\n\n" + result.toString();
+        } catch (IOException | NumberFormatException e) {
+            return "Error reading project list: " + e.getMessage();
+        }
+    }
 
 	public String viewEnquiry(String message)
 	{
@@ -151,16 +230,75 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 	@Override
-	public void updateFlatAvail(String flatType, int unitsLeft)
-	{
-		// Oficer to update flats available and save into the ProjectList CSV
-		if (assignedProj == null) {
-            System.out.println("No project assigned to officer.");
-            throw new UnsupportedOperationException("Cannot update flat availability without an assigned project.");
+	public void updateFlatAvail(String flatType, int unitsLeft) {
+    // Step 1: Validate input
+    if (assignedProj == null) {
+        System.out.println("No project assigned to officer.");
+        throw new UnsupportedOperationException("Cannot update flat availability without an assigned project.");
+    }
+
+    String projectName = assignedProj.getProjName();
+    String filePath = "V2\\ProjectList.csv";
+    ArrayList<String> updatedLines = new ArrayList<>();
+    boolean projectFound = false;
+
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        String line;
+        boolean isHeader = true;
+
+        while ((line = br.readLine()) != null) {
+            if (isHeader) {
+                updatedLines.add(line); // Retain the header row
+                isHeader = false;
+                continue;
+            }
+
+            String[] fields = line.split(",");
+            String currentProjectName = fields[0].trim();
+
+            // Step 2: Find the project row
+            if (currentProjectName.equalsIgnoreCase(projectName)) {
+                projectFound = true;
+
+                // Step 3: Update the flat type availability
+                boolean flatTypeUpdated = false;
+                for (int i = 2; i < fields.length; i += 3) {
+                    if (fields[i].trim().equalsIgnoreCase(flatType)) {
+                        fields[i + 1] = String.valueOf(unitsLeft); // Update the number of units
+                        flatTypeUpdated = true;
+                        break;
+                    }
+                }
+
+                if (!flatTypeUpdated) {
+                    System.out.println("Flat type '" + flatType + "' not found in project '" + projectName + "'.");
+                    return;
+                }
+
+                // Add the updated line to the list
+                updatedLines.add(String.join(",", fields));
+            } else {
+                // Retain other projects unchanged
+                updatedLines.add(line);
+            }
         }
-        assignedProj.updateFlatAvailability(flatType, unitsLeft);
-        System.out.println("Updated " + flatType + " flats availability to " + unitsLeft + " units in project: " + assignedProj.getProjName());
-	}
+
+        // Step 4: Write updated lines back to the file
+        if (projectFound) {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+                for (String updatedLine : updatedLines) {
+                    bw.write(updatedLine);
+                    bw.newLine();
+                }
+            }
+            System.out.println("Updated " + flatType + " flats availability to " + unitsLeft + " units in project: " + projectName);
+        } else {
+            System.out.println("Project '" + projectName + "' not found in the CSV file.");
+        }
+    } catch (IOException e) {
+        System.out.println("Error updating project list: " + e.getMessage());
+    }
+}
 
 	// ApplicantManagement Implementation
 	@Override
