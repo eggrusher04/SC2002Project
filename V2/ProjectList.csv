@@ -1,3 +1,3 @@
-﻿Project Name,Neighborhood,Type 1,Number of units for Type 1,Selling price for Type 1,Type 2,Number of units for Type 2,Selling price for Type 2,Application opening date,Application closing date,Manager,Officer Slot,Officer
-Acacia Breeze,Yishun,2-Room,2,350000,3-Room,3,450000,15/2/2025,20/3/2025,Jessica,3,"Daniel,Emily"test,my tama,2-Room,0,100,3-Room,100,0,24/5,25/5,3,
-Woodleigh Heights,Woodleigh,2-Room,25,350000,3-Room,40,500000,12/12/2025,13/12/2026,5,
+﻿Project Name,Neighborhood,Type 1,Number of units for Type 1,Selling price for Type 1,Type 2,Number of units for Type 2,Selling price for Type 2,Application opening date,Application closing date,Manager,Officer Slot,Officer,Visibility
+Jurong Hills,Jurong East,2-Room,30,3546532,3-Room,6544243,32674562,12/4/2025,30/12/2026,Bobby,3,,No
+Bukit Timah Hills,Bukit Timah,2-Room,30,5374216,3-Room,30,7831245,20/4/2025,30/6/2026,Bobby,3,,No
