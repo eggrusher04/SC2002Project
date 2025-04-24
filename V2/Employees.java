@@ -57,7 +57,7 @@ public abstract class Employees implements Users {
 	public String viewEnquiry(String message) {
 
         
-        String filePath = "enquiries.csv";
+        String filePath = "V2\\enquiries.csv";
 
         // see if the employee wants replied, unreplied or all enquiries
         Scanner scanner = new Scanner(System.in);
@@ -132,7 +132,7 @@ public abstract class Employees implements Users {
 
     public void replyEnquiry() {
         
-        String filePath = "enquiries.csv";
+        String filePath = "V2\\enquiries.csv";
 
         // users input for the enquiry to reply to
         Scanner scanner = new Scanner(System.in);
@@ -183,7 +183,7 @@ public abstract class Employees implements Users {
 	 */
     public String viewProjDetails(BTOProject project) {
         
-        String filePath = "ProjectList.csv";
+        String filePath = "V2\\ProjectList.csv";
 
         // check if project is null
         if (project == null) {
