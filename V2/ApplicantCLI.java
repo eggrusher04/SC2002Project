@@ -14,18 +14,20 @@ public class ApplicantCLI {
         while (true) {
             System.out.println("\n====== Applicant Dashboard ======");
             System.out.println("1. View Application Status");
-            System.out.println("2. Apply for BTO Project");
-            System.out.println("3. Request Withdrawal");
-            System.out.println("4. Manage Enquiries");
-            System.out.println("5. Change Password");
-            System.out.println("6. Logout");
+            System.out.println("2. View Project List");
+            System.out.println("3. Apply for BTO Project");
+            System.out.println("4. Request Withdrawal");
+            System.out.println("5. Manage Enquiries");
+            System.out.println("6. Change Password");
+            System.out.println("7. Logout");
 
             System.out.println("Enter your choice: ");
             String choice = scanner.nextLine();
 
             switch (choice) {
                 case "1" -> System.out.println(applicant.viewStatus()); // display status
-                case "2" -> { // apply for project
+                case "2" -> System.out.println(applicant.viewListOfProjects());
+                case "3" -> { // apply for project
                     System.out.println("Filter by flat type? (e.g., '2-Room', '3-Room', or leave blank):");
                     String flatTypeFilter = scanner.nextLine().trim();
                     applicant.setFlatTypeFilter(flatTypeFilter);
@@ -39,9 +41,9 @@ public class ApplicantCLI {
                     applicant.setFlatType(flatType);
                     applicant.createBTOProjectFromCSV(projectName);
                 }
-                case "3" -> applicant.reqWithdrawal(); // request withdrawal
-                case "4" -> manageEnquiries(applicant); // manage enquiries
-                case "5" -> { // change password
+                case "4" -> applicant.reqWithdrawal(); // request withdrawal
+                case "5" -> manageEnquiries(applicant); // manage enquiries
+                case "6" -> { // change password
                     System.out.println("Enter new password:");
                     String newPw = scanner.nextLine();
                     applicant.changePassword(newPw);
@@ -49,7 +51,7 @@ public class ApplicantCLI {
                     System.out.println("Password updated successfully. Please login your new password!");
                     return;
                 }
-                case "6" -> { // logout
+                case "7" -> { // logout
                     System.out.println("Logging out...");
                     return;
                 }

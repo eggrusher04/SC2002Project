@@ -366,6 +366,7 @@ public class Applicant implements Users, View {
                 int unitsType1 = Integer.parseInt(fields[3]);
                 String type2 = fields[5];
                 int unitsType2 = Integer.parseInt(fields[6]);
+                String visible = fields[13];
 
                 // ensure singles above 35 only see 2-room flats
                 if (maritalStatus.equalsIgnoreCase("single") && age >= 35) {
@@ -377,6 +378,9 @@ public class Applicant implements Users, View {
                     if (!type1.equalsIgnoreCase(flatTypeFilter) && !type2.equalsIgnoreCase(flatTypeFilter)) {
                         continue; // skip projects that don't match filter
                     }
+                }
+                if ("No".equals(visible)){
+                    continue; // skip non visible projects
                 }
 
                 // append project details to result
