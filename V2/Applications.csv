@@ -1,3 +1,8 @@
 ApplicantNRIC,ProjectName,FlatType,ApplicationStatus,AssignedOfficer
 S1234567A,Woodleigh Heights,2-Room,Pending,Unassigned
 S9876543C,Jurong Hills,3-Room,Pending,Unassigned
+S1234567A,Jurong Hills,2-Room,Approved,Daniel
+T7654321B,Bukit Timah Hills,3-Room,Pending,
+S9876543C,Jurong Hills,2-Room,Rejected,Emily
+T2345678D,Bukit Timah Hills,3-Room,Approved,David
+S3456789E,Jurong Hills,2-Room,Pending,
