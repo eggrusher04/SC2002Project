@@ -170,7 +170,7 @@ public class LoginManager {
 				if(user instanceof HDBOfficer)
 				{
 					HDBOfficer app = (HDBOfficer) user;
-					String writeLine = String.format("%s,%s,%d,%b,%s\n",
+					String writeLine = String.format("%s,%s,%d,%s,%s\n",
 						app.getName(),
 						app.getNRIC(),
 						app.getAge(),
@@ -246,7 +246,7 @@ public class LoginManager {
 				if(user instanceof HDBManager)
 				{
 					HDBManager manager = (HDBManager) user;
-					String writeLine = String.format("%s,%s,%d,%b,%s,%d\n",
+					String writeLine = String.format("%s,%s,%d,%s,%s,%d\n",
 						manager.getName(),
 						manager.getNRIC(),
 						manager.getAge(),
