@@ -18,17 +18,17 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	private List<Enquiry> enquiries;
 	private String regStatus;
 	private dataLoader loader;
-	
 
 	// First Constructor to apply as an applicant
 	public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
-
+	
     this.applicationStatus = applicationStatus;
-    this.appliedProject = appliedProject;
+    this.assignedProj = loadAssignedProject(name);
     this.enquiries = enquiries;
 	this.loader = new dataLoader();
+	
 }
 
 
@@ -36,20 +36,79 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, BTOProject assignedProj) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
-    this.assignedProj = assignedProj;
+    this.assignedProj = loadAssignedProject(name);
 	this.loader = new dataLoader();
+
 }
 	//Third constructor to load login details and basic attributes when app is launched
 	public HDBOfficer(String name, String nric, String password, int age, String maritalStatus)
 	{
 		super(nric, password, age, maritalStatus, 0, "Officer", name); // default staffID = 0, role = "Officer"
-		this.assignedProj = null;
+		this.assignedProj = loadAssignedProject(name);
 		this.applicationStatus = null;
 		this.appliedProject = null;
 		this.enquiries = null;
 		this.regStatus = null;
 		this.loader = new dataLoader();
 	}
+
+	// Helper method to load the assigned project from OfficerList.csv
+    private BTOProject loadAssignedProject(String officerName) {
+        String filePath = "V2\\OfficerList.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+
+                String[] fields = line.split(",");
+                String name = fields[0].trim();
+                String projectName = fields.length > 5 ? fields[5].trim() : ""; // Project Applied column
+                String status = fields.length > 6 ? fields[6].trim() : ""; // Status column
+
+                if (name.equalsIgnoreCase(officerName) && "Approved".equalsIgnoreCase(status)) {
+                    // Create and return the BTOProject object for the assigned project
+                    return createBTOProjectFromCSV(projectName);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading officer list: " + e.getMessage());
+        }
+        return null; // Return null if no project is found
+    }
+
+    // Method to create a BTOProject object from ProjectList.csv
+    private BTOProject createBTOProjectFromCSV(String projectName) {
+        String filePath = "V2\\ProjectList.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+
+                String[] fields = line.split(",");
+                String projName = fields[0].trim();
+                String neighborhood = fields[1].trim();
+                String openDate = fields[8].trim();
+                String closeDate = fields[9].trim();
+
+                if (projName.equalsIgnoreCase(projectName)) {
+                    return new BTOProject(projName, neighborhood, openDate, closeDate);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading project list: " + e.getMessage());
+        }
+        return null; // Return null if the project is not found
+    }
 
 	public String getApplicationStatus() {
     	return applicationStatus;

@@ -38,7 +38,8 @@ public class OfficerCLI {
             System.out.println("9. Retrieve Applicant Details");
             System.out.println("10. Update Applicant Status");
             System.out.println("11. Change Password");
-            System.out.println("12. Logout");
+            System.err.println("12. View Project Lists");
+            System.out.println("13. Logout");
 
             System.out.println("Enter your choice: ");
             String choice = scanner.nextLine();
@@ -162,6 +163,9 @@ public class OfficerCLI {
                     System.out.println("You have sucessfully updated your password. Please login using your new password!");
                     return;
                 case "12":
+                    System.out.println(officer.viewListOfProjects());
+                    break;
+                case "13":
                     System.out.println("Logging out....");
                     return;
                 default:
