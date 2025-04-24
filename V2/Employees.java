@@ -57,7 +57,7 @@ public abstract class Employees implements Users {
 	public String viewEnquiry(String message) {
 
         
-        String filePath = "enquiries.csv";
+        String filePath = "V2\\enquiries.csv";
 
         // see if the employee wants replied, unreplied or all enquiries
         Scanner scanner = new Scanner(System.in);

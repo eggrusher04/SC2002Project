@@ -113,6 +113,11 @@ public class BTOProject {
         this.applicationCloseDate = appCloseDate;
     }
 
+    public void setMaxOfficerSlots(int officerslots)
+    {
+        this.maxOfficerSlots = officerslots;
+    }
+
     @Override
     public String toString() {
         return "Project: " + projName + ", Neighbourhood: " + neighbourhood +

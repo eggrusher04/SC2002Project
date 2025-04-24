@@ -13,14 +13,16 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 	public HDBManager(String nric, String password, int age, String maritalStatus, int staffID, String name) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
+ 
     }
 
     public HDBManager(String name, String nric, String password, int age, String maritalStatus, int staffID) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
-        this.createdProj = new BTOProject[INITIAL_CAPACITY];  // ✅ initialize it here
+        this.createdProj = new BTOProject[INITIAL_CAPACITY];  // initialize it here
+        
     }
     
-
+    
 	@Override
 	public String viewEnquiry(String message) {
 		return "Enquiry: " + message;
@@ -104,7 +106,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
                 result.append("Neighborhood     : ").append(neighborhood).append("\n");
                 result.append("Flat Types       : ").append(type1).append(" (").append(unitsType1).append(" units, $").append(priceType1).append("), ")
                       .append(type2).append(" (").append(unitsType2).append(" units, $").append(priceType2).append(")\n");
-                result.append("Application Dates: ").append(openDate).append(" → ").append(closeDate).append("\n");
+                result.append("Application Dates: ").append(openDate).append(" to ").append(closeDate).append("\n");
                 result.append("Manager          : ").append(manager).append("\n");
                 result.append("Officer Slot     : ").append(officerSlot).append("\n");
                 result.append("Assigned Officer : ").append(officer).append("\n");
@@ -127,14 +129,17 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 	@Override
     public void createProject(BTOProject project) {
-        ensureCapacity();
+        ensureCapacity(); // Ensure there is enough space in the array
         for (int i = 0; i < createdProj.length; i++) {
             if (createdProj[i] == null) {
                 createdProj[i] = project;
+                System.out.println("Project '" + project.getProjName() + "' has been added to the system.");
                 return;
             }
         }
-    }
+        System.out.println("Failed to add project: No available slots in the createdProj array.");
+            }
+
 
 // This method only updates data - no printing or input
 	public void editProject(BTOProject project, String newName, String newHood, String newOpen, String newClose, int twoRoom, int threeRoom) {
@@ -169,14 +174,6 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         }
     }
 
-    @Override
-    public void toggleVisibility(BTOProject project, boolean visibility) {
-        if (project != null) {
-            project.setVisibility(visibility); // Make sure this method exists in BTOProject
-        }
-    }
-
-
 
 
 
@@ -203,14 +200,102 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         }
     }
 
+
     public String genReport(String filterCriteria) {
-        StringBuilder report = new StringBuilder("=== Manager Report ===\n");
-        for (BTOProject p : createdProj) {
-            if (p != null) {
-                report.append("Project: ").append(p.getProjName()).append("\n");
-            }
+        // Parse the filter criteria into individual components
+        String[] filters = new String[4]; // Default to blank filters
+        String[] inputFilters = filterCriteria.split(",");
+        for (int i = 0; i < inputFilters.length && i < 4; i++) {
+            filters[i] = inputFilters[i].trim();
         }
-        return report.toString();
+    
+        String filterFlatType = filters[0];
+        String filterProjectName = filters[1];
+        String filterAge = filters[2];
+        String filterMaritalStatus = filters[3];
+    
+        // Prepare the report header
+        StringBuilder report = new StringBuilder("=== Manager Report ===\n");
+        report.append(String.format("%-15s | %-15s | %-10s | %-15s | %-15s\n", 
+            "Applicant NRIC", "Project Name", "Flat Type", "Age", "Marital Status"));
+        report.append("-------------------------------------------------------------\n");
+    
+        // Read applicant details from Applications.csv
+        String applicationsFilePath = "V2\\Applications.csv";
+        try (BufferedReader appBr = new BufferedReader(new FileReader(applicationsFilePath))) {
+            String line;
+            boolean isHeader = true;
+    
+            while ((line = appBr.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+    
+                String[] fields = line.split(",");
+                String applicantNRIC = fields[0].trim();
+                String projectName = fields[1].trim();
+                String flatType = fields[2].trim();
+                String applicationStatus = fields[3].trim(); // Optional: Can be used for filtering later
+    
+                // Retrieve age and marital status from ApplicantList.csv
+                String applicantDetails = getApplicantDetails(applicantNRIC);
+                if (applicantDetails == null) {
+                    continue; // Skip if applicant details are not found
+                }
+    
+                String[] applicantFields = applicantDetails.split(",");
+                int age = Integer.parseInt(applicantFields[2].trim());
+                String maritalStatus = applicantFields[3].trim();
+    
+                // Apply filters
+                boolean matchesFlatType = filterFlatType.isEmpty() || flatType.equalsIgnoreCase(filterFlatType);
+                boolean matchesProjectName = filterProjectName.isEmpty() || projectName.equalsIgnoreCase(filterProjectName);
+                boolean matchesAge = filterAge.isEmpty() || age == Integer.parseInt(filterAge);
+                boolean matchesMaritalStatus = filterMaritalStatus.isEmpty() || maritalStatus.equalsIgnoreCase(filterMaritalStatus);
+    
+                if (matchesFlatType && matchesProjectName && matchesAge && matchesMaritalStatus) {
+                    // Add matching applicant to the report
+                    report.append(String.format("%-15s | %-15s | %-10s | %-15d | %-15s\n", 
+                        applicantNRIC, projectName, flatType, age, maritalStatus));
+                }
+            }
+        } catch (IOException e) {
+            return "Error reading applications file ('" + applicationsFilePath + "'): " + e.getMessage();
+        }
+    
+        // Return the generated report
+        if (report.toString().contains("Applicant NRIC")) {
+            return report.toString();
+        } else {
+            return "No matching applicants found.";
+        }
+    }
+
+    // Helper method to retrieve applicant details from ApplicantList.csv
+    private String getApplicantDetails(String nric) {
+        String applicantFilePath = "V2\\ApplicantList.csv";
+        try (BufferedReader appBr = new BufferedReader(new FileReader(applicantFilePath))) {
+            String line;
+            boolean isHeader = true;
+
+            while ((line = appBr.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+
+                String[] fields = line.split(",");
+                String currentNRIC = fields[1].trim();
+
+                if (currentNRIC.equalsIgnoreCase(nric)) {
+                    return line; // Return the entire line for the matching NRIC
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading applicant list: " + e.getMessage());
+        }
+        return null; // Return null if applicant not found
     }
 
 	private void ensureCapacity() {
@@ -220,11 +305,47 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
     public BTOProject getProjectByName(String name) {
-        for (BTOProject project : createdProj) {
-            if (project != null && project.getProjName().equalsIgnoreCase(name)) {
-                return project;
-            }
+        BTOProject project = createBTOProjectFromCSV(name);
+        if (project != null){
+            return project;
         }
+        
+        return null;
+    }
+
+
+    // method to create a bto project object from csv data
+    public BTOProject createBTOProjectFromCSV(String projectName) {
+        String filePath = "V2\\ProjectList.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+            while ((line = br.readLine()) != null) {
+                if (isHeader) { // skip header row
+                    isHeader = false;
+                    continue;
+                }
+                String[] fields = line.split(",");
+                if ((fields[0].trim().equalsIgnoreCase(projectName)) && 
+                    (!fields[10].trim().isEmpty() && fields[10].trim().equalsIgnoreCase(this.getName().trim()))) { // find matching project
+                    String projName = fields[0];
+                    String neighborhood = fields[1];
+                    String appOpenDate = fields[8];
+                    String appCloseDate = fields[9];
+                    BTOProject project = new BTOProject(projName, neighborhood, appOpenDate, appCloseDate);
+                    String type1 = fields[2];
+                    int unitsType1 = Integer.parseInt(fields[3]);
+                    String type2 = fields[5];
+                    int unitsType2 = Integer.parseInt(fields[6]);
+                    project.addFlatType(type1, unitsType1); // add flat types
+                    project.addFlatType(type2, unitsType2);
+                    return project;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading project list: " + e.getMessage());
+        }
+        System.out.println("Project not found. Please enter a valid project name.");
         return null;
     }
 

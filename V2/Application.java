@@ -96,7 +96,7 @@ public class Application {
     }
 
     public void deleteFromCSV() {
-        String filePath = "Applications.csv";
+        String filePath = "V2\\Applications.csv";
         List<String> lines = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

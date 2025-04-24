@@ -1,4 +1,6 @@
-Name,NRIC,Age,Marital Status, Password, Project Applied, Status
-Daniel,T2109876H,36,Single,DanielOfficer1
-Emily,S6543210I,28,Single,password
-David,T1234567J,29,Married,D4vdPassw0rd
+Name,NRIC,Age,Marital Status,Password,Project Applied,Status
+Daniel,T2109876H,36,Single,DanielOfficer1,Jurong Hills,Approved
+Emily,S6543210I,28,Single,password,Jurong Hills,Rejected
+David,T1234567J,29,Married,D4vdPassw0rd,Jurong Hills,Rejected
+Emili,S6543212I,28,Single,password,Jurong Hills,Rejected
+Davif,T1234568J,29,Married,D4vdPassw0rd,Jurong Hills,Pending

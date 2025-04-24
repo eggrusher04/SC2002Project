@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Applicant implements Users, View {
     private String name; // applicant's name
@@ -131,9 +132,36 @@ public class Applicant implements Users, View {
 
     public void withraw(){
         // delete application from csv and reset current application
+        if (this.currentApplication != null){
         this.currentApplication.deleteFromCSV();
         this.currentApplication = null;
-        System.out.println("your withdrawal request has been processed.");
+        System.out.println("Your withdrawal request has been processed.");
+    }
+        else{
+            String filePath = "V2\\Applications.csv";
+            List<String> lines = new ArrayList<>();
+
+            try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] fields = line.split(",");
+                    if (!(fields[0].equals(this.nric))){
+                        lines.add(line);
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("Error reading applications from CSV: " + e.getMessage());
+            }
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+                for (String line : lines) {
+                    bw.write(line + "\n");
+                }
+            } catch (IOException e) {
+                System.out.println("Error writing applications to CSV: " + e.getMessage());
+            }
+            }
+        
     }
 
     // method to create a bto project object from csv data
@@ -316,6 +344,7 @@ public class Applicant implements Users, View {
                 int unitsType1 = Integer.parseInt(fields[3]);
                 String type2 = fields[5];
                 int unitsType2 = Integer.parseInt(fields[6]);
+                String visible = fields[13];
 
                 // ensure singles above 35 only see 2-room flats
                 if (maritalStatus.equalsIgnoreCase("single") && age >= 35) {
@@ -327,6 +356,9 @@ public class Applicant implements Users, View {
                     if (!type1.equalsIgnoreCase(flatTypeFilter) && !type2.equalsIgnoreCase(flatTypeFilter)) {
                         continue; // skip projects that don't match filter
                     }
+                }
+                if ("No".equals(visible)){
+                    continue; // skip non visible projects
                 }
 
                 // append project details to result
