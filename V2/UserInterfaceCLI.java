@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * Class UserInterfaceCLI - Auto-generated Javadoc documentation.
+ */
 public class UserInterfaceCLI {
 
 	private Scanner scanner = new Scanner(System.in);
@@ -17,6 +20,9 @@ public class UserInterfaceCLI {
 		loginManager.loadManager("V2\\ManagerList.csv");
 	}
 
+/**
+ * Method displayMenu - auto-documented method.
+ */
 	public void displayMenu() {
 		// TODO - implement UserInterfaceCLI.displayMenu
 		System.out.println("====== Welcome to HDB Login System =====");
@@ -29,6 +35,9 @@ public class UserInterfaceCLI {
 	 * 
 	 * @param prompt
 	 */
+/**
+ * Method getInput - auto-documented method.
+ */
 	public String getInput(String prompt) {
 		// TODO - implement UserInterfaceCLI.getInput
 		System.out.println(prompt);
@@ -40,6 +49,9 @@ public class UserInterfaceCLI {
 	 * 
 	 * @param output
 	 */
+/**
+ * Method showOutput - auto-documented method.
+ */
 	public void showOutput(String output) {
 		// TODO - implement UserInterfaceCLI.showOutput
 		System.out.println(output);
@@ -104,6 +116,9 @@ public class UserInterfaceCLI {
 		}
 	}
 
+/**
+ * Method main - auto-documented method.
+ */
 	public static void main(String[] args) {
 		UserInterfaceCLI cli = new UserInterfaceCLI();
 		cli.launch();

@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+/**
+ * Class BTOProject - Auto-generated Javadoc documentation.
+ */
 public class BTOProject {
 
     private String projName;
@@ -10,6 +13,9 @@ public class BTOProject {
     private ArrayList<HDBOfficer> assignedOfficers;
     private int maxOfficerSlots;
 
+/**
+ * Method BTOProject - auto-documented method.
+ */
     public BTOProject(String projName, String neighbourhood, String applicationOpenDate, String applicationCloseDate) {
         this.projName = projName;
         this.neighbourhood = neighbourhood;
@@ -26,6 +32,9 @@ public class BTOProject {
     }
 
 	
+/**
+ * Method addFlatType - auto-documented method.
+ */
     public void addFlatType(String flatType, int units) {
             for (int i = 0; i < units; i++) {
             String unitNumber = flatType + "-" + (availFlats.size() + 1);
@@ -33,6 +42,9 @@ public class BTOProject {
     }
 
 }
+/**
+ * Method getAvailUnits - auto-documented method.
+ */
     public int getAvailUnits(String flatType) {
         int count = 0;
         for (Flat flat : availFlats) {
@@ -42,6 +54,9 @@ public class BTOProject {
         }
         return count;
     }
+/**
+ * Method updateFlatAvailability - auto-documented method.
+ */
     public void updateFlatAvailability(String flatType, int newFlatCount) {
       int available = 0;
       for (Flat flat : availFlats) {
@@ -56,39 +71,69 @@ public class BTOProject {
         addFlatType(flatType, toAdd);
     }
 }
+/**
+ * Method assignedFlats - auto-documented method.
+ */
     public Flat[] assignedFlats() {
         return availFlats.toArray(new Flat[0]);
     }
+/**
+ * Method assignOfficer - auto-documented method.
+ */
     public void assignOfficer(HDBOfficer officer) {
         assignedOfficers.add(officer);
     }
+/**
+ * Method getAvailFlats - auto-documented method.
+ */
     public ArrayList<Flat> getAvailFlats() {
         return availFlats;
     }
 
+/**
+ * Method getAssignedOfficers - auto-documented method.
+ */
     public ArrayList<HDBOfficer> getAssignedOfficers() {
         return assignedOfficers;
     }
 
+/**
+ * Method getProjName - auto-documented method.
+ */
     public String getProjName() {
         return projName;
     }
 
+/**
+ * Method getNeighbourhood - auto-documented method.
+ */
     public String getNeighbourhood() {
         return neighbourhood;
     }
 
+/**
+ * Method getApplicationOpenDate - auto-documented method.
+ */
     public String getApplicationOpenDate() {
         return applicationOpenDate;
     }
+/**
+ * Method getApplicationCloseDate - auto-documented method.
+ */
     public String getApplicationCloseDate() {
         return applicationCloseDate;
     }
 
+/**
+ * Method isVisible - auto-documented method.
+ */
     public boolean isVisible() {
         return visibility;
     }
 
+/**
+ * Method setVisibility - auto-documented method.
+ */
     public void setVisibility(boolean visibility) {
         this.visibility = visibility;
     }
@@ -114,6 +159,9 @@ public class BTOProject {
     }
 
     @Override
+/**
+ * Method toString - auto-documented method.
+ */
     public String toString() {
         return "Project: " + projName + ", Neighbourhood: " + neighbourhood +
                 ", Open: " + applicationOpenDate + ", Close: " + applicationCloseDate +

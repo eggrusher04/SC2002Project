@@ -4,6 +4,9 @@ import java.util.Scanner;
 // This class is what the OFFICER will see upon successful login
 
 
+/**
+ * Class OfficerCLI - Auto-generated Javadoc documentation.
+ */
 public class OfficerCLI {
     private Scanner scanner = new Scanner(System.in);
     private LoginManager loginManager;

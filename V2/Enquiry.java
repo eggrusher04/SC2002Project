@@ -1,3 +1,6 @@
+/**
+ * Class Enquiry - Auto-generated Javadoc documentation.
+ */
 public class Enquiry {
 
 	private int enquiryID;
@@ -50,15 +53,24 @@ public class Enquiry {
 	}
 
 	
+/**
+ * Method updateEnquiry - auto-documented method.
+ */
 	public void updateEnquiry(String newMessage) {
 		this.message = newMessage;
 	}
 
+/**
+ * Method delEnquiry - auto-documented method.
+ */
 	public void delEnquiry() {
 		this.message = null;
 		this.response = null;
 	}
 
+/**
+ * Method addEnquiry - auto-documented method.
+ */
 	public void addEnquiry(Applicant sender, String message) {
 		this.sender = sender;
 		this.message = message;

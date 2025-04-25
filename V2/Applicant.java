@@ -2,6 +2,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class Applicant - Auto-generated Javadoc documentation.
+ */
 public class Applicant implements Users, View {
     private String name; // applicant's name
     private String nric; // applicant's nric
@@ -17,6 +20,9 @@ public class Applicant implements Users, View {
     private String assignedOfficer;
     private String appliedProjName;
 
+/**
+ * Method Applicant - auto-documented method.
+ */
     public Applicant(String name, String nric, String password, int age, String maritalStatus) {
         this.name = name;
         this.nric = nric;
@@ -34,68 +40,113 @@ public class Applicant implements Users, View {
         this.assignedOfficer = null;
     }
 
+/**
+ * Method getAppliedProjectName - auto-documented method.
+ */
     public String getAppliedProjectName() {
         return appliedProjName;
     }
 
+/**
+ * Method setAppliedProjectName - auto-documented method.
+ */
     public void setAppliedProjectName(String appliedProjectName) {
         this.appliedProjName = appliedProjectName;
     }
 
     // getters and setters for attributes
+/**
+ * Method setFlatTypeFilter - auto-documented method.
+ */
     public void setFlatTypeFilter(String flatTypeFilter) {
         this.flatTypeFilter = flatTypeFilter;
     }
 
+/**
+ * Method getFlatTypeFilter - auto-documented method.
+ */
     public String getFlatTypeFilter() {
         return flatTypeFilter;
     }
 
     @Override
+/**
+ * Method getName - auto-documented method.
+ */
     public String getName() {
         return name;
     }
 
     @Override
+/**
+ * Method getNRIC - auto-documented method.
+ */
     public String getNRIC() {
         return nric;
     }
 
     @Override
+/**
+ * Method getPassword - auto-documented method.
+ */
     public String getPassword() {
         return password;
     }
 
     @Override
+/**
+ * Method getAge - auto-documented method.
+ */
     public int getAge() {
         return age;
     }
 
     @Override
+/**
+ * Method getMaritalStatus - auto-documented method.
+ */
     public String getMaritalStatus() {
         return maritalStatus;
     }
 
+/**
+ * Method setApplicationStatus - auto-documented method.
+ */
     public void setApplicationStatus(String status) {
         this.applicationStatus = status;
     }
 
+/**
+ * Method getApplicationStatus - auto-documented method.
+ */
     public String getApplicationStatus() {
         return applicationStatus;
     }
 
+/**
+ * Method setAppliedProject - auto-documented method.
+ */
     public void setAppliedProject(BTOProject project) {
         this.appliedProject = project;
     }
 
+/**
+ * Method getAppliedProject - auto-documented method.
+ */
     public BTOProject getAppliedProject() {
         return appliedProject;
     }
 
+/**
+ * Method setFlatType - auto-documented method.
+ */
     public void setFlatType(String flatType) {
         this.flatType = flatType;
     }
 
+/**
+ * Method getFlatType - auto-documented method.
+ */
     public String getFlatType() {
         return flatType;
     }
@@ -106,6 +157,9 @@ public class Applicant implements Users, View {
     }
 
     // method to apply for a bto project
+/**
+ * Method applyProject - auto-documented method.
+ */
     public void applyProject(BTOProject project) {
         if (this.currentApplication != null) { // check if already applied
             System.out.println("you have already applied for a project.");
@@ -125,11 +179,17 @@ public class Applicant implements Users, View {
         System.out.println("you have successfully applied for the project: " + project.getProjName());
     }
 
+/**
+ * Method getCurrentApplication - auto-documented method.
+ */
     public Application getCurrentApplication() {
         return currentApplication;
     }
 
     // method to view application status
+/**
+ * Method viewStatus - auto-documented method.
+ */
     public String viewStatus() {
         if (currentApplication == null) { // no active application
             return "no active application.";
@@ -138,6 +198,9 @@ public class Applicant implements Users, View {
     }
 
     // method to request withdrawal of application
+/**
+ * Method reqWithdrawal - auto-documented method.
+ */
     public void reqWithdrawal() {
         if (this.currentApplication == null) { // check if there is an active application
             System.out.println("you have no active application to withdraw.");
@@ -152,6 +215,9 @@ public class Applicant implements Users, View {
         this.withraw();
     }
 
+/**
+ * Method withraw - auto-documented method.
+ */
     public void withraw(){
         // delete application from csv and reset current application
         if (this.currentApplication != null){
@@ -187,6 +253,9 @@ public class Applicant implements Users, View {
     }
 
     // method to create a bto project object from csv data
+/**
+ * Method createBTOProjectFromCSV - auto-documented method.
+ */
     public void createBTOProjectFromCSV(String projectName) {
         String filePath = "V2\\ProjectList.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -222,17 +291,26 @@ public class Applicant implements Users, View {
 
     // method to handle user login
     @Override
+/**
+ * Method login - auto-documented method.
+ */
     public boolean login(String nric, String pw) {
         return this.nric.equals(nric) && this.password.equals(pw);
     }
 
     // method to change password
     @Override
+/**
+ * Method changePassword - auto-documented method.
+ */
     public void changePassword(String newPassword) {
         this.password = newPassword;
     }
 
     // method to check eligibility for a project
+/**
+ * Method isEligible - auto-documented method.
+ */
     private boolean isEligible(BTOProject project) {
         if (maritalStatus.equalsIgnoreCase("married")) { // married applicants can apply for any flat
             return true;
@@ -244,6 +322,9 @@ public class Applicant implements Users, View {
     }
 
     // enquiry management methods
+/**
+ * Method addEnquiry - auto-documented method.
+ */
     public void addEnquiry(String message) {
         int enquiryID = enquiries.size() + 1; // generate unique id
         Enquiry newEnquiry = new Enquiry(enquiryID, this, message);
@@ -252,6 +333,9 @@ public class Applicant implements Users, View {
         System.out.println("enquiry added successfully.");
     }
 
+/**
+ * Method viewEnquiries - auto-documented method.
+ */
     public void viewEnquiries() {
         if (enquiries.isEmpty()) { // no enquiries to display
             System.out.println("you have no enquiries.");
@@ -264,6 +348,9 @@ public class Applicant implements Users, View {
         }
     }
 
+/**
+ * Method editEnquiry - auto-documented method.
+ */
     public void editEnquiry(int enquiryID, String newMessage) {
         for (Enquiry enquiry : enquiries) { // find and update enquiry
             if (enquiry.getEnquiryID() == enquiryID) {
@@ -276,6 +363,9 @@ public class Applicant implements Users, View {
         System.out.println("enquiry not found.");
     }
 
+/**
+ * Method deleteEnquiry - auto-documented method.
+ */
     public void deleteEnquiry(int enquiryID) {
         enquiries.removeIf(enquiry -> enquiry.getEnquiryID() == enquiryID); // remove enquiry
         saveAllEnquiriesToCSV(); // rewrite csv
@@ -283,6 +373,9 @@ public class Applicant implements Users, View {
     }
 
     // helper methods for csv handling
+/**
+ * Method loadEnquiriesFromCSV - auto-documented method.
+ */
     private void loadEnquiriesFromCSV() {
         String filePath = "V2\\enquiries.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -307,6 +400,9 @@ public class Applicant implements Users, View {
         }
     }
 
+/**
+ * Method saveEnquiryToCSV - auto-documented method.
+ */
     private void saveEnquiryToCSV(Enquiry enquiry) {
         String filePath = "V2\\enquiries.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
@@ -323,10 +419,16 @@ public class Applicant implements Users, View {
         }
     }
 
+/**
+ * Method updateEnquiryInCSV - auto-documented method.
+ */
     private void updateEnquiryInCSV(Enquiry enquiry) {
         saveAllEnquiriesToCSV(); // rewrite entire csv
     }
 
+/**
+ * Method saveAllEnquiriesToCSV - auto-documented method.
+ */
     private void saveAllEnquiriesToCSV() {
         String filePath = "V2\\enquiries.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
@@ -348,6 +450,9 @@ public class Applicant implements Users, View {
 
     // method to view filtered list of projects
     @Override
+/**
+ * Method viewListOfProjects - auto-documented method.
+ */
     public String viewListOfProjects() {
         String filePath = "V2\\ProjectList.csv";
         StringBuilder result = new StringBuilder();
@@ -413,6 +518,9 @@ public class Applicant implements Users, View {
         }
     }
 
+/**
+ * Method loadCurrentApplicationFromCSV - auto-documented method.
+ */
     private void loadCurrentApplicationFromCSV() {
         String filePath = "V2\\Applications.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
