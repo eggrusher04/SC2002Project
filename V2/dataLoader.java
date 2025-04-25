@@ -7,20 +7,33 @@ import java.util.List;
 import java.util.Map;
 
 /**
+<<<<<<< HEAD
  * Class dataLoader - Represents the dataloader in the system.
+=======
+ * Class dataLoader - Auto-generated Javadoc documentation.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 public class dataLoader {
 
 /**
+<<<<<<< HEAD
  * Method dataLoader - performs the dataLoader operation.
+=======
+ * Method dataLoader - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public dataLoader() {
-        // No need for hdbManager anymore
+        
     }
 
+<<<<<<< HEAD
     // Function to load personal details
 /**
  * Method loadPersonalDetails - performs the loadPersonalDetails operation.
+=======
+/**
+ * Method loadPersonalDetails - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public Map<String, Applicant> loadPersonalDetails(String personalCSV) {
         Map<String, Applicant> applicantMap = new HashMap<>();
@@ -43,7 +56,6 @@ public class dataLoader {
                     String maritalStatus = fields[3].trim();
                     String password = fields[4].trim();
 
-                    // Create and store the applicant in the map
                     Applicant applicant = new Applicant(name,nric, password, age, maritalStatus);
                     applicantMap.put(nric, applicant);
 
@@ -56,9 +68,14 @@ public class dataLoader {
         return applicantMap;
     }
 
+<<<<<<< HEAD
     // Function to load application data and associate with personal details
 /**
  * Method loadApplicationData - performs the loadApplicationData operation.
+=======
+/**
+ * Method loadApplicationData - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void loadApplicationData(String applicationCSV, Map<String, Applicant> applicantMap) {
         try (BufferedReader br = new BufferedReader(new FileReader(applicationCSV))) {
@@ -98,7 +115,11 @@ public class dataLoader {
     }
 
 /**
+<<<<<<< HEAD
  * Method loadApplicants - performs the loadApplicants operation.
+=======
+ * Method loadApplicants - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public List<Applicant> loadApplicants(String personalCSV, String applicationCSV) {
         // First, load personal details into the map

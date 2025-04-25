@@ -1,3 +1,6 @@
+/**
+ * Interface Users - Auto-generated Javadoc documentation.
+ */
 public interface Users {
 
 	//String nric = "SXXXXXXD";

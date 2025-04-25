@@ -1,3 +1,6 @@
+/**
+ * Interface ProjectManager - Auto-generated Javadoc documentation.
+ */
 public interface ProjectManager {
 
 	/**
@@ -19,11 +22,5 @@ public interface ProjectManager {
 	 */
 	void deleteProject(BTOProject project);
 
-	/**
-	 * 
-	 * @param project
-	 * @param visibility
-	 */
-	void toggleVisibility(BTOProject project, boolean visibility);
 
 }

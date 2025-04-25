@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
+<<<<<<< HEAD
  * Class HDBManager - Represents the hdbmanager in the system.
+=======
+ * Class HDBManager - Auto-generated Javadoc documentation.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 public class HDBManager extends Employees implements ProjectManager, OfficerApproval, View {
 
@@ -14,11 +18,16 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 /**
+<<<<<<< HEAD
  * Method HDBManager - performs the HDBManager operation.
+=======
+ * Method HDBManager - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public HDBManager(String nric, String password, int age, String maritalStatus, int staffID, String name) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
+<<<<<<< HEAD
     }
 
 /**
@@ -33,6 +42,24 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 	@Override
 /**
  * Method viewEnquiry - performs the viewEnquiry operation.
+=======
+ 
+    }
+
+/**
+ * Method HDBManager - auto-documented method.
+ */
+    public HDBManager(String name, String nric, String password, int age, String maritalStatus, int staffID) {
+        super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
+        this.createdProj = new BTOProject[INITIAL_CAPACITY];  // initialize it here
+        
+    }
+    
+    
+	@Override
+/**
+ * Method viewEnquiry - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public String viewEnquiry(String message) {
 		return "Enquiry: " + message;
@@ -40,7 +67,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 	
 	@Override
 /**
+<<<<<<< HEAD
  * Method replyEnquiry - performs the replyEnquiry operation.
+=======
+ * Method replyEnquiry - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void replyEnquiry() {
 		System.out.println("Replying to enquiry... (HDBManager specific logic)");
@@ -48,7 +79,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 	
 	@Override
 /**
+<<<<<<< HEAD
  * Method viewProjDetails - performs the viewProjDetails operation.
+=======
+ * Method viewProjDetails - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public String viewProjDetails(BTOProject project) {
 		if (project == null) return "No project provided.";
@@ -83,7 +118,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 	@Override
 /**
+<<<<<<< HEAD
  * Method login - performs the login operation.
+=======
+ * Method login - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public boolean login(String nric, String pw) {
         return getNRIC().equals(nric) && getPassword().equals(pw);
@@ -94,7 +133,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     // pulls from projectlist csv and prints out all the exisitng projects (changed)
 	@Override
 /**
+<<<<<<< HEAD
  * Method viewListOfProjects - performs the viewListOfProjects operation.
+=======
+ * Method viewListOfProjects - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String viewListOfProjects() {
         String filePath = "V2\\ProjectList.csv";
@@ -128,7 +171,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
                 result.append("Neighborhood     : ").append(neighborhood).append("\n");
                 result.append("Flat Types       : ").append(type1).append(" (").append(unitsType1).append(" units, $").append(priceType1).append("), ")
                       .append(type2).append(" (").append(unitsType2).append(" units, $").append(priceType2).append(")\n");
+<<<<<<< HEAD
                 result.append("Application Dates: ").append(openDate).append(" → ").append(closeDate).append("\n");
+=======
+                result.append("Application Dates: ").append(openDate).append(" to ").append(closeDate).append("\n");
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
                 result.append("Manager          : ").append(manager).append("\n");
                 result.append("Officer Slot     : ").append(officerSlot).append("\n");
                 result.append("Assigned Officer : ").append(officer).append("\n");
@@ -151,6 +198,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 	@Override
 /**
+<<<<<<< HEAD
  * Method createProject - performs the createProject operation.
  */
     public void createProject(BTOProject project) {
@@ -166,6 +214,26 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 // This method only updates data - no printing or input
 /**
  * Method editProject - performs the editProject operation.
+=======
+ * Method createProject - auto-documented method.
+ */
+    public void createProject(BTOProject project) {
+        ensureCapacity(); // Ensure there is enough space in the array
+        for (int i = 0; i < createdProj.length; i++) {
+            if (createdProj[i] == null) {
+                createdProj[i] = project;
+                System.out.println("Project '" + project.getProjName() + "' has been added to the system.");
+                return;
+            }
+        }
+        System.out.println("Failed to add project: No available slots in the createdProj array.");
+            }
+
+
+// This method only updates data - no printing or input
+/**
+ * Method editProject - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void editProject(BTOProject project, String newName, String newHood, String newOpen, String newClose, int twoRoom, int threeRoom) {
 		if (newName != null && !newName.isBlank()) {
@@ -191,7 +259,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
     @Override
 /**
+<<<<<<< HEAD
  * Method deleteProject - performs the deleteProject operation.
+=======
+ * Method deleteProject - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void deleteProject(BTOProject project) {
         for (int i = 0; i < createdProj.length; i++) {
@@ -202,6 +274,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         }
     }
 
+<<<<<<< HEAD
     @Override
 /**
  * Method toggleVisibility - performs the toggleVisibility operation.
@@ -213,12 +286,18 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
 
+=======
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
 
 
 
 	@Override
 /**
+<<<<<<< HEAD
  * Method approveOfficer - performs the approveOfficer operation.
+=======
+ * Method approveOfficer - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void approveOfficer(HDBOfficer officer) {
         if (officer != null) {
@@ -228,7 +307,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
     @Override
 /**
+<<<<<<< HEAD
  * Method rejectOfficer - performs the rejectOfficer operation.
+=======
+ * Method rejectOfficer - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void rejectOfficer(HDBOfficer officer) {
         if (officer != null) {
@@ -240,7 +323,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
     // cahnged a bit
 /**
+<<<<<<< HEAD
  * Method approveWithdrawal - performs the approveWithdrawal operation.
+=======
+ * Method approveWithdrawal - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void approveWithdrawal(Applicant applicant) {
         if (applicant != null) {
@@ -248,6 +335,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         }
     }
 
+<<<<<<< HEAD
 /**
  * Method genReport - performs the genReport operation.
  */
@@ -263,6 +351,114 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 /**
  * Method ensureCapacity - performs the ensureCapacity operation.
+=======
+
+/**
+ * Method genReport - auto-documented method.
+ */
+    public String genReport(String filterCriteria) {
+        // Parse the filter criteria into individual components
+        String[] filters = new String[4]; // Default to blank filters
+        String[] inputFilters = filterCriteria.split(",");
+        for (int i = 0; i < inputFilters.length && i < 4; i++) {
+            filters[i] = inputFilters[i].trim();
+        }
+    
+        String filterFlatType = filters[0];
+        String filterProjectName = filters[1];
+        String filterAge = filters[2];
+        String filterMaritalStatus = filters[3];
+    
+        // Prepare the report header
+        StringBuilder report = new StringBuilder("=== Manager Report ===\n");
+        report.append(String.format("%-15s | %-15s | %-10s | %-15s | %-15s\n", 
+            "Applicant NRIC", "Project Name", "Flat Type", "Age", "Marital Status"));
+        report.append("-------------------------------------------------------------\n");
+    
+        // Read applicant details from Applications.csv
+        String applicationsFilePath = "V2\\Applications.csv";
+        try (BufferedReader appBr = new BufferedReader(new FileReader(applicationsFilePath))) {
+            String line;
+            boolean isHeader = true;
+    
+            while ((line = appBr.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+    
+                String[] fields = line.split(",");
+                String applicantNRIC = fields[0].trim();
+                String projectName = fields[1].trim();
+                String flatType = fields[2].trim();
+                String applicationStatus = fields[3].trim(); // Optional: Can be used for filtering later
+    
+                // Retrieve age and marital status from ApplicantList.csv
+                String applicantDetails = getApplicantDetails(applicantNRIC);
+                if (applicantDetails == null) {
+                    continue; // Skip if applicant details are not found
+                }
+    
+                String[] applicantFields = applicantDetails.split(",");
+                int age = Integer.parseInt(applicantFields[2].trim());
+                String maritalStatus = applicantFields[3].trim();
+    
+                // Apply filters
+                boolean matchesFlatType = filterFlatType.isEmpty() || flatType.equalsIgnoreCase(filterFlatType);
+                boolean matchesProjectName = filterProjectName.isEmpty() || projectName.equalsIgnoreCase(filterProjectName);
+                boolean matchesAge = filterAge.isEmpty() || age == Integer.parseInt(filterAge);
+                boolean matchesMaritalStatus = filterMaritalStatus.isEmpty() || maritalStatus.equalsIgnoreCase(filterMaritalStatus);
+    
+                if (matchesFlatType && matchesProjectName && matchesAge && matchesMaritalStatus) {
+                    // Add matching applicant to the report
+                    report.append(String.format("%-15s | %-15s | %-10s | %-15d | %-15s\n", 
+                        applicantNRIC, projectName, flatType, age, maritalStatus));
+                }
+            }
+        } catch (IOException e) {
+            return "Error reading applications file ('" + applicationsFilePath + "'): " + e.getMessage();
+        }
+    
+        // Return the generated report
+        if (report.toString().contains("Applicant NRIC")) {
+            return report.toString();
+        } else {
+            return "No matching applicants found.";
+        }
+    }
+
+    // Helper method to retrieve applicant details from ApplicantList.csv
+/**
+ * Method getApplicantDetails - auto-documented method.
+ */
+    private String getApplicantDetails(String nric) {
+        String applicantFilePath = "V2\\ApplicantList.csv";
+        try (BufferedReader appBr = new BufferedReader(new FileReader(applicantFilePath))) {
+            String line;
+            boolean isHeader = true;
+
+            while ((line = appBr.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+
+                String[] fields = line.split(",");
+                String currentNRIC = fields[1].trim();
+
+                if (currentNRIC.equalsIgnoreCase(nric)) {
+                    return line; // Return the entire line for the matching NRIC
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading applicant list: " + e.getMessage());
+        }
+        return null; // Return null if applicant not found
+    }
+
+/**
+ * Method ensureCapacity - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	private void ensureCapacity() {
         if (createdProj[createdProj.length - 1] != null) {
@@ -271,6 +467,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
 /**
+<<<<<<< HEAD
  * Method getProjectByName - performs the getProjectByName operation.
  */
     public BTOProject getProjectByName(String name) {
@@ -279,6 +476,55 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
                 return project;
             }
         }
+=======
+ * Method getProjectByName - auto-documented method.
+ */
+    public BTOProject getProjectByName(String name) {
+        BTOProject project = createBTOProjectFromCSV(name);
+        if (project != null){
+            return project;
+        }
+        
+        return null;
+    }
+
+
+    // method to create a bto project object from csv data
+/**
+ * Method createBTOProjectFromCSV - auto-documented method.
+ */
+    public BTOProject createBTOProjectFromCSV(String projectName) {
+        String filePath = "V2\\ProjectList.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true;
+            while ((line = br.readLine()) != null) {
+                if (isHeader) { // skip header row
+                    isHeader = false;
+                    continue;
+                }
+                String[] fields = line.split(",");
+                if ((fields[0].trim().equalsIgnoreCase(projectName)) && 
+                    (!fields[10].trim().isEmpty() && fields[10].trim().equalsIgnoreCase(this.getName().trim()))) { // find matching project
+                    String projName = fields[0];
+                    String neighborhood = fields[1];
+                    String appOpenDate = fields[8];
+                    String appCloseDate = fields[9];
+                    BTOProject project = new BTOProject(projName, neighborhood, appOpenDate, appCloseDate);
+                    String type1 = fields[2];
+                    int unitsType1 = Integer.parseInt(fields[3]);
+                    String type2 = fields[5];
+                    int unitsType2 = Integer.parseInt(fields[6]);
+                    project.addFlatType(type1, unitsType1); // add flat types
+                    project.addFlatType(type2, unitsType2);
+                    return project;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading project list: " + e.getMessage());
+        }
+        System.out.println("Project not found. Please enter a valid project name.");
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
         return null;
     }
 

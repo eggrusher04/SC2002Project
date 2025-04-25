@@ -4,6 +4,9 @@ import java.util.Scanner;
 // This class is what the OFFICER will see upon successful login
 
 
+/**
+ * Class OfficerCLI - Auto-generated Javadoc documentation.
+ */
 public class OfficerCLI {
     private Scanner scanner = new Scanner(System.in);
     private LoginManager loginManager;
@@ -46,10 +49,8 @@ public class OfficerCLI {
 
             switch(choice)
             {
-                case "1":
-                    System.out.println("Your Application Status: " + officerApplicant.viewStatus());
-                    break;
-                case "2":
+                case "1" -> System.out.println("Your Application Status: " + officerApplicant.viewStatus());
+                case "2" -> {
                     //add logic to check whether officer can apply the project as an applicant
                     if(officer.isEligibleForApplicant(officerApplicant))
                     {
@@ -71,12 +72,12 @@ public class OfficerCLI {
                     {
                         System.out.println("You are not eligible to apply as you are managing his project!");
                     }
-                    break;
-                case "3":
+                }
+                case "3" -> {
                     officerApplicant.reqWithdrawal();
                     System.out.println("You have submitted a withdrawal request.");
-                    break;
-                case "4":
+                }
+                case "4" -> {
                     if(officer.getEnquiries() != null && !officer.getEnquiries().isEmpty())
                     {
                         for(Enquiry e : officer.getEnquiries())
@@ -88,22 +89,10 @@ public class OfficerCLI {
                     {
                         System.out.println("No enquiries found.");
                     }
-                    break;
-                case "5":
-                    officer.replyEnquiry();
-                    break;
-                case "6":
-                    BTOProject assigned = officer.getAssignedProj();
-                    if(assigned != null)
-                    {
-                        System.out.println(officer.viewProjDetails(assigned));
-                    }
-                    else
-                    {
-                        System.out.println("You have yet to register to manage a project.");
-                    }
-                    break;
-                case "7":
+                }
+                case "5" -> officer.replyEnquiry();
+                case "6" -> System.out.println(officer.viewProjDetails(officer.getName()));
+                case "7" -> {
                     System.out.println(officer.viewListOfProjects());
                     System.out.println("Enter project name you want to manage: ");
                     String regProjName = scanner.nextLine();
@@ -114,22 +103,21 @@ public class OfficerCLI {
                     } else {
                         System.out.println("Project not found.");
                     }
-                    break;
-                case "8":
+                }
+                case "8" -> {
                     System.out.println("Enter flat type to update: ");
                     String flatType = scanner.nextLine();
 
                     System.out.println("Enter units left: ");
                     int unitsLeft = Integer.parseInt(scanner.nextLine());
                     officer.updateFlatAvail(flatType, unitsLeft);
-
-                    break;
-                case "9":
+                }
+                case "9" -> {
                     System.out.println("Enter applicant's nric: ");
                     String applicantNRIC = scanner.nextLine();
                     officer.retrieveApplicant(applicantNRIC);
-                    break;
-                case "10":
+                }
+                case "10" -> {
                     System.out.println("Enter applicant's NRIC: ");
                     String appliNRIC = scanner.nextLine();
             
@@ -154,22 +142,21 @@ public class OfficerCLI {
                     } else {
                         System.out.println("No application found with NRIC: " + appliNRIC);
                     }
-                    break;
-                case "11":
+                }
+                case "11" -> {
                     System.out.println("Enter your new password: ");
                     String newPass = scanner.nextLine();
                     officer.changePassword(newPass);
                     loginManager.saveOfficerToCSV(officerCSVPath);
                     System.out.println("You have sucessfully updated your password. Please login using your new password!");
                     return;
-                case "12":
-                    System.out.println(officer.viewListOfProjects());
-                    break;
-                case "13":
+                }
+                case "12" -> System.out.println(officer.viewListOfProjects());
+                case "13" -> {
                     System.out.println("Logging out....");
                     return;
-                default:
-                    System.out.println("Invalid option. Try again!!");
+                }
+                default -> System.out.println("Invalid option. Try again!!");
             }
         }
     }

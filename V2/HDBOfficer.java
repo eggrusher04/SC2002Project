@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,13 @@ import java.util.Set;
 
 /**
  * Class HDBOfficer - Represents the hdbofficer in the system.
+=======
+import java.util.List;
+
+
+/**
+ * Class HDBOfficer - Auto-generated Javadoc documentation.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement{
 
@@ -24,7 +32,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	// First Constructor to apply as an applicant
 /**
+<<<<<<< HEAD
  * Method HDBOfficer - performs the HDBOfficer operation.
+=======
+ * Method HDBOfficer - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries) {
 
@@ -40,7 +52,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	// Second constructor to manage a project
 /**
+<<<<<<< HEAD
  * Method HDBOfficer - performs the HDBOfficer operation.
+=======
+ * Method HDBOfficer - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, BTOProject assignedProj) {
 
@@ -63,7 +79,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	// Helper method to load the assigned project from OfficerList.csv
 /**
+<<<<<<< HEAD
  * Method loadAssignedProject - performs the loadAssignedProject operation.
+=======
+ * Method loadAssignedProject - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     private BTOProject loadAssignedProject(String officerName) {
         String filePath = "V2\\OfficerList.csv";
@@ -95,7 +115,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
     // Method to create a BTOProject object from ProjectList.csv
 /**
+<<<<<<< HEAD
  * Method createBTOProjectFromCSV - performs the createBTOProjectFromCSV operation.
+=======
+ * Method createBTOProjectFromCSV - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     private BTOProject createBTOProjectFromCSV(String projectName) {
         String filePath = "V2\\ProjectList.csv";
@@ -126,21 +150,33 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     }
 
 /**
+<<<<<<< HEAD
  * Method getApplicationStatus - performs the getApplicationStatus operation.
+=======
+ * Method getApplicationStatus - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public String getApplicationStatus() {
     	return applicationStatus;
 	}
 
 /**
+<<<<<<< HEAD
  * Method getAppliedProject - performs the getAppliedProject operation.
+=======
+ * Method getAppliedProject - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public BTOProject getAppliedProject() {
     	return appliedProject;
 	}
 
 /**
+<<<<<<< HEAD
  * Method getEnquiries - performs the getEnquiries operation.
+=======
+ * Method getEnquiries - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public List<Enquiry> getEnquiries() {
 		return enquiries;
@@ -165,7 +201,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	@Override
 /**
+<<<<<<< HEAD
  * Method viewListOfProjects - performs the viewListOfProjects operation.
+=======
+ * Method viewListOfProjects - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String viewListOfProjects() {
         String filePath = "V2\\ProjectList.csv";
@@ -238,6 +278,7 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
         }
 	}
 
+<<<<<<< HEAD
 	public String viewProjDetails(BTOProject project)
 	{
 		// Method to view project details
@@ -251,6 +292,39 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
                "\nLocation: " + project.getNeighbourhood() +
                "\nAvailable Flat Types: " + String.join(", ", flatTypes);
 	}
+=======
+    
+/**
+ * Method viewProjDetails - auto-documented method.
+ */
+	public String viewProjDetails(String officerName) {
+        String filePath = "V2\\OfficerList.csv";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isHeader = true; // To skip the header row
+            while ((line = br.readLine()) != null) {
+                if (isHeader) {
+                    isHeader = false;
+                    continue; // Skip the header row
+                }
+                String[] fields = line.split(","); // Split the CSV line into fields
+                String name = fields[0].trim(); // Officer's name
+                String status = fields.length > 6 ? fields[6].trim() : ""; // Status column
+    
+                // Check if the officer's name matches
+                if (name.equalsIgnoreCase(officerName)) {
+                    // Return the status or "no projects there" if the status is blank
+                    return status.isEmpty() ? "No projects" : status;
+                }
+            }
+            // If no matching officer is found
+            return "Officer not found";
+        } catch (IOException e) {
+            // Handle file reading errors
+            return "Error reading officer list: " + e.getMessage();
+        }
+    }
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
 
 	// ProjectManagement Implementation
 	@Override
@@ -262,7 +336,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 /**
+<<<<<<< HEAD
  * Method updateFlatAvail - performs the updateFlatAvail operation.
+=======
+ * Method updateFlatAvail - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void updateFlatAvail(String flatType, int unitsLeft) {
     // Step 1: Validate input
@@ -337,7 +415,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	// ApplicantManagement Implementation
 	@Override
 /**
+<<<<<<< HEAD
  * Method retrieveApplicant - performs the retrieveApplicant operation.
+=======
+ * Method retrieveApplicant - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void retrieveApplicant(String nric) {
 		List<Applicant> applicants = loader.loadApplicants("V2\\ApplicantList.csv", "V2\\Applications.csv");
@@ -366,7 +448,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 
 /**
+<<<<<<< HEAD
  * Method updateApplicantStatus - performs the updateApplicantStatus operation.
+=======
+ * Method updateApplicantStatus - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void updateApplicantStatus(String nric, String newStatus) {
 		String csvPath = "V2\\Applications.csv";
@@ -400,14 +486,22 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	// Getter and Setter for assignedProj
 /**
+<<<<<<< HEAD
  * Method getAssignedProj - performs the getAssignedProj operation.
+=======
+ * Method getAssignedProj - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public BTOProject getAssignedProj() {
         return assignedProj;
     }
 
 /**
+<<<<<<< HEAD
  * Method setAssignedProj - performs the setAssignedProj operation.
+=======
+ * Method setAssignedProj - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void setAssignedProj(BTOProject assignedProj) {
         this.assignedProj = assignedProj;
@@ -418,7 +512,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	 * @param applicant
 	 */
 /**
+<<<<<<< HEAD
  * Method generateReceipt - performs the generateReceipt operation.
+=======
+ * Method generateReceipt - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void generateReceipt(Applicant applicant) {
 		// HDBOfficer.generateReceipt
@@ -441,7 +539,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 /**
+<<<<<<< HEAD
  * Method viewRegStatus - performs the viewRegStatus operation.
+=======
+ * Method viewRegStatus - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public String viewRegStatus() {
 		// HDBOfficer.viewRegStatus
@@ -458,7 +560,11 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 /**
+<<<<<<< HEAD
  * Method loadProjectByName - performs the loadProjectByName operation.
+=======
+ * Method loadProjectByName - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public BTOProject loadProjectByName(String projectName) {
 		String filePath = "V2\\ProjectList.csv";

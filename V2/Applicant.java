@@ -1,8 +1,15 @@
 import java.io.*;
 import java.util.ArrayList;
+<<<<<<< HEAD
 
 /**
  * Class Applicant - Represents the applicant in the system.
+=======
+import java.util.List;
+
+/**
+ * Class Applicant - Auto-generated Javadoc documentation.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 public class Applicant implements Users, View {
     private String name; // applicant's name
@@ -20,7 +27,11 @@ public class Applicant implements Users, View {
     private String appliedProjName;
 
 /**
+<<<<<<< HEAD
  * Method Applicant - performs the Applicant operation.
+=======
+ * Method Applicant - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public Applicant(String name, String nric, String password, int age, String maritalStatus) {
         this.name = name;
@@ -40,14 +51,22 @@ public class Applicant implements Users, View {
     }
 
 /**
+<<<<<<< HEAD
  * Method getAppliedProjectName - performs the getAppliedProjectName operation.
+=======
+ * Method getAppliedProjectName - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String getAppliedProjectName() {
         return appliedProjName;
     }
 
 /**
+<<<<<<< HEAD
  * Method setAppliedProjectName - performs the setAppliedProjectName operation.
+=======
+ * Method setAppliedProjectName - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void setAppliedProjectName(String appliedProjectName) {
         this.appliedProjName = appliedProjectName;
@@ -55,14 +74,22 @@ public class Applicant implements Users, View {
 
     // getters and setters for attributes
 /**
+<<<<<<< HEAD
  * Method setFlatTypeFilter - performs the setFlatTypeFilter operation.
+=======
+ * Method setFlatTypeFilter - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void setFlatTypeFilter(String flatTypeFilter) {
         this.flatTypeFilter = flatTypeFilter;
     }
 
 /**
+<<<<<<< HEAD
  * Method getFlatTypeFilter - performs the getFlatTypeFilter operation.
+=======
+ * Method getFlatTypeFilter - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String getFlatTypeFilter() {
         return flatTypeFilter;
@@ -70,7 +97,11 @@ public class Applicant implements Users, View {
 
     @Override
 /**
+<<<<<<< HEAD
  * Method getName - performs the getName operation.
+=======
+ * Method getName - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String getName() {
         return name;
@@ -78,7 +109,11 @@ public class Applicant implements Users, View {
 
     @Override
 /**
+<<<<<<< HEAD
  * Method getNRIC - performs the getNRIC operation.
+=======
+ * Method getNRIC - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String getNRIC() {
         return nric;
@@ -86,7 +121,11 @@ public class Applicant implements Users, View {
 
     @Override
 /**
+<<<<<<< HEAD
  * Method getPassword - performs the getPassword operation.
+=======
+ * Method getPassword - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String getPassword() {
         return password;
@@ -94,7 +133,11 @@ public class Applicant implements Users, View {
 
     @Override
 /**
+<<<<<<< HEAD
  * Method getAge - performs the getAge operation.
+=======
+ * Method getAge - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public int getAge() {
         return age;
@@ -102,49 +145,77 @@ public class Applicant implements Users, View {
 
     @Override
 /**
+<<<<<<< HEAD
  * Method getMaritalStatus - performs the getMaritalStatus operation.
+=======
+ * Method getMaritalStatus - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String getMaritalStatus() {
         return maritalStatus;
     }
 
 /**
+<<<<<<< HEAD
  * Method setApplicationStatus - performs the setApplicationStatus operation.
+=======
+ * Method setApplicationStatus - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void setApplicationStatus(String status) {
         this.applicationStatus = status;
     }
 
 /**
+<<<<<<< HEAD
  * Method getApplicationStatus - performs the getApplicationStatus operation.
+=======
+ * Method getApplicationStatus - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String getApplicationStatus() {
         return applicationStatus;
     }
 
 /**
+<<<<<<< HEAD
  * Method setAppliedProject - performs the setAppliedProject operation.
+=======
+ * Method setAppliedProject - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void setAppliedProject(BTOProject project) {
         this.appliedProject = project;
     }
 
 /**
+<<<<<<< HEAD
  * Method getAppliedProject - performs the getAppliedProject operation.
+=======
+ * Method getAppliedProject - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public BTOProject getAppliedProject() {
         return appliedProject;
     }
 
 /**
+<<<<<<< HEAD
  * Method setFlatType - performs the setFlatType operation.
+=======
+ * Method setFlatType - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void setFlatType(String flatType) {
         this.flatType = flatType;
     }
 
 /**
+<<<<<<< HEAD
  * Method getFlatType - performs the getFlatType operation.
+=======
+ * Method getFlatType - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String getFlatType() {
         return flatType;
@@ -157,7 +228,11 @@ public class Applicant implements Users, View {
 
     // method to apply for a bto project
 /**
+<<<<<<< HEAD
  * Method applyProject - performs the applyProject operation.
+=======
+ * Method applyProject - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void applyProject(BTOProject project) {
         if (this.currentApplication != null) { // check if already applied
@@ -179,7 +254,11 @@ public class Applicant implements Users, View {
     }
 
 /**
+<<<<<<< HEAD
  * Method getCurrentApplication - performs the getCurrentApplication operation.
+=======
+ * Method getCurrentApplication - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public Application getCurrentApplication() {
         return currentApplication;
@@ -187,7 +266,11 @@ public class Applicant implements Users, View {
 
     // method to view application status
 /**
+<<<<<<< HEAD
  * Method viewStatus - performs the viewStatus operation.
+=======
+ * Method viewStatus - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String viewStatus() {
         if (currentApplication == null) { // no active application
@@ -198,7 +281,11 @@ public class Applicant implements Users, View {
 
     // method to request withdrawal of application
 /**
+<<<<<<< HEAD
  * Method reqWithdrawal - performs the reqWithdrawal operation.
+=======
+ * Method reqWithdrawal - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void reqWithdrawal() {
         if (this.currentApplication == null) { // check if there is an active application
@@ -215,6 +302,7 @@ public class Applicant implements Users, View {
     }
 
 /**
+<<<<<<< HEAD
  * Method withraw - performs the withraw operation.
  */
     public void withraw(){
@@ -222,11 +310,51 @@ public class Applicant implements Users, View {
         this.currentApplication.deleteFromCSV();
         this.currentApplication = null;
         System.out.println("your withdrawal request has been processed.");
+=======
+ * Method withraw - auto-documented method.
+ */
+    public void withraw(){
+        // delete application from csv and reset current application
+        if (this.currentApplication != null){
+        this.currentApplication.deleteFromCSV();
+        this.currentApplication = null;
+        System.out.println("Your withdrawal request has been processed.");
+    }
+        else{
+            String filePath = "V2\\Applications.csv";
+            List<String> lines = new ArrayList<>();
+
+            try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] fields = line.split(",");
+                    if (!(fields[0].equals(this.nric))){
+                        lines.add(line);
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("Error reading applications from CSV: " + e.getMessage());
+            }
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+                for (String line : lines) {
+                    bw.write(line + "\n");
+                }
+            } catch (IOException e) {
+                System.out.println("Error writing applications to CSV: " + e.getMessage());
+            }
+            }
+        
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
     }
 
     // method to create a bto project object from csv data
 /**
+<<<<<<< HEAD
  * Method createBTOProjectFromCSV - performs the createBTOProjectFromCSV operation.
+=======
+ * Method createBTOProjectFromCSV - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void createBTOProjectFromCSV(String projectName) {
         String filePath = "V2\\ProjectList.csv";
@@ -264,7 +392,11 @@ public class Applicant implements Users, View {
     // method to handle user login
     @Override
 /**
+<<<<<<< HEAD
  * Method login - performs the login operation.
+=======
+ * Method login - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public boolean login(String nric, String pw) {
         return this.nric.equals(nric) && this.password.equals(pw);
@@ -273,7 +405,11 @@ public class Applicant implements Users, View {
     // method to change password
     @Override
 /**
+<<<<<<< HEAD
  * Method changePassword - performs the changePassword operation.
+=======
+ * Method changePassword - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void changePassword(String newPassword) {
         this.password = newPassword;
@@ -281,7 +417,11 @@ public class Applicant implements Users, View {
 
     // method to check eligibility for a project
 /**
+<<<<<<< HEAD
  * Method isEligible - performs the isEligible operation.
+=======
+ * Method isEligible - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     private boolean isEligible(BTOProject project) {
         if (maritalStatus.equalsIgnoreCase("married")) { // married applicants can apply for any flat
@@ -295,7 +435,11 @@ public class Applicant implements Users, View {
 
     // enquiry management methods
 /**
+<<<<<<< HEAD
  * Method addEnquiry - performs the addEnquiry operation.
+=======
+ * Method addEnquiry - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void addEnquiry(String message) {
         int enquiryID = enquiries.size() + 1; // generate unique id
@@ -306,7 +450,11 @@ public class Applicant implements Users, View {
     }
 
 /**
+<<<<<<< HEAD
  * Method viewEnquiries - performs the viewEnquiries operation.
+=======
+ * Method viewEnquiries - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void viewEnquiries() {
         if (enquiries.isEmpty()) { // no enquiries to display
@@ -321,7 +469,11 @@ public class Applicant implements Users, View {
     }
 
 /**
+<<<<<<< HEAD
  * Method editEnquiry - performs the editEnquiry operation.
+=======
+ * Method editEnquiry - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void editEnquiry(int enquiryID, String newMessage) {
         for (Enquiry enquiry : enquiries) { // find and update enquiry
@@ -336,7 +488,11 @@ public class Applicant implements Users, View {
     }
 
 /**
+<<<<<<< HEAD
  * Method deleteEnquiry - performs the deleteEnquiry operation.
+=======
+ * Method deleteEnquiry - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void deleteEnquiry(int enquiryID) {
         enquiries.removeIf(enquiry -> enquiry.getEnquiryID() == enquiryID); // remove enquiry
@@ -346,7 +502,11 @@ public class Applicant implements Users, View {
 
     // helper methods for csv handling
 /**
+<<<<<<< HEAD
  * Method loadEnquiriesFromCSV - performs the loadEnquiriesFromCSV operation.
+=======
+ * Method loadEnquiriesFromCSV - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     private void loadEnquiriesFromCSV() {
         String filePath = "V2\\enquiries.csv";
@@ -373,7 +533,11 @@ public class Applicant implements Users, View {
     }
 
 /**
+<<<<<<< HEAD
  * Method saveEnquiryToCSV - performs the saveEnquiryToCSV operation.
+=======
+ * Method saveEnquiryToCSV - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     private void saveEnquiryToCSV(Enquiry enquiry) {
         String filePath = "V2\\enquiries.csv";
@@ -392,14 +556,22 @@ public class Applicant implements Users, View {
     }
 
 /**
+<<<<<<< HEAD
  * Method updateEnquiryInCSV - performs the updateEnquiryInCSV operation.
+=======
+ * Method updateEnquiryInCSV - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     private void updateEnquiryInCSV(Enquiry enquiry) {
         saveAllEnquiriesToCSV(); // rewrite entire csv
     }
 
 /**
+<<<<<<< HEAD
  * Method saveAllEnquiriesToCSV - performs the saveAllEnquiriesToCSV operation.
+=======
+ * Method saveAllEnquiriesToCSV - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     private void saveAllEnquiriesToCSV() {
         String filePath = "V2\\enquiries.csv";
@@ -423,7 +595,11 @@ public class Applicant implements Users, View {
     // method to view filtered list of projects
     @Override
 /**
+<<<<<<< HEAD
  * Method viewListOfProjects - performs the viewListOfProjects operation.
+=======
+ * Method viewListOfProjects - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String viewListOfProjects() {
         String filePath = "V2\\ProjectList.csv";
@@ -436,13 +612,21 @@ public class Applicant implements Users, View {
                     isHeader = false;
                     continue;
                 }
+<<<<<<< HEAD
                 String[] fields = line.split(",");
+=======
+                String[] fields = line.split(",",-1);
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
                 String projectName = fields[0];
                 String neighborhood = fields[1];
                 String type1 = fields[2];
                 int unitsType1 = Integer.parseInt(fields[3]);
                 String type2 = fields[5];
                 int unitsType2 = Integer.parseInt(fields[6]);
+<<<<<<< HEAD
+=======
+                String visible = fields[13];
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
 
                 // ensure singles above 35 only see 2-room flats
                 if (maritalStatus.equalsIgnoreCase("single") && age >= 35) {
@@ -455,6 +639,7 @@ public class Applicant implements Users, View {
                         continue; // skip projects that don't match filter
                     }
                 }
+<<<<<<< HEAD
 
                 // append project details to result
                 result.append("- project name: ").append(projectName).append("\n");
@@ -462,6 +647,32 @@ public class Applicant implements Users, View {
                 result.append("  flat types: ").append(type1).append(" (").append(unitsType1).append(" units), ")
                       .append(type2).append(" (").append(unitsType2).append(" units)\n");
                 result.append("\n");
+=======
+                if ("No".equals(visible)){
+                    continue; // skip non visible projects
+                }
+
+                // append project details to result
+                if (flatTypeFilter.equalsIgnoreCase("2-Room")){
+                    result.append("- project name: ").append(projectName).append("\n");
+                    result.append("  neighborhood: ").append(neighborhood).append("\n");
+                    result.append("  flat types: ").append(type1).append(" (").append(unitsType1).append(" units)\n");
+                    result.append("\n");
+                }
+                else if (flatTypeFilter.equalsIgnoreCase("3-Room")){
+                    result.append("- project name: ").append(projectName).append("\n");
+                    result.append("  neighborhood: ").append(neighborhood).append("\n");
+                    result.append(type2).append(" (").append(unitsType2).append(" units)\n");
+                    result.append("\n");
+                }
+                else{
+                    result.append("- project name: ").append(projectName).append("\n");
+                    result.append("  neighborhood: ").append(neighborhood).append("\n");
+                    result.append("  flat types: ").append(type1).append(" (").append(unitsType1).append(" units), ")
+                        .append(type2).append(" (").append(unitsType2).append(" units)\n");
+                    result.append("\n");
+                }
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
             }
             if (result.length() == 0) { // no projects match the filter
                 return "no projects found matching the filter.";
@@ -473,7 +684,11 @@ public class Applicant implements Users, View {
     }
 
 /**
+<<<<<<< HEAD
  * Method loadCurrentApplicationFromCSV - performs the loadCurrentApplicationFromCSV operation.
+=======
+ * Method loadCurrentApplicationFromCSV - auto-documented method.
+>>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     private void loadCurrentApplicationFromCSV() {
         String filePath = "V2\\Applications.csv";
