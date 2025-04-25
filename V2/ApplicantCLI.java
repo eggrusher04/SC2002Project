@@ -10,7 +10,7 @@ public class ApplicantCLI {
         this.applicantCSVPath = applicantCSVPath;
     }
 
-    public void launch(Applicant applicant) { // main dashboard loop
+    public void launch(Applicant applicant) {
         while (true) {
             System.out.println("\n====== Applicant Dashboard ======");
             System.out.println("1. View Application Status");
@@ -64,7 +64,7 @@ public class ApplicantCLI {
         }
     }
 
-    private void manageEnquiries(Applicant applicant) { // submenu for enquiries
+    private void manageEnquiries(Applicant applicant) {
         while (true) {
             System.out.println("\n===== Enquiry Management =====");
             System.out.println("1. View Enquiries");

@@ -118,7 +118,7 @@ public class OfficerCLI {
                     System.out.println("Enter applicant's NRIC: ");
                     String appliNRIC = scanner.nextLine();
             
-                    Application application = Application.getApplicationByNRIC("V2\\Applications.csv", appliNRIC); // Pass file path and NRIC
+                    Application application = Application.getApplicationByNRIC("V2\\Applications.csv", appliNRIC);
                     
                     if (application != null) {
                         System.out.println("Application found: " + application.toString());
