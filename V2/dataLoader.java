@@ -6,13 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class dataLoader - Represents the dataloader in the system.
+ */
 public class dataLoader {
 
+/**
+ * Method dataLoader - performs the dataLoader operation.
+ */
     public dataLoader() {
         // No need for hdbManager anymore
     }
 
     // Function to load personal details
+/**
+ * Method loadPersonalDetails - performs the loadPersonalDetails operation.
+ */
     public Map<String, Applicant> loadPersonalDetails(String personalCSV) {
         Map<String, Applicant> applicantMap = new HashMap<>();
 
@@ -48,6 +57,9 @@ public class dataLoader {
     }
 
     // Function to load application data and associate with personal details
+/**
+ * Method loadApplicationData - performs the loadApplicationData operation.
+ */
     public void loadApplicationData(String applicationCSV, Map<String, Applicant> applicantMap) {
         try (BufferedReader br = new BufferedReader(new FileReader(applicationCSV))) {
             String line;
@@ -85,6 +97,9 @@ public class dataLoader {
         }
     }
 
+/**
+ * Method loadApplicants - performs the loadApplicants operation.
+ */
     public List<Applicant> loadApplicants(String personalCSV, String applicationCSV) {
         // First, load personal details into the map
         Map<String, Applicant> applicantMap = loadPersonalDetails(personalCSV);

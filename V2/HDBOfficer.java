@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 
+/**
+ * Class HDBOfficer - Represents the hdbofficer in the system.
+ */
 public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement{
 
 	private BTOProject assignedProj;
@@ -20,6 +23,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	private dataLoader loader;
 
 	// First Constructor to apply as an applicant
+/**
+ * Method HDBOfficer - performs the HDBOfficer operation.
+ */
 	public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
@@ -33,6 +39,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 
 	// Second constructor to manage a project
+/**
+ * Method HDBOfficer - performs the HDBOfficer operation.
+ */
     public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, BTOProject assignedProj) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
@@ -53,6 +62,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 	// Helper method to load the assigned project from OfficerList.csv
+/**
+ * Method loadAssignedProject - performs the loadAssignedProject operation.
+ */
     private BTOProject loadAssignedProject(String officerName) {
         String filePath = "V2\\OfficerList.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -82,6 +94,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     }
 
     // Method to create a BTOProject object from ProjectList.csv
+/**
+ * Method createBTOProjectFromCSV - performs the createBTOProjectFromCSV operation.
+ */
     private BTOProject createBTOProjectFromCSV(String projectName) {
         String filePath = "V2\\ProjectList.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -110,14 +125,23 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
         return null; // Return null if the project is not found
     }
 
+/**
+ * Method getApplicationStatus - performs the getApplicationStatus operation.
+ */
 	public String getApplicationStatus() {
     	return applicationStatus;
 	}
 
+/**
+ * Method getAppliedProject - performs the getAppliedProject operation.
+ */
 	public BTOProject getAppliedProject() {
     	return appliedProject;
 	}
 
+/**
+ * Method getEnquiries - performs the getEnquiries operation.
+ */
 	public List<Enquiry> getEnquiries() {
 		return enquiries;
 	}
@@ -140,6 +164,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 	@Override
+/**
+ * Method viewListOfProjects - performs the viewListOfProjects operation.
+ */
     public String viewListOfProjects() {
         String filePath = "V2\\ProjectList.csv";
         StringBuilder result = new StringBuilder();
@@ -234,6 +261,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
         System.out.println("Project " + project.getProjName() + " has been successfully registered to officer " + this.getName() + ".");
 	}
 
+/**
+ * Method updateFlatAvail - performs the updateFlatAvail operation.
+ */
 	public void updateFlatAvail(String flatType, int unitsLeft) {
     // Step 1: Validate input
     if (assignedProj == null) {
@@ -306,6 +336,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	// ApplicantManagement Implementation
 	@Override
+/**
+ * Method retrieveApplicant - performs the retrieveApplicant operation.
+ */
 	public void retrieveApplicant(String nric) {
 		List<Applicant> applicants = loader.loadApplicants("V2\\ApplicantList.csv", "V2\\Applications.csv");
 
@@ -332,6 +365,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 
+/**
+ * Method updateApplicantStatus - performs the updateApplicantStatus operation.
+ */
 	public void updateApplicantStatus(String nric, String newStatus) {
 		String csvPath = "V2\\Applications.csv";
 	
@@ -363,10 +399,16 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 	// Getter and Setter for assignedProj
+/**
+ * Method getAssignedProj - performs the getAssignedProj operation.
+ */
     public BTOProject getAssignedProj() {
         return assignedProj;
     }
 
+/**
+ * Method setAssignedProj - performs the setAssignedProj operation.
+ */
     public void setAssignedProj(BTOProject assignedProj) {
         this.assignedProj = assignedProj;
     }
@@ -375,6 +417,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	 * 
 	 * @param applicant
 	 */
+/**
+ * Method generateReceipt - performs the generateReceipt operation.
+ */
 	public void generateReceipt(Applicant applicant) {
 		// HDBOfficer.generateReceipt
 		System.out.println("===== HDB Application Receipt =====");
@@ -395,6 +440,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     	System.out.println("===================================");
 	}
 
+/**
+ * Method viewRegStatus - performs the viewRegStatus operation.
+ */
 	public String viewRegStatus() {
 		// HDBOfficer.viewRegStatus
 		if (assignedProj != null) {
@@ -409,6 +457,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		this.regStatus = status;
 	}
 
+/**
+ * Method loadProjectByName - performs the loadProjectByName operation.
+ */
 	public BTOProject loadProjectByName(String projectName) {
 		String filePath = "V2\\ProjectList.csv";
 	

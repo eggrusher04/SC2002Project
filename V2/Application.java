@@ -2,6 +2,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class Application - Represents the application in the system.
+ */
 public class Application {
     private String applicantNRIC;
     private String projectName;
@@ -9,6 +12,9 @@ public class Application {
     private String assignedOfficer;
     private String applicationStatus;
 
+/**
+ * Method Application - performs the Application operation.
+ */
     public Application(String applicantNRIC, String projectName, String flatType) {
         this.applicantNRIC = applicantNRIC;
         this.projectName = projectName;
@@ -17,6 +23,9 @@ public class Application {
         this.assignedOfficer = "Unassigned";
     }
 
+/**
+ * Method Application - performs the Application operation.
+ */
     public Application(String applicantNRIC, String projectName, String flatType, String applicationStatus, String assignedOfficer) {
         this.applicantNRIC = applicantNRIC;
         this.projectName = projectName;
@@ -26,22 +35,37 @@ public class Application {
     }
     
 
+/**
+ * Method getApplicantNRIC - performs the getApplicantNRIC operation.
+ */
     public String getApplicantNRIC() {
         return applicantNRIC;
     }
 
+/**
+ * Method getProjectName - performs the getProjectName operation.
+ */
     public String getProjectName() {
         return projectName;
     }
 
+/**
+ * Method getFlatType - performs the getFlatType operation.
+ */
     public String getFlatType() {
         return flatType;
     }
 
+/**
+ * Method getAssignedOfficer - performs the getAssignedOfficer operation.
+ */
     public String getAssignedOfficer() {
         return assignedOfficer;
     }
 
+/**
+ * Method getApplicationStatus - performs the getApplicationStatus operation.
+ */
     public String getApplicationStatus() {
         String filePath = "V2\\Applications.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -58,17 +82,26 @@ public class Application {
         return "Status not found";
     }
 
+/**
+ * Method setApplicationStatus - performs the setApplicationStatus operation.
+ */
     public void setApplicationStatus(String applicationStatus) {
         this.applicationStatus = applicationStatus;
         updateCSV();
     }
     
 
+/**
+ * Method setAssignedOfficer - performs the setAssignedOfficer operation.
+ */
     public void setAssignedOfficer(String assignedOfficer) {
         this.assignedOfficer = assignedOfficer;
         updateCSV(); // update file with new officer
     }
 
+/**
+ * Method saveToCSV - performs the saveToCSV operation.
+ */
     public void saveToCSV() {
         String filePath = "V2\\Applications.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
@@ -82,6 +115,9 @@ public class Application {
         }
     }
 
+/**
+ * Method loadFromCSV - performs the loadFromCSV operation.
+ */
     public static Application loadFromCSV(String nric) {
         String filePath = "V2\\Applications.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -101,6 +137,9 @@ public class Application {
         return null; // no application found
     }
 
+/**
+ * Method updateCSV - performs the updateCSV operation.
+ */
     public void updateCSV() {
         String filePath = "V2\\Applications.csv";
         List<String> lines = new ArrayList<>();
@@ -131,6 +170,9 @@ public class Application {
         }
     }
 
+/**
+ * Method deleteFromCSV - performs the deleteFromCSV operation.
+ */
     public void deleteFromCSV() {
         String filePath = "V2\\Applications.csv";
         List<String> lines = new ArrayList<>();
@@ -156,6 +198,9 @@ public class Application {
         }
     }
 
+/**
+ * Method getApplicationByNRIC - performs the getApplicationByNRIC operation.
+ */
     public static Application getApplicationByNRIC(String csvPath, String nric) {
         try (BufferedReader reader = new BufferedReader(new FileReader(csvPath))) {
             String line;
@@ -174,6 +219,9 @@ public class Application {
     
 
     @Override
+/**
+ * Method toString - performs the toString operation.
+ */
     public String toString() {
         return "Application{" +
                "Applicant NRIC='" + applicantNRIC + '\'' +

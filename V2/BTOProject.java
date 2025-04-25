@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+/**
+ * Class BTOProject - Represents a Build-To-Order project with flat types, availability, and project timeline.
+ */
 public class BTOProject {
 
     private String projName;
@@ -10,6 +13,9 @@ public class BTOProject {
     private ArrayList<HDBOfficer> assignedOfficers;
     private int maxOfficerSlots;
 
+/**
+ * Method BTOProject - performs the BTOProject operation.
+ */
     public BTOProject(String projName, String neighbourhood, String applicationOpenDate, String applicationCloseDate) {
         this.projName = projName;
         this.neighbourhood = neighbourhood;
@@ -26,6 +32,9 @@ public class BTOProject {
     }
 
 	
+/**
+ * Method addFlatType - performs the addFlatType operation.
+ */
     public void addFlatType(String flatType, int units) {
             for (int i = 0; i < units; i++) {
             String unitNumber = flatType + "-" + (availFlats.size() + 1);
@@ -33,6 +42,9 @@ public class BTOProject {
     }
 
 }
+/**
+ * Method getAvailUnits - performs the getAvailUnits operation.
+ */
     public int getAvailUnits(String flatType) {
         int count = 0;
         for (Flat flat : availFlats) {
@@ -42,6 +54,9 @@ public class BTOProject {
         }
         return count;
     }
+/**
+ * Method updateFlatAvailability - performs the updateFlatAvailability operation.
+ */
     public void updateFlatAvailability(String flatType, int newFlatCount) {
       int available = 0;
       for (Flat flat : availFlats) {
@@ -56,39 +71,69 @@ public class BTOProject {
         addFlatType(flatType, toAdd);
     }
 }
+/**
+ * Method assignedFlats - performs the assignedFlats operation.
+ */
     public Flat[] assignedFlats() {
         return availFlats.toArray(new Flat[0]);
     }
+/**
+ * Method assignOfficer - performs the assignOfficer operation.
+ */
     public void assignOfficer(HDBOfficer officer) {
         assignedOfficers.add(officer);
     }
+/**
+ * Method getAvailFlats - performs the getAvailFlats operation.
+ */
     public ArrayList<Flat> getAvailFlats() {
         return availFlats;
     }
 
+/**
+ * Method getAssignedOfficers - performs the getAssignedOfficers operation.
+ */
     public ArrayList<HDBOfficer> getAssignedOfficers() {
         return assignedOfficers;
     }
 
+/**
+ * Method getProjName - performs the getProjName operation.
+ */
     public String getProjName() {
         return projName;
     }
 
+/**
+ * Method getNeighbourhood - performs the getNeighbourhood operation.
+ */
     public String getNeighbourhood() {
         return neighbourhood;
     }
 
+/**
+ * Method getApplicationOpenDate - performs the getApplicationOpenDate operation.
+ */
     public String getApplicationOpenDate() {
         return applicationOpenDate;
     }
+/**
+ * Method getApplicationCloseDate - performs the getApplicationCloseDate operation.
+ */
     public String getApplicationCloseDate() {
         return applicationCloseDate;
     }
 
+/**
+ * Method isVisible - performs the isVisible operation.
+ */
     public boolean isVisible() {
         return visibility;
     }
 
+/**
+ * Method setVisibility - performs the setVisibility operation.
+ */
     public void setVisibility(boolean visibility) {
         this.visibility = visibility;
     }
@@ -114,6 +159,9 @@ public class BTOProject {
     }
 
     @Override
+/**
+ * Method toString - performs the toString operation.
+ */
     public String toString() {
         return "Project: " + projName + ", Neighbourhood: " + neighbourhood +
                 ", Open: " + applicationOpenDate + ", Close: " + applicationCloseDate +

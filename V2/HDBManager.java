@@ -3,6 +3,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * Class HDBManager - Represents the hdbmanager in the system.
+ */
 public class HDBManager extends Employees implements ProjectManager, OfficerApproval, View {
 
 	private BTOProject[] createdProj;
@@ -10,11 +13,17 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     private String name;
 
 
+/**
+ * Method HDBManager - performs the HDBManager operation.
+ */
 	public HDBManager(String nric, String password, int age, String maritalStatus, int staffID, String name) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
     }
 
+/**
+ * Method HDBManager - performs the HDBManager operation.
+ */
     public HDBManager(String name, String nric, String password, int age, String maritalStatus, int staffID) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
@@ -22,16 +31,25 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     
 
 	@Override
+/**
+ * Method viewEnquiry - performs the viewEnquiry operation.
+ */
 	public String viewEnquiry(String message) {
 		return "Enquiry: " + message;
 	}
 	
 	@Override
+/**
+ * Method replyEnquiry - performs the replyEnquiry operation.
+ */
 	public void replyEnquiry() {
 		System.out.println("Replying to enquiry... (HDBManager specific logic)");
 	}
 	
 	@Override
+/**
+ * Method viewProjDetails - performs the viewProjDetails operation.
+ */
 	public String viewProjDetails(BTOProject project) {
 		if (project == null) return "No project provided.";
 	
@@ -64,6 +82,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 	@Override
+/**
+ * Method login - performs the login operation.
+ */
 	public boolean login(String nric, String pw) {
         return getNRIC().equals(nric) && getPassword().equals(pw);
 	}
@@ -72,6 +93,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
     // pulls from projectlist csv and prints out all the exisitng projects (changed)
 	@Override
+/**
+ * Method viewListOfProjects - performs the viewListOfProjects operation.
+ */
     public String viewListOfProjects() {
         String filePath = "V2\\ProjectList.csv";
         StringBuilder result = new StringBuilder();
@@ -126,6 +150,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 	@Override
+/**
+ * Method createProject - performs the createProject operation.
+ */
     public void createProject(BTOProject project) {
         ensureCapacity();
         for (int i = 0; i < createdProj.length; i++) {
@@ -137,6 +164,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
 // This method only updates data - no printing or input
+/**
+ * Method editProject - performs the editProject operation.
+ */
 	public void editProject(BTOProject project, String newName, String newHood, String newOpen, String newClose, int twoRoom, int threeRoom) {
 		if (newName != null && !newName.isBlank()) {
 			project.setProjectName(newName);
@@ -160,6 +190,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
     @Override
+/**
+ * Method deleteProject - performs the deleteProject operation.
+ */
     public void deleteProject(BTOProject project) {
         for (int i = 0; i < createdProj.length; i++) {
             if (createdProj[i] != null && createdProj[i].equals(project)) {
@@ -170,6 +203,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
     @Override
+/**
+ * Method toggleVisibility - performs the toggleVisibility operation.
+ */
     public void toggleVisibility(BTOProject project, boolean visibility) {
         if (project != null) {
             project.setVisibility(visibility); // Make sure this method exists in BTOProject
@@ -181,6 +217,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 	@Override
+/**
+ * Method approveOfficer - performs the approveOfficer operation.
+ */
 	public void approveOfficer(HDBOfficer officer) {
         if (officer != null) {
             officer.setRegStatus("Approved"); // Assume setter exists
@@ -188,6 +227,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
     @Override
+/**
+ * Method rejectOfficer - performs the rejectOfficer operation.
+ */
     public void rejectOfficer(HDBOfficer officer) {
         if (officer != null) {
             officer.setRegStatus("Rejected");
@@ -197,12 +239,18 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
     // cahnged a bit
+/**
+ * Method approveWithdrawal - performs the approveWithdrawal operation.
+ */
     public void approveWithdrawal(Applicant applicant) {
         if (applicant != null) {
             applicant.withraw(); // deletes the application from application.csv
         }
     }
 
+/**
+ * Method genReport - performs the genReport operation.
+ */
     public String genReport(String filterCriteria) {
         StringBuilder report = new StringBuilder("=== Manager Report ===\n");
         for (BTOProject p : createdProj) {
@@ -213,12 +261,18 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         return report.toString();
     }
 
+/**
+ * Method ensureCapacity - performs the ensureCapacity operation.
+ */
 	private void ensureCapacity() {
         if (createdProj[createdProj.length - 1] != null) {
             createdProj = Arrays.copyOf(createdProj, createdProj.length * 2);
         }
     }
 
+/**
+ * Method getProjectByName - performs the getProjectByName operation.
+ */
     public BTOProject getProjectByName(String name) {
         for (BTOProject project : createdProj) {
             if (project != null && project.getProjName().equalsIgnoreCase(name)) {

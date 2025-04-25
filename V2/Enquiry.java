@@ -1,3 +1,6 @@
+/**
+ * Class Enquiry - Represents the enquiry in the system.
+ */
 public class Enquiry {
 
 	private int enquiryID;
@@ -50,15 +53,24 @@ public class Enquiry {
 	}
 
 	
+/**
+ * Method updateEnquiry - performs the updateEnquiry operation.
+ */
 	public void updateEnquiry(String newMessage) {
 		this.message = newMessage;
 	}
 
+/**
+ * Method delEnquiry - performs the delEnquiry operation.
+ */
 	public void delEnquiry() {
 		this.message = null;
 		this.response = null;
 	}
 
+/**
+ * Method addEnquiry - performs the addEnquiry operation.
+ */
 	public void addEnquiry(Applicant sender, String message) {
 		this.sender = sender;
 		this.message = message;
