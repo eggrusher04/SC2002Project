@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
-<<<<<<< HEAD
- * Class HDBManager - Represents the hdbmanager in the system.
-=======
  * Class HDBManager - Auto-generated Javadoc documentation.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 public class HDBManager extends Employees implements ProjectManager, OfficerApproval, View {
 
@@ -18,31 +14,11 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 /**
-<<<<<<< HEAD
- * Method HDBManager - performs the HDBManager operation.
-=======
  * Method HDBManager - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public HDBManager(String nric, String password, int age, String maritalStatus, int staffID, String name) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
-<<<<<<< HEAD
-    }
-
-/**
- * Method HDBManager - performs the HDBManager operation.
- */
-    public HDBManager(String name, String nric, String password, int age, String maritalStatus, int staffID) {
-        super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
-        this.createdProj = new BTOProject[INITIAL_CAPACITY];
-    }
-    
-
-	@Override
-/**
- * Method viewEnquiry - performs the viewEnquiry operation.
-=======
  
     }
 
@@ -59,7 +35,6 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 	@Override
 /**
  * Method viewEnquiry - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public String viewEnquiry(String message) {
 		return "Enquiry: " + message;
@@ -67,11 +42,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 	
 	@Override
 /**
-<<<<<<< HEAD
- * Method replyEnquiry - performs the replyEnquiry operation.
-=======
  * Method replyEnquiry - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void replyEnquiry() {
 		System.out.println("Replying to enquiry... (HDBManager specific logic)");
@@ -79,11 +50,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 	
 	@Override
 /**
-<<<<<<< HEAD
- * Method viewProjDetails - performs the viewProjDetails operation.
-=======
  * Method viewProjDetails - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public String viewProjDetails(BTOProject project) {
 		if (project == null) return "No project provided.";
@@ -118,11 +85,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 	@Override
 /**
-<<<<<<< HEAD
- * Method login - performs the login operation.
-=======
  * Method login - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public boolean login(String nric, String pw) {
         return getNRIC().equals(nric) && getPassword().equals(pw);
@@ -133,11 +96,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     // pulls from projectlist csv and prints out all the exisitng projects (changed)
 	@Override
 /**
-<<<<<<< HEAD
- * Method viewListOfProjects - performs the viewListOfProjects operation.
-=======
  * Method viewListOfProjects - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public String viewListOfProjects() {
         String filePath = "V2\\ProjectList.csv";
@@ -171,11 +130,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
                 result.append("Neighborhood     : ").append(neighborhood).append("\n");
                 result.append("Flat Types       : ").append(type1).append(" (").append(unitsType1).append(" units, $").append(priceType1).append("), ")
                       .append(type2).append(" (").append(unitsType2).append(" units, $").append(priceType2).append(")\n");
-<<<<<<< HEAD
-                result.append("Application Dates: ").append(openDate).append(" → ").append(closeDate).append("\n");
-=======
                 result.append("Application Dates: ").append(openDate).append(" to ").append(closeDate).append("\n");
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
                 result.append("Manager          : ").append(manager).append("\n");
                 result.append("Officer Slot     : ").append(officerSlot).append("\n");
                 result.append("Assigned Officer : ").append(officer).append("\n");
@@ -198,23 +153,6 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 	@Override
 /**
-<<<<<<< HEAD
- * Method createProject - performs the createProject operation.
- */
-    public void createProject(BTOProject project) {
-        ensureCapacity();
-        for (int i = 0; i < createdProj.length; i++) {
-            if (createdProj[i] == null) {
-                createdProj[i] = project;
-                return;
-            }
-        }
-    }
-
-// This method only updates data - no printing or input
-/**
- * Method editProject - performs the editProject operation.
-=======
  * Method createProject - auto-documented method.
  */
     public void createProject(BTOProject project) {
@@ -233,7 +171,6 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 // This method only updates data - no printing or input
 /**
  * Method editProject - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void editProject(BTOProject project, String newName, String newHood, String newOpen, String newClose, int twoRoom, int threeRoom) {
 		if (newName != null && !newName.isBlank()) {
@@ -259,11 +196,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
     @Override
 /**
-<<<<<<< HEAD
- * Method deleteProject - performs the deleteProject operation.
-=======
  * Method deleteProject - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void deleteProject(BTOProject project) {
         for (int i = 0; i < createdProj.length; i++) {
@@ -274,30 +207,12 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         }
     }
 
-<<<<<<< HEAD
-    @Override
-/**
- * Method toggleVisibility - performs the toggleVisibility operation.
- */
-    public void toggleVisibility(BTOProject project, boolean visibility) {
-        if (project != null) {
-            project.setVisibility(visibility); // Make sure this method exists in BTOProject
-        }
-    }
-
-
-=======
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
 
 
 
 	@Override
 /**
-<<<<<<< HEAD
- * Method approveOfficer - performs the approveOfficer operation.
-=======
  * Method approveOfficer - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	public void approveOfficer(HDBOfficer officer) {
         if (officer != null) {
@@ -307,11 +222,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
     @Override
 /**
-<<<<<<< HEAD
- * Method rejectOfficer - performs the rejectOfficer operation.
-=======
  * Method rejectOfficer - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void rejectOfficer(HDBOfficer officer) {
         if (officer != null) {
@@ -323,11 +234,7 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
     // cahnged a bit
 /**
-<<<<<<< HEAD
- * Method approveWithdrawal - performs the approveWithdrawal operation.
-=======
  * Method approveWithdrawal - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
     public void approveWithdrawal(Applicant applicant) {
         if (applicant != null) {
@@ -335,23 +242,6 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         }
     }
 
-<<<<<<< HEAD
-/**
- * Method genReport - performs the genReport operation.
- */
-    public String genReport(String filterCriteria) {
-        StringBuilder report = new StringBuilder("=== Manager Report ===\n");
-        for (BTOProject p : createdProj) {
-            if (p != null) {
-                report.append("Project: ").append(p.getProjName()).append("\n");
-            }
-        }
-        return report.toString();
-    }
-
-/**
- * Method ensureCapacity - performs the ensureCapacity operation.
-=======
 
 /**
  * Method genReport - auto-documented method.
@@ -458,7 +348,6 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 /**
  * Method ensureCapacity - auto-documented method.
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
  */
 	private void ensureCapacity() {
         if (createdProj[createdProj.length - 1] != null) {
@@ -467,16 +356,6 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
 /**
-<<<<<<< HEAD
- * Method getProjectByName - performs the getProjectByName operation.
- */
-    public BTOProject getProjectByName(String name) {
-        for (BTOProject project : createdProj) {
-            if (project != null && project.getProjName().equalsIgnoreCase(name)) {
-                return project;
-            }
-        }
-=======
  * Method getProjectByName - auto-documented method.
  */
     public BTOProject getProjectByName(String name) {
@@ -524,7 +403,6 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
             System.out.println("Error reading project list: " + e.getMessage());
         }
         System.out.println("Project not found. Please enter a valid project name.");
->>>>>>> 9b0546170238e4f3197a17806f2a839da3d77f05
         return null;
     }
 
