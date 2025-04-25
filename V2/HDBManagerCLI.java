@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class HDBManagerCLI - Auto-generated Javadoc documentation.
+ */
 public class HDBManagerCLI {
     private LoginManager loginManager;
     private String managerCSVPath;
@@ -176,6 +179,9 @@ public class HDBManagerCLI {
         
     }
 
+/**
+ * Method handleApproveOfficer - auto-documented method.
+ */
     private void handleApproveOfficer(HDBManager manager) {
         System.out.println("Enter an officer's NRIC to approve: ");
         String nric = scanner.nextLine();
@@ -292,6 +298,9 @@ public class HDBManagerCLI {
         }
     }
 
+/**
+ * Method handleRejectOfficer - auto-documented method.
+ */
     private void handleRejectOfficer(HDBManager manager) {
         System.out.println("Enter an officer's NRIC to reject: ");
         String nric = scanner.nextLine();
@@ -308,6 +317,9 @@ public class HDBManagerCLI {
     }
     
     
+/**
+ * Method updateOfficerStatusInCSV - auto-documented method.
+ */
     private void updateOfficerStatusInCSV(String nric, String status) {
         String filePath = "V2\\OfficerList.csv";
     
@@ -365,6 +377,9 @@ public class HDBManagerCLI {
     }
 
 
+/**
+ * Method saveProjectToCSV - auto-documented method.
+ */
     private void saveProjectToCSV(BTOProject project, int twoRoomUnits, int twoRoomPrice, int threeRoomUnits, int threeRoomPrice, int maxOfficerSlots, String managerName, String visibility) {
         String filePath = "V2\\ProjectList.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
@@ -387,6 +402,9 @@ public class HDBManagerCLI {
     }
 
     // help delete from csv file
+/**
+ * Method deleteProjectFromCSV - auto-documented method.
+ */
     private void deleteProjectFromCSV(String projectName) {
         String filePath = "V2\\ProjectList.csv";
         ArrayList<String> updatedLines = new ArrayList<>();

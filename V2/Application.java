@@ -2,6 +2,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class Application - Auto-generated Javadoc documentation.
+ */
 public class Application {
     private String applicantNRIC;
     private String projectName;
@@ -9,6 +12,9 @@ public class Application {
     private String assignedOfficer;
     private String applicationStatus;
 
+/**
+ * Method Application - auto-documented method.
+ */
     public Application(String applicantNRIC, String projectName, String flatType) {
         this.applicantNRIC = applicantNRIC;
         this.projectName = projectName;
@@ -17,6 +23,9 @@ public class Application {
         this.assignedOfficer = "Unassigned";
     }
 
+/**
+ * Method Application - auto-documented method.
+ */
     public Application(String applicantNRIC, String projectName, String flatType, String applicationStatus, String assignedOfficer) {
         this.applicantNRIC = applicantNRIC;
         this.projectName = projectName;
@@ -26,22 +35,37 @@ public class Application {
     }
     
 
+/**
+ * Method getApplicantNRIC - auto-documented method.
+ */
     public String getApplicantNRIC() {
         return applicantNRIC;
     }
 
+/**
+ * Method getProjectName - auto-documented method.
+ */
     public String getProjectName() {
         return projectName;
     }
 
+/**
+ * Method getFlatType - auto-documented method.
+ */
     public String getFlatType() {
         return flatType;
     }
 
+/**
+ * Method getAssignedOfficer - auto-documented method.
+ */
     public String getAssignedOfficer() {
         return assignedOfficer;
     }
 
+/**
+ * Method getApplicationStatus - auto-documented method.
+ */
     public String getApplicationStatus() {
         String filePath = "V2\\Applications.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -58,17 +82,26 @@ public class Application {
         return "Status not found";
     }
 
+/**
+ * Method setApplicationStatus - auto-documented method.
+ */
     public void setApplicationStatus(String applicationStatus) {
         this.applicationStatus = applicationStatus;
         updateCSV();
     }
     
 
+/**
+ * Method setAssignedOfficer - auto-documented method.
+ */
     public void setAssignedOfficer(String assignedOfficer) {
         this.assignedOfficer = assignedOfficer;
         updateCSV(); // update file with new officer
     }
 
+/**
+ * Method saveToCSV - auto-documented method.
+ */
     public void saveToCSV() {
         String filePath = "V2\\Applications.csv";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
@@ -82,6 +115,9 @@ public class Application {
         }
     }
 
+/**
+ * Method loadFromCSV - auto-documented method.
+ */
     public static Application loadFromCSV(String nric) {
         String filePath = "V2\\Applications.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -101,6 +137,9 @@ public class Application {
         return null; // no application found
     }
 
+/**
+ * Method updateCSV - auto-documented method.
+ */
     public void updateCSV() {
         String filePath = "V2\\Applications.csv";
         List<String> lines = new ArrayList<>();
@@ -131,6 +170,9 @@ public class Application {
         }
     }
 
+/**
+ * Method deleteFromCSV - auto-documented method.
+ */
     public void deleteFromCSV() {
         String filePath = "V2\\Applications.csv";
         List<String> lines = new ArrayList<>();
@@ -156,6 +198,9 @@ public class Application {
         }
     }
 
+/**
+ * Method getApplicationByNRIC - auto-documented method.
+ */
     public static Application getApplicationByNRIC(String csvPath, String nric) {
         try (BufferedReader reader = new BufferedReader(new FileReader(csvPath))) {
             String line;
@@ -174,6 +219,9 @@ public class Application {
     
 
     @Override
+/**
+ * Method toString - auto-documented method.
+ */
     public String toString() {
         return "Application{" +
                "Applicant NRIC='" + applicantNRIC + '\'' +

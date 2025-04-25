@@ -6,12 +6,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class dataLoader - Auto-generated Javadoc documentation.
+ */
 public class dataLoader {
 
+/**
+ * Method dataLoader - auto-documented method.
+ */
     public dataLoader() {
         
     }
 
+/**
+ * Method loadPersonalDetails - auto-documented method.
+ */
     public Map<String, Applicant> loadPersonalDetails(String personalCSV) {
         Map<String, Applicant> applicantMap = new HashMap<>();
 
@@ -45,6 +54,9 @@ public class dataLoader {
         return applicantMap;
     }
 
+/**
+ * Method loadApplicationData - auto-documented method.
+ */
     public void loadApplicationData(String applicationCSV, Map<String, Applicant> applicantMap) {
         try (BufferedReader br = new BufferedReader(new FileReader(applicationCSV))) {
             String line;
@@ -82,6 +94,9 @@ public class dataLoader {
         }
     }
 
+/**
+ * Method loadApplicants - auto-documented method.
+ */
     public List<Applicant> loadApplicants(String personalCSV, String applicationCSV) {
         // First, load personal details into the map
         Map<String, Applicant> applicantMap = loadPersonalDetails(personalCSV);

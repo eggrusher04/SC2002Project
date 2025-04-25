@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Class HDBOfficer - Auto-generated Javadoc documentation.
+ */
 public class HDBOfficer extends Employees implements View, ProjectManagement, ApplicantManagement{
 
 	private BTOProject assignedProj;
@@ -18,6 +21,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	private dataLoader loader;
 
 	// First Constructor to apply as an applicant
+/**
+ * Method HDBOfficer - auto-documented method.
+ */
 	public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, String applicationStatus, BTOProject appliedProject, List<Enquiry> enquiries) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
@@ -31,6 +37,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 
 	// Second constructor to manage a project
+/**
+ * Method HDBOfficer - auto-documented method.
+ */
     public HDBOfficer(String nric, String name, String password, int age, String maritalStatus, int staffID, String role, BTOProject assignedProj) {
 
     super(nric, password, age, maritalStatus, staffID, role, name);
@@ -51,6 +60,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 	// Helper method to load the assigned project from OfficerList.csv
+/**
+ * Method loadAssignedProject - auto-documented method.
+ */
     private BTOProject loadAssignedProject(String officerName) {
         String filePath = "V2\\OfficerList.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -80,6 +92,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     }
 
     // Method to create a BTOProject object from ProjectList.csv
+/**
+ * Method createBTOProjectFromCSV - auto-documented method.
+ */
     private BTOProject createBTOProjectFromCSV(String projectName) {
         String filePath = "V2\\ProjectList.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -108,14 +123,23 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
         return null; // Return null if the project is not found
     }
 
+/**
+ * Method getApplicationStatus - auto-documented method.
+ */
 	public String getApplicationStatus() {
     	return applicationStatus;
 	}
 
+/**
+ * Method getAppliedProject - auto-documented method.
+ */
 	public BTOProject getAppliedProject() {
     	return appliedProject;
 	}
 
+/**
+ * Method getEnquiries - auto-documented method.
+ */
 	public List<Enquiry> getEnquiries() {
 		return enquiries;
 	}
@@ -138,6 +162,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 	@Override
+/**
+ * Method viewListOfProjects - auto-documented method.
+ */
     public String viewListOfProjects() {
         String filePath = "V2\\ProjectList.csv";
         StringBuilder result = new StringBuilder();
@@ -210,6 +237,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
     
+/**
+ * Method viewProjDetails - auto-documented method.
+ */
 	public String viewProjDetails(String officerName) {
         String filePath = "V2\\OfficerList.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -247,6 +277,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
         System.out.println("Project " + project.getProjName() + " has been successfully registered to officer " + this.getName() + ".");
 	}
 
+/**
+ * Method updateFlatAvail - auto-documented method.
+ */
 	public void updateFlatAvail(String flatType, int unitsLeft) {
     // Step 1: Validate input
     if (assignedProj == null) {
@@ -319,6 +352,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 
 	// ApplicantManagement Implementation
 	@Override
+/**
+ * Method retrieveApplicant - auto-documented method.
+ */
 	public void retrieveApplicant(String nric) {
 		List<Applicant> applicants = loader.loadApplicants("V2\\ApplicantList.csv", "V2\\Applications.csv");
 
@@ -345,6 +381,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 
+/**
+ * Method updateApplicantStatus - auto-documented method.
+ */
 	public void updateApplicantStatus(String nric, String newStatus) {
 		String csvPath = "V2\\Applications.csv";
 	
@@ -376,10 +415,16 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	}
 
 	// Getter and Setter for assignedProj
+/**
+ * Method getAssignedProj - auto-documented method.
+ */
     public BTOProject getAssignedProj() {
         return assignedProj;
     }
 
+/**
+ * Method setAssignedProj - auto-documented method.
+ */
     public void setAssignedProj(BTOProject assignedProj) {
         this.assignedProj = assignedProj;
     }
@@ -388,6 +433,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 	 * 
 	 * @param applicant
 	 */
+/**
+ * Method generateReceipt - auto-documented method.
+ */
 	public void generateReceipt(Applicant applicant) {
 		// HDBOfficer.generateReceipt
 		System.out.println("===== HDB Application Receipt =====");
@@ -408,6 +456,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
     	System.out.println("===================================");
 	}
 
+/**
+ * Method viewRegStatus - auto-documented method.
+ */
 	public String viewRegStatus() {
 		// HDBOfficer.viewRegStatus
 		if (assignedProj != null) {
@@ -422,6 +473,9 @@ public class HDBOfficer extends Employees implements View, ProjectManagement, Ap
 		this.regStatus = status;
 	}
 
+/**
+ * Method loadProjectByName - auto-documented method.
+ */
 	public BTOProject loadProjectByName(String projectName) {
 		String filePath = "V2\\ProjectList.csv";
 	

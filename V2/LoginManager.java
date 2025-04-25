@@ -4,6 +4,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 
+/**
+ * Class LoginManager - Auto-generated Javadoc documentation.
+ */
 public class LoginManager {
 
 	private ArrayList<Users> userList;
@@ -23,6 +26,9 @@ public class LoginManager {
 	 * @param nric
 	 * @param password
 	 */
+/**
+ * Method authenticateUser - auto-documented method.
+ */
 	public Users authenticateUser(String nric, String password) {
 		
 		for(Users user: userList)
@@ -40,6 +46,9 @@ public class LoginManager {
 	 * @param user
 	 * @param password
 	 */
+/**
+ * Method changeUserPassword - auto-documented method.
+ */
 	public void changeUserPassword(Users user, String password) {
 		
 		user.changePassword(password);
@@ -262,6 +271,9 @@ public class LoginManager {
 		}
 	}
 
+/**
+ * Method findOfficerByNRIC - auto-documented method.
+ */
     public HDBOfficer findOfficerByNRIC(String nric) {
         for (Users users : userList) {
             if (users instanceof HDBOfficer && users.getNRIC().equals(nric)) {

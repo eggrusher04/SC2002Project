@@ -3,6 +3,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * Class HDBManager - Auto-generated Javadoc documentation.
+ */
 public class HDBManager extends Employees implements ProjectManager, OfficerApproval, View {
 
 	private BTOProject[] createdProj;
@@ -10,12 +13,18 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     private String name;
 
 
+/**
+ * Method HDBManager - auto-documented method.
+ */
 	public HDBManager(String nric, String password, int age, String maritalStatus, int staffID, String name) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
         this.createdProj = new BTOProject[INITIAL_CAPACITY];
  
     }
 
+/**
+ * Method HDBManager - auto-documented method.
+ */
     public HDBManager(String name, String nric, String password, int age, String maritalStatus, int staffID) {
         super(nric, password, age, maritalStatus, staffID, "HDB_MANAGER", name);
         this.createdProj = new BTOProject[INITIAL_CAPACITY];  // initialize it here
@@ -24,16 +33,25 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     
     
 	@Override
+/**
+ * Method viewEnquiry - auto-documented method.
+ */
 	public String viewEnquiry(String message) {
 		return "Enquiry: " + message;
 	}
 	
 	@Override
+/**
+ * Method replyEnquiry - auto-documented method.
+ */
 	public void replyEnquiry() {
 		System.out.println("Replying to enquiry... (HDBManager specific logic)");
 	}
 	
 	@Override
+/**
+ * Method viewProjDetails - auto-documented method.
+ */
 	public String viewProjDetails(BTOProject project) {
 		if (project == null) return "No project provided.";
 	
@@ -66,6 +84,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 	@Override
+/**
+ * Method login - auto-documented method.
+ */
 	public boolean login(String nric, String pw) {
         return getNRIC().equals(nric) && getPassword().equals(pw);
 	}
@@ -74,6 +95,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
     // pulls from projectlist csv and prints out all the exisitng projects (changed)
 	@Override
+/**
+ * Method viewListOfProjects - auto-documented method.
+ */
     public String viewListOfProjects() {
         String filePath = "V2\\ProjectList.csv";
         StringBuilder result = new StringBuilder();
@@ -128,6 +152,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 	@Override
+/**
+ * Method createProject - auto-documented method.
+ */
     public void createProject(BTOProject project) {
         ensureCapacity(); // Ensure there is enough space in the array
         for (int i = 0; i < createdProj.length; i++) {
@@ -142,6 +169,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 // This method only updates data - no printing or input
+/**
+ * Method editProject - auto-documented method.
+ */
 	public void editProject(BTOProject project, String newName, String newHood, String newOpen, String newClose, int twoRoom, int threeRoom) {
 		if (newName != null && !newName.isBlank()) {
 			project.setProjectName(newName);
@@ -165,6 +195,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
     @Override
+/**
+ * Method deleteProject - auto-documented method.
+ */
     public void deleteProject(BTOProject project) {
         for (int i = 0; i < createdProj.length; i++) {
             if (createdProj[i] != null && createdProj[i].equals(project)) {
@@ -178,6 +211,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
 	@Override
+/**
+ * Method approveOfficer - auto-documented method.
+ */
 	public void approveOfficer(HDBOfficer officer) {
         if (officer != null) {
             officer.setRegStatus("Approved"); // Assume setter exists
@@ -185,6 +221,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
     @Override
+/**
+ * Method rejectOfficer - auto-documented method.
+ */
     public void rejectOfficer(HDBOfficer officer) {
         if (officer != null) {
             officer.setRegStatus("Rejected");
@@ -194,6 +233,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
     // cahnged a bit
+/**
+ * Method approveWithdrawal - auto-documented method.
+ */
     public void approveWithdrawal(Applicant applicant) {
         if (applicant != null) {
             applicant.withraw(); // deletes the application from application.csv
@@ -201,6 +243,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
 
+/**
+ * Method genReport - auto-documented method.
+ */
     public String genReport(String filterCriteria) {
         // Parse the filter criteria into individual components
         String[] filters = new String[4]; // Default to blank filters
@@ -273,6 +318,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
     }
 
     // Helper method to retrieve applicant details from ApplicantList.csv
+/**
+ * Method getApplicantDetails - auto-documented method.
+ */
     private String getApplicantDetails(String nric) {
         String applicantFilePath = "V2\\ApplicantList.csv";
         try (BufferedReader appBr = new BufferedReader(new FileReader(applicantFilePath))) {
@@ -298,12 +346,18 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
         return null; // Return null if applicant not found
     }
 
+/**
+ * Method ensureCapacity - auto-documented method.
+ */
 	private void ensureCapacity() {
         if (createdProj[createdProj.length - 1] != null) {
             createdProj = Arrays.copyOf(createdProj, createdProj.length * 2);
         }
     }
 
+/**
+ * Method getProjectByName - auto-documented method.
+ */
     public BTOProject getProjectByName(String name) {
         BTOProject project = createBTOProjectFromCSV(name);
         if (project != null){
@@ -315,6 +369,9 @@ public class HDBManager extends Employees implements ProjectManager, OfficerAppr
 
 
     // method to create a bto project object from csv data
+/**
+ * Method createBTOProjectFromCSV - auto-documented method.
+ */
     public BTOProject createBTOProjectFromCSV(String projectName) {
         String filePath = "V2\\ProjectList.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

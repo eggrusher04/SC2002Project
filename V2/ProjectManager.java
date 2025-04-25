@@ -1,3 +1,6 @@
+/**
+ * Interface ProjectManager - Auto-generated Javadoc documentation.
+ */
 public interface ProjectManager {
 
 	/**

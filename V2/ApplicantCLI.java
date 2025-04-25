@@ -1,15 +1,24 @@
 import java.util.Scanner;
 
+/**
+ * Class ApplicantCLI - Auto-generated Javadoc documentation.
+ */
 public class ApplicantCLI {
     private Scanner scanner = new Scanner(System.in); // for user input
     private LoginManager loginManager; // manages login functionality
     private String applicantCSVPath; // path to applicant CSV file
 
+/**
+ * Method ApplicantCLI - auto-documented method.
+ */
     public ApplicantCLI(LoginManager loginManager, String applicantCSVPath) {
         this.loginManager = loginManager;
         this.applicantCSVPath = applicantCSVPath;
     }
 
+/**
+ * Method launch - auto-documented method.
+ */
     public void launch(Applicant applicant) { // main dashboard loop
         while (true) {
             System.out.println("\n====== Applicant Dashboard ======");
@@ -64,6 +73,9 @@ public class ApplicantCLI {
         }
     }
 
+/**
+ * Method manageEnquiries - auto-documented method.
+ */
     private void manageEnquiries(Applicant applicant) { // submenu for enquiries
         while (true) {
             System.out.println("\n===== Enquiry Management =====");

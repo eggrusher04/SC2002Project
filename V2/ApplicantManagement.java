@@ -1,3 +1,6 @@
+/**
+ * Interface ApplicantManagement - Auto-generated Javadoc documentation.
+ */
 public interface ApplicantManagement {
 
 	/**

@@ -1,3 +1,6 @@
+/**
+ * Interface OfficerApproval - Auto-generated Javadoc documentation.
+ */
 public interface OfficerApproval {
 
 	/**
